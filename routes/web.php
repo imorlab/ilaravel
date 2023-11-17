@@ -15,7 +15,7 @@ use App\Http\Controllers\MailController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/sending', function () {
@@ -26,3 +26,7 @@ Route::get('/sending', function () {
 
 // Email related routes
 Route::post('/send', [MailController::class, 'store']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
