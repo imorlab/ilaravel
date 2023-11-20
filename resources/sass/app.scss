@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.bunny.net/css?family=Source+Code+Pro');
 
 // Variables
 @import 'variables';
@@ -10,7 +10,7 @@
 $body-bg: #0c0009;
 
 body {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Source Code Pro', sans-serif;
     background-color: $body-bg;
     font-size: $font-size-base;
     line-height: $line-height-base;
