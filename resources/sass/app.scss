@@ -7,7 +7,7 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-$body-bg: #051f38;
+$body-bg: #0c0009;
 
 body {
     font-family: 'Nunito', sans-serif;
@@ -15,4 +15,90 @@ body {
     font-size: $font-size-base;
     line-height: $line-height-base;
 }
+
+$secondary: #9240d5;
+
+
+
+.custom-border {
+    border: 2px solid $secondary;
+    /* Reemplaza "#ff0000" con tu color personalizado */
+    border-radius: 4px;
+    /* Opcional: Añadir esquinas redondeadas */
+    background-color: $body-bg;
+
+    &:focus {
+        border-color: $secondary;
+        /* Color personalizado cuando está activo */
+        background-color: $body-bg;
+        color: #fff;
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 0.2rem $secondary;
+        /* Difuminado personalizado */
+    }
+
+    &::placeholder {
+        color: white;
+        /* Reemplaza "#ff0000" con tu color personalizado */
+        font-weight: bold;
+
+        font-family: "GT Walsheim Pro Bold";
+    }
+}
+
+.form-input {
+    color: $secondary; /* Reemplaza "#FF0000" con el color de texto deseado */
+    font-weight: bold;
+    background-color: $body-bg; /* Reemplaza "#FFFFFF" con el color de fondo deseado */
+
+    &.custom-border {
+      border: 2px solid $secondary;
+      /* Reemplaza "$light-green-amway" con tu color personalizado */
+      border-radius: 4px;
+      /* Opcional: Añadir esquinas redondeadas */
+
+      &:focus {
+        border-color: $secondary;
+        /* Color personalizado cuando está activo */
+
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 0.2rem $secondary;
+        /* Difuminado personalizado */
+      }
+
+      &:focus::placeholder {
+        color: $secondary;
+        /* Reemplaza "$green-amway" con tu color personalizado */
+        font-weight: bold;
+      }
+
+      /* Estilo de las opciones deshabilitadas en el select */
+      select.custom-border {
+        option:disabled {
+          color: $primary; /* Reemplaza "$green-amway" con el color deseado para las opciones deshabilitadas */
+        }
+      }
+    }
+  }
+
+  .btn-register{
+    background-color: $secondary;
+    border: 2px solid $secondary;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 30px;
+
+
+    &:hover{
+
+        border-color: $secondary;
+        background-color: $light;
+        color: $secondary;
+
+    }
+  }
 

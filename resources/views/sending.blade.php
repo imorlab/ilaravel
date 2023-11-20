@@ -5,21 +5,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-6 mb-5">
-            <img src="{{ asset('/img/sending.jpg') }}" class="img-fluid ms-auto me-auto d-block mb-1" />
+            <img src="{{ asset('/img/mail.png') }}" class="img-fluid ms-auto me-auto d-block mb-1" />
 
-            <h4 class="text-center primary fw-bold mb-4">{{__('¿Quieres enviar una newsletter?')}}</h4>
-            <p class="text-center primary mb-4">{{__('Asegurate de tener selecionada la newsletter que quieres enviar')}}</p>
+            <h4 class="text-center text-light fw-bold mb-4">{{__('¿Quieres enviar una newsletter?')}}</h4>
+            <p class="text-center text-light mb-4">{{__('Asegurate de tener selecionada la newsletter que quieres enviar')}}</p>
 
             <form id="form" action="{{ url('/send') }}" method="POST">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <div class="input-group mb-3">
-                            <input id="email" type="email" placeholder="{{ __('front.email') }}"
+                            <input id="email" type="email" placeholder="{{ __('Email') }}"
                             class="custom-border form-control @error('email') is-invalid @enderror" name="email"
                             value="{{ old('email') }}" required autocomplete="email">
 
-                            <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+                            <button type="submit" class="btn btn-register">{{ __('Enviar') }}</button>
                         </div>
                     </div>
                 </div>
