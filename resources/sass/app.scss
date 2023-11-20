@@ -16,7 +16,7 @@ body {
     line-height: $line-height-base;
 }
 
-$secondary: #9240d5;
+$secondary: #d54040;
 
 
 
@@ -44,11 +44,11 @@ $secondary: #9240d5;
         /* Reemplaza "#ff0000" con tu color personalizado */
         font-weight: bold;
 
-        font-family: "GT Walsheim Pro Bold";
+        font-family: "Source Code Pro";
     }
 }
 
-.form-input {
+.form-control {
     color: $secondary; /* Reemplaza "#FF0000" con el color de texto deseado */
     font-weight: bold;
     background-color: $body-bg; /* Reemplaza "#FFFFFF" con el color de fondo deseado */
@@ -102,3 +102,8 @@ $secondary: #9240d5;
     }
   }
 
+  .card {
+    height: 220px;
+    width: 450px;
+    border-radius: 10px;
+  }

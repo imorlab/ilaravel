@@ -6,7 +6,7 @@
 
         <div class="col-auto">
             <div class="col-auto text-center mb-5">
-                <img src="{{ asset('/img/logo.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
+                <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
             </div>
 
             {{-- <img src="{{ asset('/img/laravel.jpg') }}" class="img-fluid ms-auto me-auto d-block mb-1" /> --}}
@@ -17,8 +17,8 @@
                         <div class="card text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body">
-                                <img src="{{ asset('/img/mail.png') }}" class="card-img-top w-25 mb-3 text-center" alt="...">
-                                <h2 class="card-title">Sending mail</h2>
+                                <img src="{{ asset('/icons/mail_96.png') }}" style="width: 96px;">
+                                <h4 class="card-title mt-2">Sending mail</h4>
                                 <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
                             </div>
                         </div>
@@ -29,10 +29,9 @@
                         <div class="card text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body">
-                                <img src="{{ asset('/img/mail.png') }}" class="card-img-top w-25 mb-3" alt="...">
-                                <i class="bi bi-arrow-right"></i>
-                                <h5 class="card-title">Sending mail</h5>
-                                <p class="card-text">Do you want to send a newsletter?</p>
+                                <img src="{{ asset('/icons/rubik_96.png') }}" style="width: 96px;">
+                                <h4 class="card-title mt-2">Cubo Rubik</h4>
+                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
                             </div>
                         </div>
                     </a>
@@ -44,9 +43,9 @@
                         <div class="card text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body">
-                                <i class="bi bi-arrow-right"></i>
-                                <h5 class="card-title">Sending mail</h5>
-                                <p class="card-text">Do you want to send a newsletter?</p>
+                                <img src="{{ asset('/icons/new_96.png') }}" style="width: 96px;">
+                                <h4 class="card-title mt-2">New tool</h4>
+                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
                             </div>
                         </div>
                     </a>
@@ -56,9 +55,9 @@
                         <div class="card text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body">
-                                <i class="bi bi-arrow-right"></i>
-                                <h5 class="card-title">Sending mail</h5>
-                                <p class="card-text">Do you want to send a newsletter?</p>
+                                <img src="{{ asset('/icons/toolbox_96.png') }}" style="width: 96px;">
+                                <h4 class="card-title mt-2">Tool Box</h4>
+                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
                             </div>
                         </div>
                     </a>
