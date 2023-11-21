@@ -1,13 +1,22 @@
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Source+Code+Pro');
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;1,500&display=swap");
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+// Bootstrap Icons
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
+// Colors
 $body-bg: #0c0009;
+$secondary: #d54040;
+$purple: #8a15ff;
+$blue: #3800e7;
+$ltblue: #15e0ff;
+$magenta: #d000c5;
 
 body {
     font-family: 'Source Code Pro', sans-serif;
@@ -15,10 +24,6 @@ body {
     font-size: $font-size-base;
     line-height: $line-height-base;
 }
-
-$secondary: #d54040;
-
-
 
 .custom-border {
     border: 2px solid $secondary;
@@ -49,61 +54,344 @@ $secondary: #d54040;
 }
 
 .form-control {
-    color: $secondary; /* Reemplaza "#FF0000" con el color de texto deseado */
+    color: $secondary;
+    /* Reemplaza "#FF0000" con el color de texto deseado */
     font-weight: bold;
-    background-color: $body-bg; /* Reemplaza "#FFFFFF" con el color de fondo deseado */
+    background-color: $body-bg;
+    /* Reemplaza "#FFFFFF" con el color de fondo deseado */
 
     &.custom-border {
-      border: 2px solid $secondary;
-      /* Reemplaza "$light-green-amway" con tu color personalizado */
-      border-radius: 4px;
-      /* Opcional: Añadir esquinas redondeadas */
+        border: 2px solid $secondary;
+        /* Reemplaza "$light-green-amway" con tu color personalizado */
+        border-radius: 4px;
+        /* Opcional: Añadir esquinas redondeadas */
 
-      &:focus {
-        border-color: $secondary;
-        /* Color personalizado cuando está activo */
+        &:focus {
+            border-color: $secondary;
+            /* Color personalizado cuando está activo */
 
-      }
-
-      &:focus-visible {
-        box-shadow: 0 0 0 0.2rem $secondary;
-        /* Difuminado personalizado */
-      }
-
-      &:focus::placeholder {
-        color: $secondary;
-        /* Reemplaza "$green-amway" con tu color personalizado */
-        font-weight: bold;
-      }
-
-      /* Estilo de las opciones deshabilitadas en el select */
-      select.custom-border {
-        option:disabled {
-          color: $primary; /* Reemplaza "$green-amway" con el color deseado para las opciones deshabilitadas */
         }
-      }
-    }
-  }
 
-  .btn-register{
+        &:focus-visible {
+            box-shadow: 0 0 0 0.2rem $secondary;
+            /* Difuminado personalizado */
+        }
+
+        &:focus::placeholder {
+            color: $secondary;
+            /* Reemplaza "$green-amway" con tu color personalizado */
+            font-weight: bold;
+        }
+
+        /* Estilo de las opciones deshabilitadas en el select */
+        select.custom-border {
+            option:disabled {
+                color: $primary;
+                /* Reemplaza "$green-amway" con el color deseado para las opciones deshabilitadas */
+            }
+        }
+    }
+}
+
+.btn-register {
     background-color: $secondary;
     border: 2px solid $secondary;
     color: #fff;
     font-weight: bold;
-    border-radius: 30px;
+    width: 100%;
 
-
-    &:hover{
-
+    &:hover {
         border-color: $secondary;
         background-color: $light;
         color: $secondary;
-
     }
-  }
+}
 
-  .card {
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.42857;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.card {
     height: 220px;
     width: 450px;
     border-radius: 10px;
-  }
+}
+
+
+
+.rubik {
+    background: linear-gradient($blue, $purple);
+    height: 100vh;
+    font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+    font-family: "DM Mono", monospace;
+    font-weight: 300;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.geo-arrow {
+    fill: none;
+    stroke: $secondary;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 1000;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    font-family: "DM Mono", monospace;
+    font-weight: 300;
+    color: white;
+}
+
+h2 {
+    font-size: 2em;
+    font-family: "DM Mono", monospace;
+    font-weight: 300;
+    color: white;
+}
+
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: -3;
+    }
+
+    &:before {
+        right: 0;
+        bottom: -19;
+        height: 30em;
+        width: 30em;
+        border-radius: 30em;
+        background: linear-gradient($secondary, $purple);
+        align-self: flex-end;
+        animation: gradient-fade 8s ease-in-out 3s infinite alternate;
+    }
+
+    &:after {
+        $circle-unit: 10em;
+        top: 0;
+        left: 30;
+        height: $circle-unit;
+        width: $circle-unit;
+        border-radius: $circle-unit;
+        background: linear-gradient($secondary, $purple);
+        animation: gradient-fade-alt 6s ease-in-out 3s infinite alternate;
+    }
+
+    &__text-wrapper {
+        position: relative;
+        padding: 2em;
+
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+        }
+
+        &:before {
+            $circle-unit: 13em;
+            z-index: -1;
+            top: -3em;
+            right: -3em;
+            width: $circle-unit;
+            height: $circle-unit;
+            opacity: 0.7;
+            border-radius: $circle-unit;
+            background: linear-gradient($secondary, $purple);
+            animation: rotation 7s linear infinite;
+        }
+
+        &:after {
+            $circle-unit: 20em;
+            z-index: -1;
+            bottom: -#{$circle-unit};
+            width: $circle-unit;
+            height: $circle-unit;
+            border-radius: $circle-unit;
+            background: linear-gradient($dark, $secondary);
+            animation: rotation 7s linear infinite;
+        }
+    }
+}
+
+.arrow {
+    z-index: 1000;
+    opacity: 0.5;
+    position: absolute;
+
+    &--top {
+        top: 0;
+        left: -5em;
+    }
+
+    &--bottom {
+        bottom: 0;
+        right: 3em;
+    }
+}
+
+.circle {
+    transform: translate(50%, -50%) rotate(0deg);
+    transform-origin: center;
+
+    &--ltblue {
+        $circle-unit: 20em;
+        height: $circle-unit;
+        width: $circle-unit;
+        border-radius: $circle-unit;
+        background: linear-gradient($ltblue, $blue);
+    }
+}
+
+.backdrop {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    background-color: pink;
+}
+
+.dotted-circle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.3;
+    animation: rotation 38s linear infinite;
+}
+
+// animations
+.draw-in {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 10;
+    animation: draw 15s ease-in-out alternate infinite;
+}
+
+@keyframes draw {
+    from {
+        stroke-dashoffset: 1000;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.item-to {
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    transform-origin: bottom;
+}
+
+.bounce-1 {
+    animation-name: bounce-1;
+    animation-timing-function: ease;
+}
+
+.bounce-2 {
+    animation-name: bounce-2;
+    animation-timing-function: ease;
+}
+
+.bounce-3 {
+    animation-name: bounce-3;
+    animation-timing-function: ease;
+}
+
+@keyframes bounce-1 {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(50px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce-2 {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-30px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce-3 {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(30px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+// gradient fade
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gradient-fade {
+    from {
+        transform: translate(10%, -10%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes gradient-fade-alt {
+    from {
+        transform: translate(-20%, 20%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-60%, 60%) rotate(360deg);
+    }
+}

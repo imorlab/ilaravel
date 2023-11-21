@@ -6,21 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
     <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
-    <meta name="color-scheme" content="light">
-    <meta name="supported-color-schemes" content="light">
-    <title>La historia interminable, el musical</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
     <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
     <!--[if gte mso 9]>
     <xml>
         <o:OfficeDocumentSettings>
-            <o:AllowPNG/>
             <o:PixelsPerInch>96</o:PixelsPerInch>
         </o:OfficeDocumentSettings>
     </xml>
     <![endif]-->
 
-     <!-- Web Font / @font-face : BEGIN -->
+    <!-- Web Font / @font-face : BEGIN -->
     <!-- NOTE: If web fonts are not required, lines 23 - 41 can be safely removed. -->
 
     <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
@@ -32,20 +31,24 @@
         </style>
     <![endif]-->
 
-   <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: https://web.archive.org/web/20190717120616/http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
     <!--[if !mso]><!-->
     <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
     <!--<![endif]-->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  -->
+    <!--<![endif]-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
     <!-- Web Font / @font-face : END -->
 
     <!-- CSS Reset : BEGIN -->
     <style>
 
-        /* What it does: Tells the email client that only light styles are provided but the client can transform them to dark. A duplicate of meta color-scheme meta tag above. */
+        /* What it does: Tells the email client that both light and dark styles are provided. A duplicate of meta color-scheme meta tag above. */
         :root {
-          color-scheme: light;
-          supported-color-schemes: light;
+          color-scheme: light dark;
+          supported-color-schemes: light dark;
         }
 
         /* What it does: Remove spaces around the email design added by some email clients. */
@@ -68,6 +71,7 @@
         div[style*="margin: 16px 0"] {
             margin: 0 !important;
         }
+
         /* What it does: forces Samsung Android mail clients to use the entire viewport */
         #MessageViewBody, #MessageWebViewDiv{
             width: 100% !important;
@@ -112,16 +116,17 @@
             line-height: inherit !important;
         }
 
-        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
-        .im {
-            color: inherit !important;
-        }
-
         /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
         .a6S {
             display: none !important;
             opacity: 0.01 !important;
         }
+
+        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+        .im {
+            color: inherit !important;
+        }
+
         /* If the above doesn't work, add a .g-img class to any image in question. */
         img.g-img + div {
             display: none !important;
@@ -149,27 +154,6 @@
             }
         }
 
-        @media screen {
-            @font-face {
-                font-family:'Benguiat';
-                font-weight:600;
-                font-display:swap;
-                src:url(https://www.lahistoriainterminablemusical.com/newsletter/template/Benguiat-Bold-2.woff) format('woff');
-                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-            }
-        }
-
-
-        li{
-
-            list-style: none;
-            margin: 15px 0;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
-
-
     </style>
     <!-- CSS Reset : END -->
 
@@ -183,8 +167,8 @@
 	    }
 	    .button-td-primary:hover,
 	    .button-a-primary:hover {
-	        background: #fff !important;
-	        border-color: #fff !important;
+	        background: #555555 !important;
+	        border-color: #555555 !important;
 	    }
 
 	    /* Media Queries */
@@ -192,41 +176,76 @@
 
 	        /* What it does: Adjust typography on small screens to improve readability */
 	        .email-container p {
-	            font-size: 17px !important;
+	            font-size: 20px !important;
 	        }
 
 	    }
 
+        /* Dark Mode Styles : BEGIN */
+        @media (prefers-color-scheme: dark) {
+			.email-bg {
+				background: #222222 !important;
+			}
+            .darkmode-bg {
+                background: #3D72AB !important;
+            }
+			h1,
+			h2,
+			h3,
+			p,
+			li,
+			.darkmode-text,
+			.email-container a:not([class]) {
+				color: #F7F7F9 !important;
+			}
+			td.button-td-primary,
+			td.button-td-primary a {
+				background: #FFCC3E !important;
+				border-color: #FD9F00 !important;
+				color: #F4391B !important;
+			}
+			td.button-td-primary:hover,
+			td.button-td-primary a:hover {
+				background: #FFCC3E !important;
+				border-color: #FD9F00 !important;
+                color: #F4391B !important;
+			}
+			.footer td {
+				color: #F7F7F9 !important;
+			}
+            .darkmode-fullbleed-bg {
+                background-color: #111111 !important;
+            }
+		}
+        /* Dark Mode Styles : END */
     </style>
     <!-- Progressive Enhancements : END -->
 
-    <!-- Add icon library -->
-    <link rel="stylesheet" href="https://kit.fontawesome.com/771ee084d5.css" crossorigin="anonymous">
-
 </head>
 <!--
-	The email background color (#222222) is defined in three places:
+	The email background color (#ffffff) is defined in three places:
 	1. body tag: for most email clients
 	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
 	3. mso conditional: For Windows 10 Mail
 -->
-<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #050A30;">
-	<center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #050A30;">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #ffffff;" class="email-bg">
+	<center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #ffffff;" class="email-bg">
     <!--[if mso | IE]>
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050A30;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff;" class="email-bg">
     <tr>
     <td>
     <![endif]-->
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
+
         </div>
         <!-- Visually Hidden Preheader Text : END -->
 
         <!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
         <!-- Preview Text Spacing Hack : BEGIN -->
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-            🎟 ENTRADAS YA DISPONIBLES con un 20%dto. por compra anticipada y tiempo limitado
+	        &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
         <!-- Preview Text Spacing Hack : END -->
 
@@ -234,9 +253,8 @@
             Set the email width. Defined in two places:
             1. max-width for all clients except Desktop Windows Outlook, allowing the email to squish on narrow but never go wider than 600px.
             2. MSO tags for Desktop Windows Outlook enforce a 600px width.
-            Note: The Fluid and Responsive templates have a different width (600px). The hybrid grid is more "fragile", and I've found that 600px is a good width. Change with caution.
         -->
-        <div style="max-width: 600px; margin: 0 auto; background-color: #050A30;" class="email-container">
+        <div style="max-width: 600px; margin: 0 auto;" class="email-container">
             <!--[if mso]>
             <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
             <tr>
@@ -244,40 +262,135 @@
             <![endif]-->
 
 	        <!-- Email Body : BEGIN -->
-	        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto; background-color: #050A30;" align="center">
+	        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;">
 
-
-                 <!-- Hero Image, Flush : BEGIN -->
-                 <tr>
-                    <td style="background-color: #050A30;" align="center">
-                        <a href="https://entradas.gruposmedia.com/entradas/historiainterminable-apo?utm_source=newsletter&utm_medium=email&utm_campaign=LHI_BCN&utm_term=banner_sup" target="_blank"><img src="https://www.beon-entertainment.com/newsletter/lhi/barcelona-1-semana/bcn-1-semana.jpeg" width="600" height="auto" alt="La Historia Interminable" border="0" style="display: block;"></a>
+                <!-- Hero Image, Flush : BEGIN -->
+                <tr>
+                    <td style="background-color: #3D72AB;">
+                        <img src="https://media.beonworldwide.com/newsletters/airbus/carteros_reales/hero.png" width="600" height="" alt="alt_text" border="0" style="width: 100%; height: auto; background: #ffffff; margin: 0; display: block;" class="darkmode-bg">
                     </td>
                 </tr>
                 <!-- Hero Image, Flush : END -->
 
-
-
                 <!-- 1 Column Text + Button : BEGIN -->
                 <tr>
-                    <td style="background-color: #050A30; color:#EFC317;">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #050A30;">
-
+                    <td width="600" style="background-color: #3D72AB;" class="darkmode-bg">
+                        <table role="presentation" cellspacing="0" cellpadding="0" align="center" border="0" width="475">
+                            <!-- Hero Image, Flush : END -->
                             <tr>
-                                <td style="padding: 0px 40px; font-family: 'Montserrat', sans-serif; line-height: 20px; color: #fff; text-align: center;" align="center">
-                                    <p style="font-size: 24px; line-height: 34px; ">
-                                        ¡Agarra tu Auryn y prepárate porque La historia interminable, el musical llega a <span style="color:#EFC317; font-weight: bold;">BARCELONA</span>!
+                                <td aria-hidden="true" height="40" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <!-- 2 Even Columns : BEGIN -->
+                            <tr>
+                                <td style="background-color: #3D72AB;" class="darkmode-bg">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="475">
+                                        <tr>
+                                            <td style="text-align: left; font-family: 'Montserrat Black', sans-serif; font-size: 24px; line-height: 26px; font-weight: bold; color: #FFE82E; padding: 0px 0px 0px 20px;">
+                                                <span style="margin: 0; font-family: 'Montserrat Black', sans-serif; font-size: 24px; line-height: 26px; font-weight: bold; color: #FFE82E;">¡Los Carteros Reales ya están aquí!</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <!-- 2 Even Columns : END -->
+                            <tr>
+                                <td style="padding: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                    <p style="margin: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                        ¡Un año más vuelven los emisarios de los Reyes Magos! Airbus hará entrega de los regalos a los hijos de empleados, y queremos compartir este momento en un acto en el que los más pequeños también podrán hacer entrega de las cartas para Sus Majestades.
                                     </p>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 20px; background-color: #050A30;" class="darkmode-bg">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                    <p style="margin: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                        Os invitamos a participar a todos los padres y madres con hijos entre 0 y 12 años (nacidos a partir del 01/01/2011) que trabajéis en Tablada y San Pablo. Además, os pedimos que, en medida de lo posible, traigáis un juguete en buen estado para donarlo a una ONG, ayudando así a que otros niños sin recursos también puedan disfrutar de la magia de la Navidad.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                    <p style="margin: 0; font-family: 'Montserrat Regular', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                        Por motivos de Seguridad, el acceso a la Planta será mediante invitación, por lo que no olvides traerla el día del evento, así como tu tarjeta de empleado. Asimismo, os recordamos que podéis traer vuestro desayuno de casa.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0; font-family: 'Montserrat Light', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                    <p style="margin: 0; font-family: 'Montserrat Light', sans-serif; font-size: 18px; line-height: 26px; color: #555555;">
+                                        (Recuerda que es necesario tener a tus hijos dados de alta en MyPulse)
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                  &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0; font-family: 'Montserrat Light', sans-serif; font-style: italic; font-size: 18px; line-height: 26px; color: #555555;">
+                                    <p style="margin: 0; font-family: 'Montserrat Light', sans-serif; font-style: italic; font-size: 18px; line-height: 26px; color: #555555;">
+                                        *Cada empleado es responsable de los acompañantes con los que acceda a la planta.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- 1 Column Text + Button : END -->
+
+                <!-- 1 Column Text + Button : BEGIN -->
+                <tr>
+                    <td style="background-color: #3D72AB;" class="darkmode-bg">
+                        <table role="presentation" cellspacing="0" cellpadding="0" align="center" border="0" width="475">
+                            <tr>
+                                <td aria-hidden="true" height="60" style="font-size: 0; line-height: 0px;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!-- 2 Even Columns : BEGIN -->
+                            <tr>
+                                <td style="background-color: #3D72AB;" class="darkmode-bg">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="475">
                                         <tr>
-                                            <td align="center">
-                                                <table valign="center" width="500" cellspacing="0" cellpadding="0" border="0">
+                                            <td valign="middle" width="10%">
+                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                                     <tr>
-                                                        <td valign="center" align="center" style="background-color: #050A30; color: #ffffff; width: 500px; height: 100%; padding: 0px;">
-                                                            <img src="https://gen.sendtric.com/countdown/wm4k0jaxlx" style="display: block;width:500px" />
+                                                        <td style="text-align: center; padding: 0;">
+                                                            <img src="https://media.beonworldwide.com/newsletters/airbus/carteros_reales/clock.png" width="79" height="" alt="alt_text" border="0" style="width: 79px; max-width: 79px; background: #3D72AB; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;" class="darkmode-bg">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td aria-hidden="true" width="10" style="font-size: 0; line-height: 0px;">
+                                                &nbsp;
+                                            </td>
+                                            <td valign="middle" width="80%">
+                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                    <tr>
+                                                        <td style="text-align: left; font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 18px; line-height: 26px; color: #555555;">
+                                                            <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 18px; line-height: 26px; color: #555555;">16 de diciembre 2023, De 10:00h a 13:00h</p>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -287,68 +400,65 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 0px 40px; font-family: 'Montserrat', sans-serif; line-height: 20px; color: #fff; text-align: center;" align="center">
-                                    <p style="margin: 0 0 0px; font-size: 20px; line-height: 32px; ">
-                                        Ven a conocer a Bastian, Atreyu,  Fújur, Ártax y todos los personajes del Reino de Fantasia a partir del 22 de noviembre en el Teatre Apolo
-                                    </p>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                    &nbsp;
                                 </td>
                             </tr>
-
-
                             <tr>
-                                <td style="padding: 60px; font-family: 'Montserrat', sans-serif; line-height: 20px; color: #fff; text-align: center;" align="center">
-                                    <p style="font-size: 22px; line-height: 38px;">
-                                        <span style="color:#fff; font-weight: bold;">Si compras tus entradas esta semana obtendrás un<br>
-                                        <span style="color:#EFC317; font-weight: bold; font-size: 32px;">20% de descuento...</span> <br>
-                                        ¡Vuela, quedan muy pocos días para que acabe la promoción!
-                                    </p>
+                                <td style="background-color: #3D72AB;" class="darkmode-bg">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="475">
+                                        <tr>
+                                            <td valign="middle" width="10%">
+                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                    <tr>
+                                                        <td style="text-align: center; padding: 0;">
+                                                            <img src="https://media.beonworldwide.com/newsletters/airbus/carteros_reales/star.png" width="55" height="" alt="alt_text" border="0" style="width: 55px; max-width: 55px; background: #3D72AB; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; padding-left: 10px;" class="darkmode-bg">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td aria-hidden="true" width="10" style="font-size: 0; line-height: 0px;">
+                                                &nbsp;
+                                            </td>
+                                            <td valign="middle" width="80%">
+                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                    <tr>
+                                                        <td style="text-align: left; font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 18px; line-height: 26px; color: #555555;">
+                                                            <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 18px; line-height: 26px; color: #555555;">
+                                                                Explanada de Airframe, Nave A400M <br>
+                                                                (San Pablo)</p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
-
                             <tr>
-                                <td style="padding: 20px;">
+                                <td aria-hidden="true" height="60" style="font-size: 0; line-height: 0px;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!-- 2 Even Columns : END -->
+                            <tr>
+                                <td style="padding: 0 20px;">
                                     <!-- Button : BEGIN -->
                                     <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
                                         <tr>
-                                            <td class="button-td button-td-primary" style="border-radius: 4px; background: #EFC317; padding: 8px 12px;" align="center">
-											     <a class="button-a button-a-primary" href="https://entradas.gruposmedia.com/entradas/historiainterminable-apo?utm_source=newsletter&utm_medium=email&utm_campaign=LHI_BCN&utm_term=btn_entradas" target="_blank" style="background: #EFC317; border: 1px solid #EFC317; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: bold; line-height: 15px; text-decoration: none; padding: 8px 12px; color: #050A30; display: block; border-radius: 4px; text-align: center;">ENTRADAS DISPONIBLES</a>
+                                            <td class="button-td button-td-primary" style="border-radius: 4px; background: #FFCC3E;">
+											     <a class="button-a button-a-primary" href="https://google.com/" style="background: #FFCC3E; border: 3px solid #FD9F00; font-family: 'Montserrat Black', sans-serif; font-size: 18px; line-height: 26px; text-decoration: none; padding: 23px 67px; color: #F4391B; display: block; border-radius: 4px; text-transform: uppercase;">
+                                                    Confirmar asistencia
+                                                </a>
 											</td>
                                         </tr>
                                     </table>
-                                     <!-- Button : END -->
+                                    <!-- Button : END -->
                                 </td>
                             </tr>
-
-
                             <tr>
-                                <td style="padding: 0 20px 0px;" align="center">
-                                    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto; background-color: #050A30;">
-                                        <tr style="text-align: center;">
-                                            <td align="center">
-                                                <a href="https://www.lahistoriainterminablemusical.com/" target="_blank">
-                                                    <img src="https://www.beon-entertainment.com/newsletter/lhi/ZARAGOZA/logos%20premios.png" width="550" height="auto" alt="la historia interminable" border="0" align="center" style="width: 550px; max-width: 550px; height: auto; background: #050A30; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto; display: block; text-align: center;" class="g-img">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding: 20px; text-align: center;">
-                                                <p style="margin: 0px; font-size: 24px; line-height: 30px; color: #EFC317; font-weight: bold; font-family: 'Benguiat', 'Times New Roman', Times, serif; text-align: center;">DONDE SIEMPRE<br>QUERRÁS VOLVER</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td style="padding:20px 0" align="center">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" align="center" style="max-width: 600px; background-color: #050A30;">
-                                        <tr>
-                                            <td style="color: #ffffff; text-align: center;" align="center">
-                                                <p style="margin:0px; font-size: 16px; line-height: 20px; color: #ffffff; font-weight: bold; font-family: 'Benguiat', 'Times New Roman', Times, serif;">Más información</p>
-                                                <a href="https://www.lahistoriainterminablemusical.com/" target="_blank" style="color:#EFC317">lahistoriainterminablemusical.com</a>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <td aria-hidden="true" height="20" style="font-size: 0; line-height: 0px;">
+                                    &nbsp;
                                 </td>
                             </tr>
                         </table>
@@ -356,133 +466,23 @@
                 </tr>
                 <!-- 1 Column Text + Button : END -->
 
-
-
             </table>
             <!-- Email Body : END -->
 
             <!-- Email Footer : BEGIN -->
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="max-width: 600px; background-color: #050A30;">
+	        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="footer">
                 <tr>
-                    <td style="background-color: #050A30; padding: 20px; text-align: center;">
-                        <p style="margin: 0px; font-size: 8px; color: #fff; text-align: center;">UNA PRODUCCIÓN DE</p>
-                        <a href="https://www.beon-entertainment.com/" target="_blank">
-                            <img src="https://beon-entertainment.com/newsletter/lhi/template/logo-beon-entertainment.png" width="120" height="auto" alt="beon entertainment" border="0" align="center" style=" max-width: 120px; height: auto; margin: auto; text-align: center;" class="g-img">
-                        </a>
-
+                    <td aria-hidden="true" height="10" style="font-size: 0; line-height: 0px;" class="darkmode-bg">
+                        &nbsp;
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <p style=" font-family: sans-serif; line-height: 20px; color: #fff; text-align: center; margin: 0px; font-size: 16px;">Otros espectáculos de beon. Entertainment:</p>
-                    </td>
-                </tr>
-
-                 <!-- Hero Image, Flush : BEGIN -->
-                 <tr>
-                    <td style="background-color: #050A30; padding: 10px;" align="center">
-                        <a href="https://www.beon-entertainment.com/el-tiempo-entre-costuras-musical/" target="_blank"><img src="https://www.beon-entertainment.com/newsletter/beon-entertainment/template/imagen/etec.jpg" width="500" height="auto" alt="La Historia Interminable" style=" border:1px solid #EFC317; max-width: 500px; height: auto; margin: auto; display: block;" class="g-img"></a>
-                    </td>
-                </tr>
-                <!-- Hero Image, Flush : END -->
-
-                <!-- Hero Image, Flush : BEGIN -->
-                <tr>
-                    <td style="background-color: #050A30; padding: 10px;" align="center">
-                        <a href="https://www.beon-entertainment.com/forever-van-gogh/" target="_blank"><img src="https://www.beon-entertainment.com/newsletter/beon-entertainment/template/imagen/fvg.jpg" width="500" height="auto" alt="La Historia Interminable" style=" border:1px solid #EFC317; max-width: 500px; height: auto; margin: auto; display: block;" class="g-img"></a>
-                    </td>
-                </tr>
-                <!-- Hero Image, Flush : END -->
-
-                <!-- Hero Image, Flush : BEGIN -->
-                <tr>
-                    <td style="background-color: #050A30; padding: 10px;" align="center">
-                        <a href="https://www.beon-entertainment.com/shakespeare-97-minutos/" target="_blank"><img src="https://www.beon-entertainment.com/newsletter/beon-entertainment/template/imagen/shakespeare.jpg" width="500" height="auto" alt="La Historia Interminable" style=" border:1px solid #EFC317; max-width: 500px; height: auto; margin: auto; display: block;" class="g-img"></a>
-                    </td>
-                </tr>
-                <!-- Hero Image, Flush : END -->
-
-            </table>
-            <!-- Email Footer : END -->
-
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="max-width: 600px; background-color: #050A30;">
-
-                <!-- SEPARADOR : BEGIN -->
-                <tr>
-                    <td style="background-color: #050A30; padding: 20px 0;" align="center">
-                        <img src="https://www.beon-entertainment.com/newsletter/lhi/SEMANA-SANTA/auryn-(1)-(1).png" width="580" height="" alt="auryn" border="0" style="width: 580px; max-width: 580px; height: auto; background: #050A30; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto; display: block;" class="g-img">
-                    </td>
-                </tr>
-                <!-- SEPARADOR : END -->
-
-
-
-                <tr style="text-align: center;">
-                    <td style="padding:20px 0" align="center">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="450" align="center">
-                            <tr>
-                                <td style="font-family: sans-serif; line-height: 20px; color: #fff; text-align: center;" align="center">
-                                    <h4 style="margin:0px; font-size: 14px; line-height: 20px; color: #fff; font-weight: bold; font-family: 'Montserrat', sans-serif; text-align: center;">Síguenos en redes sociales y sé el primero en enterarte de nuestras novedades y promociones</h4>
-                                </td>
-                            </tr>
-                            <!-- REDES SOCIALES -->
-                            <tr>
-                                <td align="center">
-                                    <table align="center">
-                                        <tr style="text-align: center;">
-                                            <td style="padding:10px">
-                                                <a href="https://www.instagram.com/lahistoriainterminablemusical/" target="_blank"><img src="https://beon-entertainment.com/newsletter/lhi/template/rrss/instagram.png" alt="instagram" width="26"></a>
-                                            </td>
-                                            <td style="padding:10px">
-                                                <a href="https://www.facebook.com/lahistoriainterminablemusical" target="_blank"><img src="https://beon-entertainment.com/newsletter/lhi/template/rrss/facebook.png" alt="faebook" width="26"></a>
-                                            </td>
-                                            <td style="padding:10px">
-                                                <a href="https://www.tiktok.com/@lhimusical" target="_blank"><img src="https://beon-entertainment.com/newsletter/lhi/template/rrss/tiktok.png" alt="tiktok" width="26"></a>
-                                            </td>
-                                            <td style="padding:10px">
-                                                <a href="https://twitter.com/lhielmusical" target="_blank"><img src="https://beon-entertainment.com/newsletter/lhi/template/rrss/twitter.png" alt="twitter" width="26"></a>
-                                            </td>
-                                            <td style="padding:10px">
-                                                <a href="https://www.youtube.com/channel/UCnttpuWyRTngiZiVqJ9Ua1Q" target="_blank"><img src="https://beon-entertainment.com/newsletter/lhi/template/rrss/youtube.png" alt="YouTube" width="26"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <!-- REDES SOCIALES -->
-                        </table>
-                    </td>
-                </tr>
-
-                <!-- SEPARADOR : BEGIN -->
-                <tr>
-                    <td style="background-color: #050A30; padding: 20px 0;" align="center">
-                        <img src="https://www.beon-entertainment.com/newsletter/lhi/SEMANA-SANTA/auryn-(1)-(1).png" width="580" height="" alt="auryn" border="0" style="width: 580px; max-width: 580px; height: auto; background: #050A30; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto; display: block;" class="g-img">
-                    </td>
-                </tr>
-                <!-- SEPARADOR : END -->
-
-            </table>
-
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="max-width: 600px; background-color: #050A30; color:#fff">
-                <tr style="text-align: center;">
-                    <td style="padding:0" align="center">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="450" align="center">
-                            <tr>
-                                <td style="padding:0; font-family: sans-serif; font-size: 14px; background-color: #050A30; color:#fff" align="center">
-                                    <p>Copyright © 2023 beon. Entertainment<br>Todos los derechos reservados.</p>
-                                    <p>Recibes este correo porque te has suscrito a alguna de las newsletter de las producciones de beon. Entertainment</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td aria-hidden="true" height="30" style="font-size: 0; line-height: 0px;">
-                                  &nbsp;
-                                </td>
-                            </tr>
-                        </table>
+                    <td style="background-color: #3D72AB;" class="darkmode-bg">
+                        <img src="https://media.beonworldwide.com/newsletters/airbus/carteros_reales/footer.png" width="600" height="" alt="alt_text" border="0" style="width: 100%; height: auto; background: #3D72AB; margin: 0; display: block;">
                     </td>
                 </tr>
             </table>
+            <!-- Email Footer : END -->
 
             <!--[if mso]>
             </td>
@@ -490,7 +490,6 @@
             </table>
             <![endif]-->
         </div>
-
 
     <!--[if mso | IE]>
     </td>

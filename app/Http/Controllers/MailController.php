@@ -18,6 +18,7 @@ class MailController  extends Controller
     {
         // $order = Order::findOrFail($request->order_id);
         $email = $_POST['email'];
+
         // Ship the order...
 
         Mail::to($email)->send(new OrderShipped());

@@ -21,6 +21,9 @@ Route::get('/', function () {
 Route::get('/sending', function () {
     return view('sending');
 });
+Route::get('/rubik', function () {
+    return view('rubik');
+});
 
 
 

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Message;
 use Illuminate\Queue\SerializesModels;
 
 class OrderShipped extends Mailable
