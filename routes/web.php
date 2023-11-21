@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +19,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/sending', function () {
-    return view('sending');
-});
-Route::get('/rubik', function () {
-    return view('rubik');
-});
+// View Routes
+Route::view('/sending', 'sending');
+Route::view('/rubik', 'rubik');
 
 
 

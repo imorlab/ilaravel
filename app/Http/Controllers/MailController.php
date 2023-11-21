@@ -20,7 +20,6 @@ class MailController  extends Controller
         $email = $_POST['email'];
 
         // Ship the order...
-
         Mail::to($email)->send(new OrderShipped());
 
         return redirect('/sending');
