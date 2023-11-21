@@ -11,12 +11,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Colors
-$body-bg: #0c0009;
-$secondary: #d54040;
-$purple: #8a15ff;
-$blue: #3800e7;
-$ltblue: #15e0ff;
-$magenta: #d000c5;
+
 
 body {
     font-family: 'Source Code Pro', sans-serif;
@@ -121,14 +116,6 @@ body {
     -o-border-radius: 10px;
 }
 
-.card {
-    // height: 220px;
-    // width: 450px;
-    // border-radius: 10px;
-}
-
-
-
 .rubik {
     background: linear-gradient($blue, $purple);
     height: 100vh;
@@ -189,7 +176,8 @@ h2 {
         background: linear-gradient($secondary, $purple);
         align-self: flex-end;
         animation: gradient-fade 8s ease-in-out 3s infinite alternate;
-    }
+        -webkit-animation: gradient-fade 8s ease-in-out 3s infinite alternate;
+}
 
     &:after {
         $circle-unit: 10em;
@@ -200,7 +188,8 @@ h2 {
         border-radius: $circle-unit;
         background: linear-gradient($secondary, $purple);
         animation: gradient-fade-alt 6s ease-in-out 3s infinite alternate;
-    }
+        -webkit-animation: gradient-fade-alt 6s ease-in-out 3s infinite alternate;
+}
 
     &__text-wrapper {
         position: relative;
@@ -224,7 +213,8 @@ h2 {
             border-radius: $circle-unit;
             background: linear-gradient($secondary, $purple);
             animation: rotation 7s linear infinite;
-        }
+            -webkit-animation: rotation 7s linear infinite;
+}
 
         &:after {
             $circle-unit: 20em;
@@ -282,6 +272,7 @@ h2 {
     right: 0;
     opacity: 0.3;
     animation: rotation 38s linear infinite;
+    -webkit-animation: rotation 38s linear infinite;
 }
 
 // animations
@@ -289,6 +280,7 @@ h2 {
     stroke-dasharray: 1000;
     stroke-dashoffset: 10;
     animation: draw 15s ease-in-out alternate infinite;
+    -webkit-animation: draw 15s ease-in-out alternate infinite;
 }
 
 @keyframes draw {
@@ -325,43 +317,79 @@ h2 {
 @keyframes bounce-1 {
     0% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 
     50% {
         transform: translateY(50px);
-    }
+        -webkit-transform: translateY(50px);
+        -moz-transform: translateY(50px);
+        -ms-transform: translateY(50px);
+        -o-transform: translateY(50px);
+}
 
     100% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 }
 
 @keyframes bounce-2 {
     0% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 
     50% {
         transform: translateY(-30px);
-    }
+        -webkit-transform: translateY(-30px);
+        -moz-transform: translateY(-30px);
+        -ms-transform: translateY(-30px);
+        -o-transform: translateY(-30px);
+}
 
     100% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 }
 
 @keyframes bounce-3 {
     0% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 
     50% {
         transform: translateY(30px);
-    }
+        -webkit-transform: translateY(30px);
+        -moz-transform: translateY(30px);
+        -ms-transform: translateY(30px);
+        -o-transform: translateY(30px);
+}
 
     100% {
         transform: translateY(0);
-    }
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+}
 }
 
 // gradient fade
@@ -369,30 +397,54 @@ h2 {
 @keyframes rotation {
     from {
         transform: rotate(0deg);
-    }
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+}
 
     to {
         transform: rotate(360deg);
-    }
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+}
 }
 
 @keyframes gradient-fade {
     from {
         transform: translate(10%, -10%) rotate(0deg);
-    }
+        -webkit-transform: translate(10%, -10%) rotate(0deg);
+        -moz-transform: translate(10%, -10%) rotate(0deg);
+        -ms-transform: translate(10%, -10%) rotate(0deg);
+        -o-transform: translate(10%, -10%) rotate(0deg);
+}
 
     to {
         transform: translate(50%, -50%) rotate(360deg);
-    }
+        -webkit-transform: translate(50%, -50%) rotate(360deg);
+        -moz-transform: translate(50%, -50%) rotate(360deg);
+        -ms-transform: translate(50%, -50%) rotate(360deg);
+        -o-transform: translate(50%, -50%) rotate(360deg);
+}
 }
 
 @keyframes gradient-fade-alt {
     from {
         transform: translate(-20%, 20%) rotate(0deg);
-    }
+        -webkit-transform: translate(-20%, 20%) rotate(0deg);
+        -moz-transform: translate(-20%, 20%) rotate(0deg);
+        -ms-transform: translate(-20%, 20%) rotate(0deg);
+        -o-transform: translate(-20%, 20%) rotate(0deg);
+}
 
     to {
         transform: translate(-60%, 60%) rotate(360deg);
-    }
+        -webkit-transform: translate(-60%, 60%) rotate(360deg);
+        -moz-transform: translate(-60%, 60%) rotate(360deg);
+        -ms-transform: translate(-60%, 60%) rotate(360deg);
+        -o-transform: translate(-60%, 60%) rotate(360deg);
+}
 }
 
