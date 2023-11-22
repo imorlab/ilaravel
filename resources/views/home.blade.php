@@ -40,7 +40,7 @@
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
-                            <div class="card-body">
+                            <div class="card-body float-shadow">
                                 <img src="{{ asset('/icons/mail_96.png') }}" style="width: 84px;">
                                 <h4 class="card-title mt-2">Sending mail</h4>
                                 <p class="card-text">Do you want to send a newsletter?</p>
@@ -52,7 +52,7 @@
                     <a href="{{ '/rubik' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
-                            <div class="card-body">
+                            <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/rubik_96.png') }}" style="width: 84px;">
                                 <h4 class="card-title mt-2">Cubo Rubik</h4>
                                 <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
@@ -60,7 +60,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-6">
+                <div class="col-6 bubble-float-left">
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
@@ -72,7 +72,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-6">
+                <div class="col-6 float-shadow">
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
