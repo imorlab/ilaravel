@@ -53,10 +53,11 @@
                                 <option value="{{ __('rg@beonww.com') }}">
                                 <option value="{{ __('cci@beonww.com') }}">
                                 <option value="{{ __('gg@beonww.com') }}">
+                                <option value="{{ __('jo@beonww.com') }}">
                             </datalist>
-                            {{-- <div class="mt-3">
+                            <div class="mt-3">
                                 <textarea class="custom-border form-control" name="html" id="html" rows="3" placeholder="{{ __('Pega aquí tú html') }}"></textarea>
-                            </div> --}}
+                            </div>
                             <button type="submit" class="btn btn-register mt-3">{{ __('Enviar') }}</button>
                         </div>
                     </div>
