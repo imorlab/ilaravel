@@ -520,8 +520,10 @@ $shadowColour: rgba(0, 0, 0, .6);
 		transform: skew(-5deg);
 	}
 }
+
 /* Float Shadow */
 .float-shadow {
+
 	display: inline-block;
 	position: relative;
 	transition-duration: $defaultDuration;
@@ -532,18 +534,18 @@ $shadowColour: rgba(0, 0, 0, .6);
 	@include improveAntiAlias();
 
 	&:before {
-		pointer-events: none;
-	  position: absolute;
-	  z-index: -1;
-	  content: '';
-	  top: 100%;
-	  left: 5%;
-	  height: 10px;
-	  width: 90%;
-	  opacity: 0;
-	  background: radial-gradient(ellipse at center, rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 80%); /* W3C */
-		transition-duration: $defaultDuration;
-		transition-property: transform opacity;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+        content: '';
+        top: 100%;
+        left: 5%;
+        height: 10px;
+        width: 90%;
+        opacity: 0;
+        background: radial-gradient(ellipse at center, rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 80%); /* W3C */
+        transition-duration: $defaultDuration;
+        transition-property: transform opacity;
 	}
 
 	&:hover {
@@ -592,4 +594,21 @@ $tipColour: $primaryColour;
 	&:hover:before {
 		left: -($tipWidth);
 	}
+}
+
+.i-arrow-right {
+    visibility: hidden;
+    position: absolute;
+    right: 10px;
+    top: 60px;
+    transition: all 0.5s;
+    opacity: 0;
+    width: 100px;
+}
+
+.card-body:hover .i-arrow-right {
+    position: absolute;
+    visibility: visible;
+    right: 10px;
+    opacity: 1;
 }

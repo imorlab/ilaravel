@@ -40,10 +40,12 @@
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
-                            <div class="card-body float-shadow">
+                            <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/mail_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">Sending mail</h4>
-                                <p class="card-text">Do you want to send a newsletter?</p>
+                                <h4 class="card-title mt-2">{{ __('Sending mail') }}</h4>
+                                <p class="card-text">{{ __('Do you want to send a newsletter?') }}
+                                    <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
+                                </p>
                             </div>
                         </div>
                     </a>
@@ -54,32 +56,38 @@
 
                             <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/rubik_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">Cubo Rubik</h4>
-                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
+                                <h4 class="card-title mt-2">{{ __('Cubo Rubik') }}</h4>
+                                <p class="card-text">{{ __('Testing svg animations') }}
+                                    <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
+                                </p>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-6 bubble-float-left">
+                <div class="col-6">
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
-                            <div class="card-body">
+                            <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/new_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">New tool</h4>
-                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
+                                <h4 class="card-title mt-2">{{ __('New tool') }}</h4>
+                                <p class="card-text">{{ __('What do you want to do') }}
+                                    <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
+                                </p>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-6 float-shadow">
+                <div class="col-6">
                     <a href="{{ '/sending' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
-                            <div class="card-body">
+                            <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/toolbox_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">Tool Box</h4>
-                                <p class="card-text">Do you want to send a newsletter?<i class="bi bi-arrow-right"></i></p>
+                                <h4 class="card-title mt-2">{{ __('Tool Box') }}</h4>
+                                <p class="card-text">{{ __('Brainstorming') }}
+                                    <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
+                                </p>
                             </div>
                         </div>
                     </a>
