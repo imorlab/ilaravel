@@ -22,6 +22,6 @@ class MailController  extends Controller
         // Ship the order...
         Mail::to($email)->send(new OrderShipped());
 
-        return redirect('/sending');
+        return redirect('/home');
     }
 }
