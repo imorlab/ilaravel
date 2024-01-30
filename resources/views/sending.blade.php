@@ -65,7 +65,7 @@
             </form>
         </div>
 
-        <h5 class="text-center mt-2 hashtag" style="color: #d54040">#ImlBeonww2023</h5>
+        <h5 class="text-center mt-2 hashtag" style="color: #d54040">#ImlBeonww2024</h5>
 
         {{-- <button type="button" class="btn btn-outline-warning btn-circle text-center m-1"><i class="bi bi-arrow-left"></i></button> --}}
         <a href="{{ '/' }}" type="button" class="btn btn-outline-warning btn-circle"><i class="bi bi-house-fill"></i></a>
@@ -75,6 +75,8 @@
 </div>
 
 @push('scripts')
+
+@endpush
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -96,7 +98,5 @@
         });
 
     </script>
-
-@endpush
 
 @endsection
