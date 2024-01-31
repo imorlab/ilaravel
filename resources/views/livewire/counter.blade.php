@@ -8,7 +8,7 @@
 
             <button type="button" class="btn btn-outline-danger" wire:click="increment"><i class="bi bi-plus-lg"></i></button>
 
-            <button type="button" class="btn btn-outline-danger" wire:click="decrement">-</button>
+            <button type="button" class="btn btn-outline-danger" wire:click="decrement"><i class="bi bi-dash-lg"></i></button>
         </div>
     </div>
 </div>

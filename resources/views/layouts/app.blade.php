@@ -77,13 +77,6 @@
             @yield('content')
         </main>
     </div>
-    <div class="text-center">
-        <h5 class="text-center mt-2 hashtag" style="color: #d54040">#ImlBeonww2024</h5>
-
-        {{-- <button type="button" class="btn btn-outline-warning btn-circle text-center m-1"><i class="bi bi-arrow-left"></i></button> --}}
-        <a href="{{ '/' }}" type="button" class="btn btn-outline-warning btn-circle p-0"><i class="bi bi-house-fill p-0"></i></a>
-        {{-- <button type="button" class="btn btn-outline-warning btn-circle text-center m-1"><i class="bi bi-arrow-right"></i></button> --}}
-    </div>
 
     @livewireScripts
 </body>
