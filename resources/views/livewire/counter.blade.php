@@ -1,9 +1,14 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>{{ $title }}</h1>
 
-<div>
-    <h1>{{ $title }}</h1>
-    <h1>{{ $count }}</h1>
+            <h1>{{ $count }}</h1>
 
-    <button wire:click="increment">+</button>
 
-    <button wire:click="decrement">-</button>
+            <button type="button" class="btn btn-outline-danger" wire:click="increment"><i class="bi bi-plus-lg"></i></button>
+
+            <button type="button" class="btn btn-outline-danger" wire:click="decrement">-</button>
+        </div>
+    </div>
 </div>

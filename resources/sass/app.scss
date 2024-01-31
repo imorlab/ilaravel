@@ -618,23 +618,26 @@ $tipColour: $primaryColour;
 
 /* Translate Y Logo Livewire */
 
-.move-up {
-    position: absolute;
-    animation: 3s infinite alternate slidein;
+.floating {
+    animation-name: floating;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
-@keyframes slidein {
+@keyframes floating {
     from {
-      transition: 5px;
-      width: 100%;
-      -webkit-transition: 5px;
-      -moz-transition: 5px;
-      -ms-transition: 5px;
-      -o-transition: 5px;
-}
-
+        transform: translateY(0px);
+        -webkit-transform: translateY(0px);
+        -moz-transform: translateY(0px);
+        -ms-transform: translateY(0px);
+        -o-transform: translateY(0px);
+    }
     to {
-      transition: 45px;
-      width: 100%;
+        transform: translateY(20px);
+        -webkit-transform: translateY(20px);
+        -moz-transform: translateY(20px);
+        -ms-transform: translateY(20px);
+        -o-transform: translateY(20px);
     }
   }
