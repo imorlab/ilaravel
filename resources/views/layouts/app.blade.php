@@ -14,6 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Source+Code+Pro" rel="stylesheet">
 
     <!-- Scripts -->
+    @livewireStyles
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="m-0 vh-100 row justify-content-center align-items-center">
@@ -76,5 +77,6 @@
             @yield('content')
         </main>
     </div>
+    @livewireScripts
 </body>
 </html>

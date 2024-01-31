@@ -65,13 +65,13 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="{{ '/sending' }}" class="text-decoration-none">
+                    <a href="{{ '/counter' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/new_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">{{ __('New tool') }}</h4>
-                                <p class="card-text">{{ __('What do you want to do') }}
+                                <h4 class="card-title mt-2">{{ __('Counter') }}</h4>
+                                <p class="card-text">{{ __('Actualiza en tiempo real. Ésta es la magia de Livewire: aplicaciones frontend dinámicas escritas íntegramente en PHP.') }}
                                     <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
                                 </p>
                             </div>

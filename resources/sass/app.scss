@@ -9,6 +9,9 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
+// AnimateCSS
+@import "animate.css/animate";
+
 // Colors
 
 
@@ -612,3 +615,26 @@ $tipColour: $primaryColour;
     right: 10px;
     opacity: 1;
 }
+
+/* Translate Y Logo Livewire */
+
+.move-up {
+    position: absolute;
+    animation: 3s infinite alternate slidein;
+}
+
+@keyframes slidein {
+    from {
+      transition: 5px;
+      width: 100%;
+      -webkit-transition: 5px;
+      -moz-transition: 5px;
+      -ms-transition: 5px;
+      -o-transition: 5px;
+}
+
+    to {
+      transition: 45px;
+      width: 100%;
+    }
+  }
