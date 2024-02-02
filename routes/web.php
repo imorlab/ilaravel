@@ -34,4 +34,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Counter
-Route::get('/counter', [App\Http\Controllers\HomeController::class, 'counter'])->name('counter');
+Route::get('/todo', [App\Http\Controllers\HomeController::class, 'todo'])->name('todo');

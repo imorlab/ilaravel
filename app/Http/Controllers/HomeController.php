@@ -26,8 +26,8 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function counter()
+    public function todo()
     {
-        return view('/counter');
+        return view('/todoList');
     }
 }
