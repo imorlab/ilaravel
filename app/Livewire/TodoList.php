@@ -37,11 +37,7 @@ class TodoList extends Component
     }
 
     function editTodo(Todo $todo){
-        $todo = Todo::find($todo->id);
-        $todo->task = $this->task;
-        $todo->save();
-        $this->task = '';
-        $this->fetchTodos();
+
     }
 
     function remove(Todo $todo){
