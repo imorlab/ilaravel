@@ -70,8 +70,8 @@
 
                             <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/new_96.png') }}" style="width: 84px;">
-                                <h4 class="card-title mt-2">{{ __('Todo List') }}</h4>
-                                <p class="card-text">{{ __('Actualiza en tiempo real. Ésta es la magia de Livewire: aplicaciones frontend dinámicas escritas íntegramente en PHP.') }}
+                                <h4 class="card-title mt-2">{{ __('To Do: Lists & Tasks') }}</h4>
+                                <p class="card-text">{{ __('Planear tu día y administrar tu vida.') }}
                                     <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
                                 </p>
                             </div>

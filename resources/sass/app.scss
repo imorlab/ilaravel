@@ -18,6 +18,7 @@
 body {
     font-family: 'Source Code Pro', sans-serif;
     background-color: $body-bg;
+    background: linear-gradient(180deg, rgba(31,27,27,1) 70%, rgba(61,11,70,1) 100%);
     font-size: $font-size-base;
     line-height: $line-height-base;
 }
@@ -59,7 +60,7 @@ body {
 
     &.custom-border {
         border: 2px solid $secondary;
-        /* Reemplaza "$light-green-amway" con tu color personalizado */
+        /* Reemplaza "#FF0000" con tu color personalizado */
         border-radius: 4px;
         /* Opcional: Añadir esquinas redondeadas */
 
@@ -76,7 +77,7 @@ body {
 
         &:focus::placeholder {
             color: $secondary;
-            /* Reemplaza "$green-amway" con tu color personalizado */
+            /* Reemplaza "#FFFFFF" con tu color personalizado */
             font-weight: bold;
         }
 
@@ -84,7 +85,7 @@ body {
         select.custom-border {
             option:disabled {
                 color: $primary;
-                /* Reemplaza "$green-amway" con el color deseado para las opciones deshabilitadas */
+                /* Reemplaza "#FFFFFF" con el color deseado para las opciones deshabilitadas */
             }
         }
     }
