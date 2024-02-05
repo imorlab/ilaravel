@@ -20,7 +20,6 @@
 <body class="m-0 vh-100 row justify-content-center align-items-center">
 
     <div id="app">
-
         {{-- <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -80,7 +79,6 @@
             @yield('content')
 
         </main>
-
     </div>
 
     @livewireScripts
