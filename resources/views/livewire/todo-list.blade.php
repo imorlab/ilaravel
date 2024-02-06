@@ -42,6 +42,23 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            @foreach($todos as $todo)
+            <div class="col-sm-6">
+              <div class="card border-dark bg-dark bg-gradient m-2 text-danger">
+                <div class="card-body">
+                    <p class="card-text"><input class="form-check-input me-1" type="checkbox" value="open" id="markAsDone-{{ $todo->id }}" wire:change="markAsDone({{ $todo->id }})"></p>
+                  <h5 class="card-title"><label class="form-check-label" for="markAsDone-{{ $todo->id }}" style="{{ ($todo->status == 'done')?'text-decoration: line-through':'' }}">
+                    {{ $todo->task }}
+                </label></h5>
+                  <button wire:click="edit({{ $todo->id }})" type="button" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></button>
+                                <button wire:click="delete({{ $todo->id }})" type="button" class="btn btn-outline-warning"><i class="bi bi-trash3"></i></button>
+                </div>
+              </div>
+            </div>
+            @endforeach
+        </div>
     </div>
 </div>
 
