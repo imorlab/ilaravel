@@ -71,7 +71,7 @@
                             <div class="card-body bubble-float-left">
                                 <img src="{{ asset('/icons/new_96.png') }}" style="width: 84px;">
                                 <h4 class="card-title mt-2">{{ __('To Do: Lists & Tasks') }}</h4>
-                                <p class="card-text">{{ __('Planear tu día y administrar tu vida.') }}
+                                <p class="card-text">{{ __('Planea tu día y administra tu vida.') }}
                                     <img src="{{ asset('/icons/arrow_R96.png') }}" class="i-arrow-right" style="width: 50px;">
                                 </p>
                             </div>
@@ -79,7 +79,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="{{ '/sending' }}" class="text-decoration-none">
+                    <a href="{{ '/post' }}" class="text-decoration-none">
                         <div class="card p-3 text-white bg-dark bg-gradient mb-3">
 
                             <div class="card-body bubble-float-left">

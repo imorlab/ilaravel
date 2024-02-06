@@ -30,4 +30,9 @@ class HomeController extends Controller
     {
         return view('/todoList');
     }
+
+    public function post()
+    {
+        return view('/post');
+    }
 }

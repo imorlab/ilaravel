@@ -7,10 +7,19 @@
         <div class="col-auto floating text-center mb-5">
             <img src="{{ asset('/img/underwater_jelly.svg') }}" class="img-fluid ms-auto me-auto d-block mb-1">
         </div>
-
-        @livewire('todo-list')
-
-
+        <div class="">
+            <div class=" text-center">
+                <h2>To & Do List</h2>
+            </div>
+            <div class="">
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+                @livewire('todo-list')
+            </div>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col text-center mt-5">

@@ -8,45 +8,73 @@ use App\Models\Todo;
 class TodoList extends Component
 {
 
-    public $todos;
-    public $task = '';
+    public $todos, $task, $status, $todo_id;
+    public $updateMode = false;
 
-    public function mount()
+    public function render()
     {
-        $this->fetchTodos();
+        $this->todos = Todo::latest()->get();
+        return view('livewire.todo-list');
     }
 
-    function fetchTodos(){
-        $this->todos = Todo::all()->reverse();
+    private function resetInputFields(){
+        $this->task = '';
+        $this->status = '';
     }
 
-    function addTodo(){
-        if($this->task != ''){
-            $todo = new Todo();
-            $todo->task = $this->task;
-            $todo->save();
-            $this->task = '';
-            $this->fetchTodos();
-        }
+    public function store()
+    {
+        $validatedDate = $this->validate([
+            'task' => 'required',
+        ]);
+
+        Todo::create($validatedDate);
+
+        session()->flash('message', 'Task Created Successfully.');
+
+        $this->resetInputFields();
+    }
+
+    public function edit($id)
+    {
+        $todo = Todo::findOrFail($id);
+        $this->todo_id = $id;
+        $this->task = $todo->task;
+
+        $this->updateMode = true;
+    }
+
+    public function cancel()
+    {
+        $this->updateMode = false;
+        $this->resetInputFields();
+    }
+
+    public function update()
+    {
+        $validatedDate = $this->validate([
+            'task' => 'required',
+        ]);
+
+        $todo = Todo::findOrFail($this->todo_id);
+        $todo->update($validatedDate);
+
+        session()->flash('message', 'Task Updated Successfully.');
+
+        $this->updateMode = false;
+        $this->resetInputFields();
+    }
+
+    public function delete($id)
+    {
+        Todo::find($id)->delete();
+        session()->flash('message', 'Task Deleted Successfully.');
     }
 
     function markAsDone(Todo $todo){
         $todo->status = 'done';
         $todo->save();
-        $this->fetchTodos();
+        $this->resetInputFields();
     }
 
-    function editTodo(Todo $todo){
-
-    }
-
-    function remove(Todo $todo){
-        $todo->delete();
-        $this->fetchTodos();
-    }
-
-    public function render()
-    {
-        return view('livewire.todo-list');
-    }
 }

@@ -35,3 +35,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Counter
 Route::get('/todo', [App\Http\Controllers\HomeController::class, 'todo'])->name('todo');
+
+// Posts
+Route::get('/post', [App\Http\Controllers\HomeController::class, 'post'])->name('post');
