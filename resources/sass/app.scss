@@ -19,6 +19,7 @@ body {
     font-family: 'Source Code Pro', sans-serif;
     background-color: $body-bg;
     background: linear-gradient(180deg, rgba(31,27,27,1) 70%, rgba(61,11,70,1) 100%);
+    background-attachment: fixed;
     font-size: $font-size-base;
     line-height: $line-height-base;
 }

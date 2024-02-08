@@ -2,7 +2,7 @@ APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:0U655gQg3agBU7wRCy94C2j9qMxs/5j5gyiQS0oCQiA=
 APP_DEBUG=true
-APP_URL=http://ilaravel.test
+APP_URL=http://localhost
 
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null
@@ -32,7 +32,7 @@ REDIS_PORT=6379
 # SENDGRID
 ###########################################################
 MAIL_HOST=smtp.sendgrid.net
-MAIL_PORT=587
+MAIL_PORT=465
 MAIL_USERNAME=apikey
 MAIL_PASSWORD=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
 MAIL_ENCRYPTION=tls
