@@ -29,7 +29,7 @@
             </g>
         </svg>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-8">
             <div class="col-auto text-center mb-5">
                 <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">

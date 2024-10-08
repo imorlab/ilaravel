@@ -13,11 +13,12 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Source+Code+Pro" rel="stylesheet">
 
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
     <!-- Scripts -->
     @livewireStyles
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="m-0 vh-100 row justify-content-center align-items-center">
+<body>
 
     <div id="app">
         {{-- <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
@@ -74,7 +75,7 @@
             </div>
         </nav> --}}
 
-        <main class="py-4">
+        <main>
 
             @yield('content')
 
@@ -82,5 +83,7 @@
     </div>
 
     @livewireScripts
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
 </body>
 </html>

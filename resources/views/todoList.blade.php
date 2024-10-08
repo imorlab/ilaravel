@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-auto floating text-center mb-5">
+        <div class="col-auto floating text-center my-3">
             <img src="{{ asset('/img/underwater_jelly.svg') }}" class="img-fluid ms-auto me-auto d-block mb-1">
         </div>
         <div class="">

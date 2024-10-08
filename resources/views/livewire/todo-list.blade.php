@@ -1,67 +1,96 @@
-<div class="row justify-content-center">
-    <div class="col-md-6 mb-3">
-        {{-- Nothing in the world is as soft and yielding as water. --}}
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
-
-        @if($updateMode)
-            @include('livewire.update')
-        @else
-            @include('livewire.create')
-        @endif
-
-        <table class="table table-dark table-hover table-borderless align-middle mt-5">
-            {{-- <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Title</th>
-                    <th width="100px">Action</th>
-                </tr>
-            </thead> --}}
-            <tbody>
-                @foreach($todos as $todo)
-                    <tr>
-                        <td width="50px">
-                            <input class="form-check-input me-1" type="checkbox" value="open" id="markAsDone-{{ $todo->id }}" wire:change="markAsDone({{ $todo->id }})">
-                        </td>
-                        <td>
-                            <label class="form-check-label" for="markAsDone-{{ $todo->id }}" style="{{ ($todo->status == 'done')?'text-decoration: line-through':'' }}">
-                                {{ $todo->task }}
-                            </label>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <button wire:click="edit({{ $todo->id }})" type="button" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></button>
-                                <button wire:click="delete({{ $todo->id }})" type="button" class="btn btn-outline-warning"><i class="bi bi-trash3"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <div class="row">
-            @foreach($todos as $todo)
-            <div class="col-sm-6">
-                <div class="card border-dark bg-dark bg-gradient m-2 text-light">
-                    <div class="card-body">
-                        <input class="form-check-input me-1" type="checkbox" value="open" id="markAsDone-{{ $todo->id }}" wire:change="markAsDone({{ $todo->id }})">
-                        <label class="form-check-label" for="markAsDone-{{ $todo->id }}" style="{{ ($todo->status == 'done')?'text-decoration: line-through':'' }}">
-                            {{ $todo->task }}
-                        </label>
+<div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-8 mb-3">
+                <form wire:submit.prevent="store">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control custom-border" placeholder="New Task..." wire:model="task">
+                        @error('task') <span class="text-danger">{{ $message }}</span> @enderror
+                        <button type="submit" class="btn btn-danger">Add</button>
                     </div>
-                    <div class="card-footer text-end">
-                        <i wire:click="edit({{ $todo->id }})" class="bi bi-pencil-square text-warning"></i>
-                        <i wire:click="delete({{ $todo->id }})" class="bi bi-trash3 text-danger"></i>
+                </form>
+            </div>
+        </div>
+
+        <!-- Columnas de tareas -->
+        <div class="row">
+            <!-- Columna To Do -->
+            <div class="col-md-3">
+                <div class="card bg-dark text-light mb-3">
+                    <div class="card-header text-center fs-5">🌟 To Do</div>
+                    <hr class="m-0">
+                    <ul class="list-group list-group-flush task-list" wire:sortable="updateTaskOrder" wire:sortable-group="toDoGroup">
+                        @foreach($todos->where('status', 'open') as $todo)
+                            <li class="list-group-item bg-info rounded rounded-3 m-2 text-dark" wire:sortable.item="{{ $todo->id }}" wire:key="todo-{{ $todo->id }}">
+                                <p>{{ $todo->task }}</p>
+                                <div wire:sortable.handle>
+                                    <i class="bi bi-grip-horizontal" style="cursor: move;"></i>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Doing -->
+            <div class="col-md-3">
+                <div class="card bg-dark text-light mb-3">
+                    <div class="card-header text-center fs-5">💫 Doing</div>
+                    <hr class="m-0">
+                    <ul class="list-group list-group-flush task-list" wire:sortable="updateTaskOrder" wire:sortable-group="doingGroup">
+                        @foreach($todos->where('status', 'doing') as $todo)
+                            <li class="list-group-item bg-warning rounded rounded-3 m-2 text-light" wire:sortable.item="{{ $todo->id }}" wire:key="doing-{{ $todo->id }}">
+                                <p>{{ $todo->task }}</p>
+                                <div wire:sortable.handle>
+                                    <i class="bi bi-grip-horizontal" style="cursor: move;"></i>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Done -->
+            <div class="col-md-3">
+                <div class="card bg-dark text-light mb-3">
+                    <div class="card-header text-center fs-5">🏆 Done</div>
+                    <hr class="m-0">
+                    <ul class="list-group list-group-flush task-list" wire:sortable="updateTaskOrder" wire:sortable-group="doneGroup">
+                        @foreach($todos->where('status', 'done') as $todo)
+                            <li class="list-group-item bg-success rounded rounded-3 m-2 text-light" wire:sortable.item="{{ $todo->id }}" wire:key="done-{{ $todo->id }}">
+                                <p>{{ $todo->task }}</p>
+                                <div wire:sortable.handle>
+                                    <i class="bi bi-grip-horizontal" style="cursor: move;"></i>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Trash -->
+            <div class="col-md-3">
+                <div class="card bg-dark text-light mb-3">
+                    <div class="card-header text-center fs-5">❌ Trash</div>
+                    <hr class="m-0">
+                    <ul class="list-group list-group-flush task-list" wire:sortable="updateTaskOrder" wire:sortable-group="trashGroup">
+                        @foreach($todos->where('status', 'trash') as $todo)
+                            <li class="list-group-item bg-dark text-light" wire:sortable.item="{{ $todo->id }}" wire:key="trash-{{ $todo->id }}">
+                                <p>{{ $todo->task }}</p>
+                                <div wire:sortable.handle>
+                                    <i class="bi bi-grip-horizontal" style="cursor: move;"></i>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="text-center my-2">
+                        <button class="btn btn-danger" wire:click="emptyTrash">Delete</button>
                     </div>
                 </div>
             </div>
-            @endforeach
+
+
         </div>
     </div>
+
 </div>
-
-
