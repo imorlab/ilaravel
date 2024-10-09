@@ -3,99 +3,109 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use App\Models\Todo;
 
 class TodoList extends Component
 {
+    use LivewireAlert;
+
     public $todos = [];
     public $task, $status, $todo_id;
     public $updateMode = false;
     protected $listeners = ['updateTaskOrder'];
 
+    public function mount()
+    {
+        $this->todos = Todo::orderBy('status')->orderBy('order')->get();
+        return view('livewire.todo-list', ['todos' => $this->todos]);
+    }
+
     public function render()
     {
-        $this->todos = Todo::latest()->get();
+        $this->todos = Todo::orderBy('status')->orderBy('order')->get();
         return view('livewire.todo-list');
     }
 
     private function resetInputFields()
     {
-        $this->task = '';
-        $this->status = '';
-        $this->todo_id = null; // Reiniciar el ID de la tarea
+        $this->task = $this->status = '';
+        $this->todo_id = null;
     }
 
     public function store()
     {
-        $validatedData = $this->validate([
+        $this->validate([
             'task' => 'required|string|max:255',
         ]);
 
-        Todo::create($validatedData + ['status' => 'open']); // Establecer el estado inicial
+        Todo::create([
+            'task' => $this->task,
+            'status' => 'open'
+        ]);
 
         session()->flash('message', 'Task Created Successfully.');
-
         $this->resetInputFields();
     }
 
-    public function edit($id)
+
+    public function updateTaskOrder($data)
     {
-        $todo = Todo::findOrFail($id);
-        $this->todo_id = $id;
-        $this->task = $todo->task;
 
-        $this->updateMode = true;
-    }
-
-    public function cancel()
-    {
-        $this->updateMode = false;
-        $this->resetInputFields();
-    }
-
-    public function update()
-    {
-        $validatedData = $this->validate([
-            'task' => 'required|string|max:255',
-        ]);
-
-        $todo = Todo::findOrFail($this->todo_id);
-        $todo->update($validatedData);
-
-        session()->flash('message', 'Task Updated Successfully.');
-
-        $this->updateMode = false;
-        $this->resetInputFields();
-    }
-
-    public function delete($id)
-    {
-        Todo::find($id)->delete();
-        session()->flash('message', 'Task Deleted Successfully.');
-    }
-
-    public function markAsDone(Todo $todo)
-    {
-        $todo->status = 'done';
-        $todo->save();
-        $this->resetInputFields();
-    }
-
-    public function updateTaskOrder($taskId, $newStatus)
-    {
-        $todo = Todo::find($taskId);
-
-        if ($todo) {
-            // Actualiza el estado de la tarea según su nueva posición
-            $todo->status = $newStatus; // 'open', 'doing', 'done', 'trash'
-            $todo->save();
-            session()->flash('message', 'Task status updated to ' . $newStatus);
+        $newOrder = [];
+        foreach ($data as $item) {
+            $newOrder[] = $item['value'];
         }
+
+        // Evitar duplicados (iOS)
+        $newOrder = array_unique($newOrder);
+
+        foreach ($newOrder as $index => $todoId) {
+            $todo = Todo::find($todoId);
+
+            if ($todo) {
+                $todo->update([
+                    'order' => $index,
+                ]);
+            }
+        }
+
+        $this->mount();
 
         $this->alert('success', __('¡Hecho!'), [
             'position' => 'center',
             'timer' => 1000,
         ]);
     }
+
+    public function getTaskClass($status)
+    {
+        return match ($status) {
+            'trash' => 'bg-danger text-light',
+            'done' => 'bg-success text-light',
+            'doing' => 'bg-warning text-dark',
+            default => 'bg-info text-dark',
+        };
+    }
+
+    public function delete()
+    {
+
+        $todo = Todo::where('status', 'trash')->first();
+        if ($todo){
+            $todo->delete();
+        }
+
+        $this->mount();
+
+        $this->alert('error', __('Eliminada!'), [
+            'position' => 'center',
+            'timer' => 1000,
+        ]);
+
+    }
+
+
 
 }
