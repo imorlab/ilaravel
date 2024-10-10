@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('todos', function (Blueprint $table) {
-            // $table->dropColumn('order');
-            $table->integer('order')->nullable()->after('status');
-            $table->integer('group')->nullable()->after('order');
+            $table->boolean('is_paused')->default(false)->comment('Indicates if the task is paused');
         });
     }
 
@@ -24,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->dropColumn('order');
+            $table->dropColumn('is_paused');
         });
     }
 };

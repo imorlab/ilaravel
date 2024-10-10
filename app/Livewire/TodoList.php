@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
 use App\Models\Todo;
 
 class TodoList extends Component
@@ -14,17 +13,23 @@ class TodoList extends Component
     public $todos = [];
     public $task, $status, $todo_id;
     public $updateMode = false;
-    protected $listeners = ['updateTaskOrder'];
+
+    protected $listeners = [
+        'updateTaskStatus' => 'updateTaskStatus',
+        'updateTimeSpent' => 'updateTimeSpent',
+        'stopTask' => 'stopTask',
+        'pauseTask' => 'pauseTask',
+        'resumeTask' => 'resumeTask'
+    ];
 
     public function mount()
     {
-        $this->todos = Todo::orderBy('status')->orderBy('order')->get();
-        return view('livewire.todo-list', ['todos' => $this->todos]);
+        $this->loadTodos();
     }
 
     public function render()
     {
-        $this->todos = Todo::orderBy('status')->orderBy('order')->get();
+        $this->todos = Todo::orderBy('order')->get();
         return view('livewire.todo-list');
     }
 
@@ -32,6 +37,11 @@ class TodoList extends Component
     {
         $this->task = $this->status = '';
         $this->todo_id = null;
+    }
+
+    private function loadTodos()
+    {
+        $this->todos = Todo::orderBy('order')->get();
     }
 
     public function store()
@@ -45,44 +55,89 @@ class TodoList extends Component
             'status' => 'open'
         ]);
 
-        session()->flash('message', 'Task Created Successfully.');
         $this->resetInputFields();
+        $this->loadTodos();
+        $this->alert('success', 'Task Created Successfully.', ['position' => 'center', 'timer' => 1000]);
     }
 
-
-    public function updateTaskOrder($data)
+    public function updateTaskStatus($taskId, $newStatus)
     {
+        $todo = Todo::find($taskId);
+        if ($todo) {
+            $todo->update(['status' => $newStatus]);
 
-        $newOrder = [];
-        foreach ($data as $item) {
-            $newOrder[] = $item['value'];
-        }
-
-        // Evitar duplicados (iOS)
-        $newOrder = array_unique($newOrder);
-
-        foreach ($newOrder as $index => $todoId) {
-            $todo = Todo::find($todoId);
-
-            if ($todo) {
-                $todo->update([
-                    'order' => $index,
-                ]);
+            $tasksInNewStatus = Todo::where('status', $newStatus)->orderBy('order')->get();
+            foreach ($tasksInNewStatus as $index => $task) {
+                $task->update(['order' => $index]);
             }
+
+            $this->loadTodos();
         }
+    }
 
-        $this->mount();
+    public function updateTimeSpent($taskId, $timeSpent)
+    {
+        $todo = Todo::find($taskId);
+        if ($todo) {
+            list($hours, $minutes, $seconds) = explode(':', $timeSpent);
+            $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
 
-        $this->alert('success', __('¡Hecho!'), [
-            'position' => 'center',
-            'timer' => 1000,
-        ]);
+            $todo->update(['time_spent' => $totalSeconds]);
+
+            $this->alert('success', 'Tiempo registrado con éxito', [
+                'position' => 'center',
+                'timer' => 1000,
+            ]);
+        }
+    }
+
+    public function pauseTask($taskId, $timeSpent)
+    {
+        $todo = Todo::find($taskId);
+        if ($todo) {
+            $todo->update([
+                'time_spent' => $timeSpent,
+                'is_paused' => true
+            ]);
+        }
+    }
+
+    public function resumeTask($taskId)
+    {
+        $todo = Todo::find($taskId);
+        if ($todo) {
+            $todo->update([
+                'is_paused' => false,
+                'last_started_at' => now()
+            ]);
+        }
+    }
+
+    public function stopTask($taskId, $timeSpent)
+    {
+        $todo = Todo::find($taskId);
+        if ($todo) {
+            list($hours, $minutes, $seconds) = explode(':', $timeSpent);
+            $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+            $todo->update([
+                'time_spent' => $totalSeconds,
+                'is_paused' => false,
+                'last_started_at' => null
+            ]);
+
+            $this->alert('success', 'Tiempo registrado con éxito', [
+                'position' => 'center',
+                'timer' => 1000,
+            ]);
+
+        }
     }
 
     public function getTaskClass($status)
     {
         return match ($status) {
-            'trash' => 'bg-danger text-light',
+            'trash' => 'bg-dark border-1 text-light',
             'done' => 'bg-success text-light',
             'doing' => 'bg-warning text-dark',
             default => 'bg-info text-dark',
@@ -91,21 +146,22 @@ class TodoList extends Component
 
     public function delete()
     {
-
-        $todo = Todo::where('status', 'trash')->first();
-        if ($todo){
-            $todo->delete();
-        }
-
-        $this->mount();
+        Todo::where('status', 'trash')->delete();
+        $this->loadTodos();
 
         $this->alert('error', __('Eliminada!'), [
             'position' => 'center',
             'timer' => 1000,
         ]);
-
     }
 
+    public function getFormattedTimeSpentAttribute()
+    {
+        $hours = floor($this->time_spent / 3600);
+        $minutes = floor(($this->time_spent % 3600) / 60);
+        $seconds = $this->time_spent % 60;
 
-
+        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    }
 }
+
