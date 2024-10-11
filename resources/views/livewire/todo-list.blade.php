@@ -28,11 +28,12 @@
                             draggable="true" ondragstart="drag(event)" id="task-{{ $todo->id }}" data-id="{{ $todo->id }}">
                             <div class="d-flex">
                                 <i class="bi bi-grip-vertical fs-3 m-0 p-0" style="cursor: move;"></i>
-                                <p>{{ $todo->task }}</p>
+                                <p class="pt-2">{{ $todo->task }}</p>
                             </div>
                             @if($todo->status === 'doing' || $todo->status === 'done')
                             <div class="text-end">
-                                <span class="fs-5" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}"> {{ $todo->time_spent ? $todo->formatted_time_spent : '00:00:00' }} </span>
+                                <span class="fs-5" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}" wire:ignore>00:00:00</span>
+
                                 @if ($todo->status === 'doing')
                                     <button class="btn btn-sm btn-success" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}">
                                         {{ $todo->is_paused ? 'Pause' : 'Play' }}
@@ -98,10 +99,19 @@
         }
 
         function startTimer(taskId) {
-            const startTime = new Date().getTime() - (pausedTimes[taskId] * 1000);
+            // Verificar que pausedTimes[taskId] es un número válido, si no lo es, inicializarlo a 0
+            if (isNaN(pausedTimes[taskId])) {
+                pausedTimes[taskId] = 0;
+            }
+
+            const startTime = new Date().getTime();
+
             timers[taskId] = setInterval(() => {
                 const elapsed = Math.floor((new Date().getTime() - startTime) / 1000);
-                document.getElementById(`timer-${taskId}`).textContent = formatTime(elapsed);
+                const totalElapsed = pausedTimes[taskId] + elapsed;
+
+                // Asegurarse de que siempre se muestra un valor de tiempo válido
+                document.getElementById(`timer-${taskId}`).textContent = formatTime(totalElapsed);
             }, 1000);
         }
 
@@ -127,6 +137,8 @@
 
             pausedTimes[taskId] = convertTimeToSeconds(timeSpent);
 
+            timerElement.textContent = formatTime(pausedTimes[taskId]);
+
             window.dispatchEvent(new CustomEvent('updateTimeSpent', {
                 detail: {
                     taskId: taskId,
@@ -134,6 +146,7 @@
                 }
             }));
         }
+
 
         function formatTime(seconds) {
             const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');

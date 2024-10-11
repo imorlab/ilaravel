@@ -29,7 +29,7 @@ class TodoList extends Component
 
     public function render()
     {
-        $this->todos = Todo::orderBy('order')->get();
+        // $this->todos = Todo::orderBy('order')->get();
         return view('livewire.todo-list');
     }
 
@@ -79,13 +79,19 @@ class TodoList extends Component
     {
         $todo = Todo::find($taskId);
         if ($todo) {
-            list($hours, $minutes, $seconds) = explode(':', $timeSpent);
+            $parts = explode(':', $timeSpent);
+            $hours = isset($parts[0]) ? (int)$parts[0] : 0;
+            $minutes = isset($parts[1]) ? (int)$parts[1] : 0;
+            $seconds = isset($parts[2]) ? (int)$parts[2] : 0;
+
             $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
 
             $todo->update(['time_spent' => $totalSeconds]);
 
+            $this->loadTodos();
+
             $this->alert('success', 'Tiempo registrado con éxito', [
-                'position' => 'center',
+                'position' => 'top-end',
                 'timer' => 1000,
             ]);
         }
@@ -117,7 +123,11 @@ class TodoList extends Component
     {
         $todo = Todo::find($taskId);
         if ($todo) {
-            list($hours, $minutes, $seconds) = explode(':', $timeSpent);
+            $parts = explode(':', $timeSpent);
+            $hours = isset($parts[0]) ? (int)$parts[0] : 0;
+            $minutes = isset($parts[1]) ? (int)$parts[1] : 0;
+            $seconds = isset($parts[2]) ? (int)$parts[2] : 0;
+
             $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
 
             $todo->update([
@@ -127,7 +137,7 @@ class TodoList extends Component
             ]);
 
             $this->alert('success', 'Tiempo registrado con éxito', [
-                'position' => 'center',
+                'position' => 'top-end',
                 'timer' => 1000,
             ]);
 
@@ -150,7 +160,7 @@ class TodoList extends Component
         $this->loadTodos();
 
         $this->alert('error', __('Eliminada!'), [
-            'position' => 'center',
+            'position' => 'top-end',
             'timer' => 1000,
         ]);
     }
