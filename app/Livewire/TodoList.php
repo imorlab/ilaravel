@@ -11,7 +11,7 @@ class TodoList extends Component
     use LivewireAlert;
 
     public $todos = [];
-    public $task, $status, $todo_id;
+    public $task, $status, $todo_id, $time_spent, $paused = true;
     public $updateMode = false;
 
     protected $listeners = [
@@ -29,8 +29,11 @@ class TodoList extends Component
 
     public function render()
     {
-        // $this->todos = Todo::orderBy('order')->get();
-        return view('livewire.todo-list');
+
+        return view('livewire.todo-list', [
+            'todos' => $this->todos,
+            'paused' => $this->paused
+        ]);
     }
 
     private function resetInputFields()
@@ -132,7 +135,7 @@ class TodoList extends Component
 
             $todo->update([
                 'time_spent' => $totalSeconds,
-                'is_paused' => false,
+                'is_paused' => true,
                 'last_started_at' => null
             ]);
 
@@ -165,11 +168,11 @@ class TodoList extends Component
         ]);
     }
 
-    public function getFormattedTimeSpentAttribute()
+    public function formattedTimeSpent($seconds)
     {
-        $hours = floor($this->time_spent / 3600);
-        $minutes = floor(($this->time_spent % 3600) / 60);
-        $seconds = $this->time_spent % 60;
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
 
         return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
     }

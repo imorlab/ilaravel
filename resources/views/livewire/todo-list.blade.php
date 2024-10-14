@@ -31,14 +31,15 @@
                                 <p class="pt-2">{{ $todo->task }}</p>
                             </div>
                             @if($todo->status === 'doing' || $todo->status === 'done')
+
                             <div class="text-end">
-                                <span class="fs-5" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}" wire:ignore>00:00:00</span>
+                                <span class="fs-5" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}">{{ $this->formattedTimeSpent($todo->time_spent) }}</span>
 
                                 @if ($todo->status === 'doing')
-                                    <button class="btn btn-sm btn-success" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}">
-                                        {{ $todo->is_paused ? 'Pause' : 'Play' }}
+                                    <button class="btn btn-sm btn-success py-0" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}" wire:ignore>
+                                        <i class="bi {{ $todo->is_paused ? 'bi-pause' : 'bi-play-fill' }} fs-4"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger" onclick="stopTimer({{ $todo->id }})">Stop</button>
+                                    <button class="btn btn-sm btn-secondary py-0" onclick="stopTimer({{ $todo->id }})" wire:ignore><i class="bi bi-floppy fs-4"></i></button>
                                 @endif
                             </div>
                             @endif
@@ -118,22 +119,33 @@
         function pauseTimer(taskId) {
             const timerElement = document.getElementById(`timer-${taskId}`);
             const button = document.getElementById(`pause-${taskId}`);
+            const isPaused = button.classList.contains('paused');
 
-            if (button.textContent === 'Pause') {
+            if (isPaused) {
                 clearInterval(timers[taskId]);
                 const currentTime = timerElement.textContent;
                 pausedTimes[taskId] = convertTimeToSeconds(currentTime);
-                button.textContent = 'Play';
+                button.classList.remove('paused');
+                button.querySelector('i').classList.remove('bi-pause');
+                button.querySelector('i').classList.add('bi-play-fill');
             } else {
                 startTimer(taskId);
-                button.textContent = 'Pause';
+                button.classList.add('paused');
+                button.querySelector('i').classList.remove('bi-play-fill');
+                button.querySelector('i').classList.add('bi-pause');
             }
         }
+
 
         function stopTimer(taskId) {
             clearInterval(timers[taskId]);
             const timerElement = document.getElementById(`timer-${taskId}`);
+            const button = document.getElementById(`pause-${taskId}`);
             const timeSpent = timerElement.textContent;
+
+            button.classList.remove('paused');
+            button.querySelector('i').classList.remove('bi-pause');
+            button.querySelector('i').classList.add('bi-play-fill');
 
             pausedTimes[taskId] = convertTimeToSeconds(timeSpent);
 
