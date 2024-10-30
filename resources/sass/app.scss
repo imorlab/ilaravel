@@ -98,12 +98,55 @@ body {
     color: #fff;
     font-weight: bold;
     width: 100%;
+    position: relative;
+    transition: all 0.3s ease;
 
-    &:hover {
-        border-color: $secondary;
-        background-color: $light;
-        color: $secondary;
+    &:disabled {
+        background-color: darken($secondary, 10%);
+        border-color: darken($secondary, 10%);
+        cursor: not-allowed;
     }
+
+    .button-loader {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        .spinner-border {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.5rem;
+            border: 0.2em solid rgba(255, 255, 255, 0.9);
+            border-right-color: transparent;
+            animation: loader-spin 0.75s linear infinite;
+        }
+    }
+}
+
+.button-loader {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-border {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border: 0.2em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+}
+
+.d-none {
+    display: none !important;
+}
+
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
 }
 
 .btn-circle {
@@ -643,3 +686,31 @@ $tipColour: $primaryColour;
         -o-transform: translateY(20px);
     }
   }
+
+// Animación mejorada para el spinner
+@keyframes loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+        border-width: 0.15em;
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// Animación para el texto "Enviando..."
+@keyframes dots {
+    0%, 20% { content: "Enviando"; }
+    40% { content: "Enviando."; }
+    60% { content: "Enviando.."; }
+    80%, 100% { content: "Enviando..."; }
+}
+
+.button-loader::after {
+    content: "Enviando";
+    animation: dots 1.5s infinite;
+    font-weight: 500;
+}

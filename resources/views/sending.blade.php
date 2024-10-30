@@ -1,100 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
-
-        <div class="arrow arrow--top">
-            <svg xmlns="http://www.w3.org/2000/svg" width="270.11" height="649.9" overflow="visible">
-
-                <g class="item-to bounce-1">
-                    <path class="geo-arrow draw-in" d="M135.06 142.564L267.995 275.5 135.06 408.434 2.125 275.499z" />
-                </g>
-                <circle class="geo-arrow item-to bounce-2" cx="194.65" cy="69.54" r="7.96" />
-                <circle class="geo-arrow draw-in" cx="194.65" cy="39.5" r="7.96" />
-                <circle class="geo-arrow item-to bounce-3" cx="194.65" cy="9.46" r="7.96" />
-                <g class="geo-arrow item-to bounce-2">
-                    <path class="st0 draw-in" d="M181.21 619.5l13.27 27 13.27-27zM194.48 644.5v-552" />
-                </g>
-            </svg>
-        </div>
-        <div class="arrow arrow--bottom">
-            <svg xmlns="http://www.w3.org/2000/svg" width="31.35" height="649.9" overflow="visible">
-
-                <g class="item-to bounce-1">
-                    <circle class="geo-arrow item-to bounce-3" cx="15.5" cy="580.36" r="7.96" />
-                    <circle class="geo-arrow draw-in" cx="15.5" cy="610.4" r="7.96" />
-                    <circle class="geo-arrow item-to bounce-2" cx="15.5" cy="640.44" r="7.96" />
-                    <g class="item-to bounce-2">
-                        <path class="geo-arrow draw-in" d="M28.94 30.4l-13.26-27-13.27 27zM15.68 5.4v552" />
-                    </g>
-                </g>
-            </svg>
-        </div>
+    @include('components.arrows')
 
     <div class="row justify-content-center main">
         <div class="col-lg-6 col-md-6 mb-5">
-            <img src="{{ asset('/img/hero_sending.png') }}" style="width: 500px;" class="img-fluid ms-auto me-auto d-block mb-3" />
+            <img src="{{ asset('/img/hero_sending.png') }}"
+                 width="500"
+                 height="auto"
+                 loading="lazy"
+                 alt="Newsletter hero image"
+                 class="img-fluid ms-auto me-auto d-block mb-3" />
 
             <h4 class="text-center text-light fw-bold mb-4">{{__('¿Quieres enviar una newsletter?')}}</h4>
             <p class="text-center text-light mb-4">{{__('Asegurate de tener selecionada la newsletter que quieres enviar')}}</p>
 
-            <form id="form" action="{{ url('/send') }}" method="POST">
+            <form id="newsletterForm" action="{{ url('/send') }}" method="POST" novalidate>
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <div class="form-group mb-3">
-                            <input type="email" id="email" placeholder="{{ __('Email') }}" list="mailOptions"
-                            class="custom-border form-control @error('email') is-invalid @enderror" name="email"
-                            value="{{ old('email') }}" required autocomplete="email">
+                            <label for="email" class="visually-hidden">{{ __('Email') }}</label>
+                            <input type="email"
+                                   id="email"
+                                   placeholder="{{ __('Email') }}"
+                                   list="mailOptions"
+                                   class="custom-border form-control @error('email') is-invalid @enderror"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   required
+                                   autocomplete="email">
+
                             <datalist id="mailOptions">
-                                <option value="{{ __('iml@beonww.com') }}">
-                                <option value="{{ __('i13morenolabrador@gmail.com') }}">
-                                <option value="{{ __('rg@beonww.com') }}">
-                                <option value="{{ __('cci@beonww.com') }}">
-                                <option value="{{ __('gg@beonww.com') }}">
-                                <option value="{{ __('jo@beonww.com') }}">
+                                @foreach(['iml@beonww.com', 'i13morenolabrador@gmail.com', 'rg@beonww.com',
+                                        'cci@beonww.com', 'gg@beonww.com', 'jo@beonww.com'] as $email)
+                                    <option value="{{ __($email) }}">
+                                @endforeach
                             </datalist>
-                            <div class="mt-3">
-                                <textarea class="custom-border form-control" name="html" id="html" rows="3" placeholder="{{ __('Pega aquí tú html') }}"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-register mt-3">{{ __('Enviar') }}</button>
+
+                            <label for="html" class="visually-hidden">{{ __('HTML Content') }}</label>
+                            <textarea class="custom-border form-control mt-3"
+                                      name="html"
+                                      id="html"
+                                      rows="3"
+                                      placeholder="{{ __('Pega aquí tú html') }}"
+                                      required></textarea>
+
+                            <button type="submit" class="btn btn-register mt-3 w-100" id="submitButton">
+                                <span class="button-content">
+                                    {{ __('Enviar') }}
+                                </span>
+                                <span class="button-loader d-none">
+                                    <span class="spinner-border" role="status" aria-hidden="true"></span>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
+
         <h5 class="text-center" style="color: #d54040">#ImlBeonww2024</h5>
 
-        {{-- <button type="button" class="btn btn-outline-warning btn-circle text-center m-1"><i class="bi bi-arrow-left"></i></button> --}}
-        <a href="{{ '/' }}" type="button" class="btn btn-outline-warning btn-circle p-0"><i class="bi bi-house-fill p-0"></i></a>
-        {{-- <button type="button" class="btn btn-outline-warning btn-circle text-center m-1"><i class="bi bi-arrow-right"></i></button> --}}
+        <a href="{{ route('home') }}"
+           class="btn btn-outline-warning btn-circle p-0"
+           aria-label="{{ __('Ir a inicio') }}">
+            <i class="bi bi-house-fill p-0"></i>
+        </a>
     </div>
 </div>
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@endpush
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('newsletterForm');
+    const submitButton = document.getElementById('submitButton');
+    const buttonContent = submitButton.querySelector('.button-content');
+    const buttonLoader = submitButton.querySelector('.button-loader');
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    icon: 'success',
-                    iconColor: '#0c0009',
-                    color:  '#0c0009',
-                    background: '#d54040',
-                    title: 'Newsletter enviada',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                this.submit();
+        // Mostrar loader
+        buttonContent.classList.add('d-none');
+        buttonLoader.classList.remove('d-none');
+        submitButton.disabled = true;
+
+            Swal.fire({
+                icon: 'success',
+                iconColor: '#0c0009',
+                color: '#0c0009',
+                background: '#d54040',
+                title: '{{ __("Newsletter enviada") }}',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                // Enviar el formulario
+                form.submit();
+            }).catch(error => {
+                console.error('Error en SweetAlert:', error);
+                // En caso de error, también enviamos el formulario
+                form.submit();
             });
-        });
+    });
 
-    </script>
-
+    // Verificar que SweetAlert está disponible
+    if (typeof Swal === 'undefined') {
+        console.error('SweetAlert2 no está cargado correctamente');
+    }
+});
+</script>
+@endpush
 @endsection

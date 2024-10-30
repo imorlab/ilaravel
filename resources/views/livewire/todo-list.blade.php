@@ -4,8 +4,10 @@
             <div class="col-8 mb-3">
                 <form wire:submit.prevent="store">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control custom-border" placeholder="New Task..." wire:model="task">
-                        <button type="submit" class="btn btn-danger">Add</button>
+                        <input type="text" class="form-control custom-border" placeholder="New Task..." wire:model.defer="task" wire:keydown.enter="store">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-plus-lg"></i> Add
+                        </button>
                     </div>
                     @error('task')
                         <div class="alert alert-danger mt-2">{{ $message }}</div>
@@ -100,18 +102,15 @@
         }
 
         function startTimer(taskId) {
-            // Verificar que pausedTimes[taskId] es un número válido, si no lo es, inicializarlo a 0
-            if (isNaN(pausedTimes[taskId])) {
-                pausedTimes[taskId] = 0;
+            if (timers[taskId]) {
+                clearInterval(timers[taskId]);
             }
 
-            const startTime = new Date().getTime();
+            pausedTimes[taskId] = pausedTimes[taskId] || 0;
+            const startTime = Date.now() - (pausedTimes[taskId] * 1000);
 
             timers[taskId] = setInterval(() => {
-                const elapsed = Math.floor((new Date().getTime() - startTime) / 1000);
-                const totalElapsed = pausedTimes[taskId] + elapsed;
-
-                // Asegurarse de que siempre se muestra un valor de tiempo válido
+                const totalElapsed = Math.floor((Date.now() - startTime) / 1000);
                 document.getElementById(`timer-${taskId}`).textContent = formatTime(totalElapsed);
             }, 1000);
         }
