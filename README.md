@@ -16,6 +16,10 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Sistema de favoritos
 - Búsqueda en tiempo real
 - Interfaz moderna con diseño glassmorphism
+- Exportación de notas a PDF
+- Sistema de etiquetas dinámicas
+- Historial de cambios
+- Compartir notas vía enlace
 
 #### Sistema de Tareas
 - Gestión de tareas con drag & drop
@@ -23,6 +27,11 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Organización por estados
 - Seguimiento de tiempo
 - Interfaz intuitiva
+- Notificaciones de vencimiento
+- Subtareas anidadas
+- Priorización visual
+- Filtros avanzados
+- Reportes de productividad
 
 #### Sistema de Newsletters
 - Prueba de newsletters antes del envío oficial
@@ -30,6 +39,11 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Vista previa instantánea
 - Lista de correos predefinida
 - Confirmación visual de envío
+- Plantillas personalizables
+- Seguimiento de apertura
+- Programación de envíos
+- Gestión de listas de suscriptores
+- Análisis de engagement
 
 #### Dashboard
 - Vista general de estadísticas
@@ -37,6 +51,11 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Actividades recientes
 - Calendario de actividades
 - Monitoreo de tareas y tiempo
+- Widgets personalizables
+- Métricas de productividad
+- Resumen semanal/mensual
+- Integración con calendario
+- Panel de objetivos
 
 ### Tecnologías Utilizadas
 
@@ -114,7 +133,7 @@ Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
 
 ### Autor
 
-Desarrollado por [Iml](https://github.com/imorlab)
+Desarrollado por [Imorlab](https://github.com/imorlab)
 
 ---
 

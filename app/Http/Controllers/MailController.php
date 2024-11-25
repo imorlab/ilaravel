@@ -4,24 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderShipped;
-use App\Models\Order;
+use App\Models\Newsletter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class MailController  extends Controller
+class MailController extends Controller
 {
     /**
-     * Ship the given order.
+     * Send and store the newsletter.
      */
-    public function store()
+    public function store(Request $request)
     {
-        // $order = Order::findOrFail($request->order_id);
-        $email = $_POST['email'];
+        $email = $request->input('email');
+        $html = $request->input('html');
 
-        // Ship the order...
+        // Enviar el email
         Mail::to($email)->send(new OrderShipped());
 
-        return redirect('/home');
+        // Registrar el envío
+        Newsletter::create([
+            'email' => $email,
+            'content' => $html,
+            'sent_at' => now(),
+            'status' => 'sent'
+        ]);
+
+        return redirect('/home')->with('success', 'Newsletter enviado correctamente');
     }
 }

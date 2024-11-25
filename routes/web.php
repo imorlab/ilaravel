@@ -5,6 +5,7 @@ use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Counter;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\NoteController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 // View Routes
@@ -48,3 +49,7 @@ Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('notes.
 Route::post('/notes/{note}/toggle-favorite', [NoteController::class, 'toggleFavorite'])->name('notes.toggle-favorite');
 Route::get('/notes/category/{category}', [NoteController::class, 'getByCategory'])->name('notes.by-category');
 Route::get('/notes/favorites', [NoteController::class, 'getFavorites'])->name('notes.favorites');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/refresh-weather', [DashboardController::class, 'refreshWeather'])->name('dashboard.refresh-weather');
+Route::get('/dashboard/refresh-news', [DashboardController::class, 'refreshNews'])->name('dashboard.refresh-news');

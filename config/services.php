@@ -21,6 +21,11 @@ return [
         'scheme' => 'https',
     ],
 
+    'weather' => [
+        'key' => env('WEATHER_API_KEY', 'f2aa3b3273094a32a5d130923241601'),
+        'base_url' => env('WEATHER_API_URL', 'http://api.weatherapi.com/v1'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
