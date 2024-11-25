@@ -9,7 +9,7 @@
         </div>
         <div class="">
             <div class=" text-center">
-                <h2>To & Do List</h2>
+                <h2>iTodo</h2>
             </div>
             <div class="">
                 @if (session()->has('message'))

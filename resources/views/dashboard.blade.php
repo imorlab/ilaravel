@@ -12,7 +12,7 @@
                 <div class="card shadow glass-card">
                     <div class="card-body glass-body">
                         <div class="card-header glass-header mb-4">
-                            <h2 class="mb-0 text-light">Dashboard</h2>
+                            <h2 class="mb-0 text-light">iDashboard</h2>
                         </div>
                         <!-- Tarjetas de Resumen -->
                         <div class="row mb-4">

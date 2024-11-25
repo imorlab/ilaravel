@@ -9,7 +9,7 @@
             </div>
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0 text-light">Notas Personales</h2>
+                    <h2 class="mb-0 text-light">iNotas</h2>
                     <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#newNoteModal">
                         <i class="bi bi-plus-lg"></i> Nueva Nota
                     </button>
