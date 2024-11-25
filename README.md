@@ -17,11 +17,26 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Búsqueda en tiempo real
 - Interfaz moderna con diseño glassmorphism
 
+#### Sistema de Tareas
+- Gestión de tareas con drag & drop
+- Cronómetro por tarea
+- Organización por estados
+- Seguimiento de tiempo
+- Interfaz intuitiva
+
+#### Sistema de Newsletters
+- Prueba de newsletters antes del envío oficial
+- Soporte para contenido HTML
+- Vista previa instantánea
+- Lista de correos predefinida
+- Confirmación visual de envío
+
 #### Dashboard
 - Vista general de estadísticas
 - Gráficos de progreso
 - Actividades recientes
 - Calendario de actividades
+- Monitoreo de tareas y tiempo
 
 ### Tecnologías Utilizadas
 
@@ -31,7 +46,10 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
   - Bootstrap 5
   - Vanilla JavaScript
   - Chart.js
+  - Drag & Drop API
+  - SweetAlert2
 - **Base de Datos:** MySQL
+- **Email:** Laravel Mail
 - **Diseño:** 
   - Glassmorphism UI
   - Responsive design
@@ -43,6 +61,7 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Composer
 - Node.js y NPM
 - MySQL
+- Servidor SMTP configurado
 
 ### Instalación
 
@@ -68,7 +87,9 @@ php artisan key:generate
 
 5. Configurar la base de datos en el archivo .env
 
-6. Ejecutar migraciones
+6. Configurar credenciales SMTP en el archivo .env
+
+7. Ejecutar migraciones
 ```bash
 php artisan migrate
 ```
@@ -80,6 +101,8 @@ php artisan migrate
 - [ ] Etiquetas personalizadas
 - [ ] Integración con calendario
 - [ ] API REST
+- [ ] Estadísticas avanzadas de tiempo por tarea
+- [ ] Plantillas HTML para newsletters
 
 ### Contribución
 
@@ -91,8 +114,8 @@ Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
 
 ### Autor
 
-Desarrollado por [ImlBeonww](https://github.com/imorlab)
+Desarrollado por [Iml](https://github.com/imorlab)
 
 ---
 
-#ImlBeonww2024
+#Iml2024
