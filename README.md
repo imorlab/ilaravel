@@ -38,7 +38,12 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Soporte para contenido HTML
 - Vista previa instantánea
 - Lista de correos predefinida
-- Confirmación visual de envío
+- Confirmación visual de envío mediante SweetAlert2
+- Validación de correos RFC/DNS
+- Interfaz moderna con diseño glassmorphic
+- Manejo inteligente de errores
+- Feedback visual del estado de envío
+- Registro automático de newsletters enviadas
 - Plantillas personalizables
 - Seguimiento de apertura
 - Programación de envíos
@@ -63,7 +68,8 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - **Frontend:** 
   - Blade templates
   - Bootstrap 5
-  - Vanilla JavaScript
+  - Livewire 3
+  - Alpine.js
   - Chart.js
   - Drag & Drop API
   - SweetAlert2
@@ -121,6 +127,7 @@ php artisan migrate
 - [ ] Integración con calendario
 - [ ] API REST
 - [ ] Estadísticas avanzadas de tiempo por tarea
+- [x] Sistema moderno de newsletters con Livewire
 - [ ] Plantillas HTML para newsletters
 
 ### Contribución
