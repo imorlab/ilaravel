@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-10">
-            <div class="col-auto floating text-center mb-4">
+            <!-- <div class="col-auto floating text-center mb-4">
                 <img src="{{ asset('/img/underwater_jelly.svg') }}" class="img-fluid ms-auto me-auto d-block mb-1">
-            </div>
+            </div> -->
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0 text-light">iNotas</h2>

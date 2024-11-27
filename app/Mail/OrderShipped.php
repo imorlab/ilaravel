@@ -8,7 +8,6 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Message;
 use Illuminate\Queue\SerializesModels;
 
 class OrderShipped extends Mailable
@@ -18,9 +17,8 @@ class OrderShipped extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public string $htmlContent)
     {
-        //
     }
 
     /**
@@ -41,6 +39,9 @@ class OrderShipped extends Mailable
     {
         return new Content(
             view: 'mail',
+            with: [
+                'html' => $this->htmlContent,
+            ],
         );
     }
 
@@ -53,21 +54,4 @@ class OrderShipped extends Mailable
     {
         return [];
     }
-
-    // public function build()
-    // {
-    //     return $this->from('iml@beonww.com')
-    //                 ->view('mail')
-    //                 ->subject('Test - Newsletter Laravel')
-    //                 /*->text('mails.demo_plain')
-    //                 ->with(
-    //                   [
-    //                         'testVarOne' => '1',
-    //                         'testVarTwo' => '2',
-    //                   ])
-    //                   ->attach(public_path('/images').'/demo.jpg', [
-    //                           'as' => 'demo.jpg',
-    //                           'mime' => 'image/jpeg',
-    //                   ])*/;
-    // }
 }

@@ -6,7 +6,10 @@
 @import 'variables';
 
 // Custom Variables
-$brand-accent: #d54040;
+$brand-purple: #6b21a8; // Color base morado
+$light-purple: #9333ea;
+$dark-purple: #3b0764;
+$brand-accent: #FF2D20; // Laravel red
 $sidebar-accent: #6366f1; // Indigo color for sidebar
 
 // Shared button styles
@@ -50,29 +53,32 @@ $sidebar-accent: #6366f1; // Indigo color for sidebar
 
 body {
     font-family: 'Source Code Pro', sans-serif;
-    background-color: $body-bg;
-    background: linear-gradient(180deg, rgba(31,27,27,1) 70%, rgba(61,11,70,1) 100%);
-    background-attachment: fixed;
+    background: linear-gradient(180deg, 
+        rgba(15, 15, 20, 1) 0%,
+        rgba(35, 17, 44, 1) 50%,
+        rgba(59, 7, 100, 1) 100%
+    );
+    min-height: 100vh;
     font-size: $font-size-base;
     line-height: $line-height-base;
 }
 
 .custom-border {
-    border: 2px solid $secondary;
+    border: 2px solid rgba($light-purple, 0.2);
     /* Reemplaza "#ff0000" con tu color personalizado */
     border-radius: 4px;
     /* Opcional: Añadir esquinas redondeadas */
     background-color: $body-bg;
 
     &:focus {
-        border-color: $secondary;
+        border-color: rgba($light-purple, 0.4);
         /* Color personalizado cuando está activo */
         background-color: $body-bg;
         color: #fff;
     }
 
     &:focus-visible {
-        box-shadow: 0 0 0 0.2rem $secondary;
+        box-shadow: 0 0 0 0.2rem rgba($light-purple, 0.4);
         /* Difuminado personalizado */
     }
 
@@ -93,19 +99,19 @@ body {
     /* Reemplaza "#FFFFFF" con el color de fondo deseado */
 
     &.custom-border {
-        border: 2px solid $secondary;
+        border: 2px solid rgba($light-purple, 0.2);
         /* Reemplaza "#FF0000" con tu color personalizado */
         border-radius: 4px;
         /* Opcional: Añadir esquinas redondeadas */
 
         &:focus {
-            border-color: $secondary;
+            border-color: rgba($light-purple, 0.4);
             /* Color personalizado cuando está activo */
 
         }
 
         &:focus-visible {
-            box-shadow: 0 0 0 0.2rem $secondary;
+            box-shadow: 0 0 0 0.2rem rgba($light-purple, 0.4);
             /* Difuminado personalizado */
         }
 
@@ -130,33 +136,107 @@ body {
 }
 
 .btn-register {
-    background-color: $secondary;
-    border: 2px solid $secondary;
-    color: #fff;
+    background: linear-gradient(45deg, #d54040, #3d0b46);
+    border: none;
+    color: white;
     font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 8px 24px;
+    border-radius: 6px;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(213, 64, 64, 0.3);
+        color: white;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    &:hover::before {
+        left: 100%;
+    }
+}
+
+.btn-mail {
+    @extend .btn-register;
     width: 100%;
     position: relative;
-    transition: all 0.3s ease;
-
-    &:disabled {
-        background-color: darken($secondary, 10%);
-        border-color: darken($secondary, 10%);
-        cursor: not-allowed;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    
+    .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        transition: opacity 0.3s ease;
+        height: 100%;
     }
 
     .button-loader {
-        display: inline-flex;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        height: auto;
+        display: none;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-
+        background: inherit;
+        border-radius: inherit;
+        color: white;
+        font-weight: bold;
+        transition: opacity 0.3s ease;
+        padding: 0;
+        
         .spinner-border {
-            width: 1.2rem;
-            height: 1.2rem;
-            margin-right: 0.5rem;
-            border: 0.2em solid rgba(255, 255, 255, 0.9);
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 0.15em solid currentColor;
             border-right-color: transparent;
             animation: loader-spin 0.75s linear infinite;
+        }
+    }
+
+    &:disabled {
+        background: linear-gradient(45deg, darken(#d54040, 15%), darken(#3d0b46, 15%));
+        cursor: not-allowed;
+        transform: none !important;
+        
+        &::before {
+            display: none;
+        }
+
+        .button-content {
+            display: none;
+        }
+
+        .button-loader {
+            display: flex;
         }
     }
 }
@@ -186,567 +266,9 @@ body {
     to { transform: rotate(360deg); }
 }
 
-.btn-circle {
-    @include circle-button-base;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    color: #ffc107;
-
-    &:hover {
-        background: rgba(255, 193, 7, 0.15);
-        border-color: rgba(255, 193, 7, 0.4);
-        color: #ffc107;
-    }
-}
-
-.btn-sidebar-toggle {
-    @include circle-button-base;
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: $sidebar-accent;
-
-    &:hover {
-        background: rgba(99, 102, 241, 0.15);
-        border-color: rgba(99, 102, 241, 0.4);
-        color: $sidebar-accent;
-    }
-
-    &.active {
-        background: rgba(99, 102, 241, 0.2);
-        color: $sidebar-accent;
-    }
-}
-
-.rubik {
-    background: linear-gradient($blue, $purple);
-    height: 100vh;
-    font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
-    font-family: "DM Mono", monospace;
-    font-weight: 300;
-    overflow: hidden;
-    color: white;
-    text-align: center;
-}
-
-.geo-arrow {
-    fill: none;
-    stroke: $secondary;
-    stroke-width: 2;
-    stroke-miterlimit: 10;
-    stroke-dasharray: 1000;
-}
-
-h1 {
-    font-size: 3em;
-    margin-bottom: 0.2em;
-    font-family: "DM Mono", monospace;
-    font-weight: 300;
-    color: white;
-}
-
-h2 {
-    font-size: 2em;
-    font-family: "DM Mono", monospace;
-    font-weight: 300;
-    color: white;
-}
-
-.main {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-
-    &:before,
-    &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        z-index: -3;
-    }
-
-    &:before {
-        right: 0;
-        bottom: -19;
-        height: 30em;
-        width: 30em;
-        border-radius: 30em;
-        background: linear-gradient($secondary, $purple);
-        align-self: flex-end;
-        animation: gradient-fade 8s ease-in-out 3s infinite alternate;
-        -webkit-animation: gradient-fade 8s ease-in-out 3s infinite alternate;
-}
-
-    &:after {
-        $circle-unit: 10em;
-        top: 0;
-        left: 30;
-        height: $circle-unit;
-        width: $circle-unit;
-        border-radius: $circle-unit;
-        background: linear-gradient($secondary, $purple);
-        animation: gradient-fade-alt 6s ease-in-out 3s infinite alternate;
-        -webkit-animation: gradient-fade-alt 6s ease-in-out 3s infinite alternate;
-}
-
-    &__text-wrapper {
-        position: relative;
-        padding: 2em;
-
-        &:before,
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-        }
-
-        &:before {
-            $circle-unit: 13em;
-            z-index: -1;
-            top: -3em;
-            right: -3em;
-            width: $circle-unit;
-            height: $circle-unit;
-            opacity: 0.7;
-            border-radius: $circle-unit;
-            background: linear-gradient($secondary, $purple);
-            animation: rotation 7s linear infinite;
-            -webkit-animation: rotation 7s linear infinite;
-}
-
-        &:after {
-            $circle-unit: 20em;
-            z-index: -1;
-            bottom: -#{$circle-unit};
-            width: $circle-unit;
-            height: $circle-unit;
-            border-radius: $circle-unit;
-            background: linear-gradient($dark, $secondary);
-            animation: rotation 7s linear infinite;
-        }
-    }
-}
-
-.arrow {
-    z-index: 1000;
-    opacity: 0.5;
-    position: absolute;
-
-    &--top {
-        top: 0;
-        left: -5em;
-    }
-
-    &--bottom {
-        bottom: 0;
-        right: 3em;
-    }
-}
-
-.circle {
-    transform: translate(50%, -50%) rotate(0deg);
-    transform-origin: center;
-
-    &--ltblue {
-        $circle-unit: 20em;
-        height: $circle-unit;
-        width: $circle-unit;
-        border-radius: $circle-unit;
-        background: linear-gradient($ltblue, $blue);
-    }
-}
-
-.backdrop {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    background-color: pink;
-}
-
-.dotted-circle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0.3;
-    animation: rotation 38s linear infinite;
-    -webkit-animation: rotation 38s linear infinite;
-}
-
-// animations
-.draw-in {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 10;
-    animation: draw 15s ease-in-out alternate infinite;
-    -webkit-animation: draw 15s ease-in-out alternate infinite;
-}
-
-@keyframes draw {
-    from {
-        stroke-dashoffset: 1000;
-    }
-
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-.item-to {
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
-    transform-origin: bottom;
-}
-
-.bounce-1 {
-    animation-name: bounce-1;
-    animation-timing-function: ease;
-}
-
-.bounce-2 {
-    animation-name: bounce-2;
-    animation-timing-function: ease;
-}
-
-.bounce-3 {
-    animation-name: bounce-3;
-    animation-timing-function: ease;
-}
-
-@keyframes bounce-1 {
-    0% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-
-    50% {
-        transform: translateY(50px);
-        -webkit-transform: translateY(50px);
-        -moz-transform: translateY(50px);
-        -ms-transform: translateY(50px);
-        -o-transform: translateY(50px);
-}
-
-    100% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-}
-
-@keyframes bounce-2 {
-    0% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-
-    50% {
-        transform: translateY(-30px);
-        -webkit-transform: translateY(-30px);
-        -moz-transform: translateY(-30px);
-        -ms-transform: translateY(-30px);
-        -o-transform: translateY(-30px);
-}
-
-    100% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-}
-
-@keyframes bounce-3 {
-    0% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-
-    50% {
-        transform: translateY(30px);
-        -webkit-transform: translateY(30px);
-        -moz-transform: translateY(30px);
-        -ms-transform: translateY(30px);
-        -o-transform: translateY(30px);
-}
-
-    100% {
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-}
-}
-
-// gradient fade
-
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-}
-
-    to {
-        transform: rotate(360deg);
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-}
-}
-
-@keyframes gradient-fade {
-    from {
-        transform: translate(10%, -10%) rotate(0deg);
-        -webkit-transform: translate(10%, -10%) rotate(0deg);
-        -moz-transform: translate(10%, -10%) rotate(0deg);
-        -ms-transform: translate(10%, -10%) rotate(0deg);
-        -o-transform: translate(10%, -10%) rotate(0deg);
-}
-
-    to {
-        transform: translate(50%, -50%) rotate(360deg);
-        -webkit-transform: translate(50%, -50%) rotate(360deg);
-        -moz-transform: translate(50%, -50%) rotate(360deg);
-        -ms-transform: translate(50%, -50%) rotate(360deg);
-        -o-transform: translate(50%, -50%) rotate(360deg);
-}
-}
-
-@keyframes gradient-fade-alt {
-    from {
-        transform: translate(-20%, 20%) rotate(0deg);
-        -webkit-transform: translate(-20%, 20%) rotate(0deg);
-        -moz-transform: translate(-20%, 20%) rotate(0deg);
-        -ms-transform: translate(-20%, 20%) rotate(0deg);
-        -o-transform: translate(-20%, 20%) rotate(0deg);
-    }
-
-    to {
-        transform: translate(-60%, 60%) rotate(360deg);
-        -webkit-transform: translate(-60%, 60%) rotate(360deg);
-        -moz-transform: translate(-60%, 60%) rotate(360deg);
-        -ms-transform: translate(-60%, 60%) rotate(360deg);
-        -o-transform: translate(-60%, 60%) rotate(360deg);
-    }
-}
-
-/*
- * Hover.css (https://ianlunn.co.uk/)
- * Version: 1.0
- * Author: Ian Lunn @IanLunn
- * Author URL: https://ianlunn.co.uk/
- * Github: https://github.com/IanLunn/Hover
-
- * Made available under a MIT License:
- * https://www.opensource.org/licenses/mit-license.php
-
- * Hover.css Copyright Ian Lunn 2014.
- */
-
-
-// Default options
-$defaultDuration: .3s;
-$primaryColour: #ececec;
-$secondaryColour: #666;
-$shadowColour: rgba(0, 0, 0, .6);
-
-
-
-// As is often the case, some devices/browsers need additional code to get CSS to work
-// in the most desired way. These mixins are used to quickly drop in hacks for each element
-@mixin hideTapHighlightColor() {
-	//Prevent highlight colour when element is tapped
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-@mixin hardwareAccel() {
-	//Improve performance on mobile/tablet devices
-	transform: translateZ(0);
-}
-
-@mixin improveAntiAlias() {
-	//Improve aliasing on mobile/tablet devices
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-}
-
-
-/* 2D TRANSITIONS */
-
-/* Grow */
-.grow {
-	display: inline-block;
-	transition-duration: $defaultDuration;
-	transition-property: transform;
-
-	@include hideTapHighlightColor();
-	@include hardwareAccel();
-	@include improveAntiAlias();
-
-	&:hover {
-		transform: scale(1.1);
-		-webkit-transform: scale(1.1);
-		-moz-transform: scale(1.1);
-		-ms-transform: scale(1.1);
-		-o-transform: scale(1.1);
-}
-}
-.skew-forward {
-	display: inline-block;
-	transition-duration: $defaultDuration;
-	transform-origin: 0 100%;
-
-	@include hideTapHighlightColor();
-	@include hardwareAccel();
-	@include improveAntiAlias();
-
-	&:hover {
-		transform: skew(-5deg);
-	}
-}
-
-/* Float Shadow */
-.float-shadow {
-
-	display: inline-block;
-	position: relative;
-	transition-duration: $defaultDuration;
-	transition-property: transform;
-
-	@include hideTapHighlightColor();
-	@include hardwareAccel();
-	@include improveAntiAlias();
-
-	&:before {
-        pointer-events: none;
-        position: absolute;
-        z-index: -1;
-        content: '';
-        top: 100%;
-        left: 5%;
-        height: 10px;
-        width: 90%;
-        opacity: 0;
-        background: radial-gradient(ellipse at center, rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 80%); /* W3C */
-        transition-duration: $defaultDuration;
-        transition-property: transform opacity;
-	}
-
-	&:hover {
-		transform: translateY(-5px); /* move the element up by 5px */
-
-		&:before {
-			opacity: 1;
-			transform: translateY(5px); /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
-		}
-	}
-}
-
-$tipWidth: 10px;  //the width of the speech bubble tip
-$tipHeight: 10px; //the height of the speech bubble tip
-$tipColour: $primaryColour;
-
-/* Bubble Float Left */
-.bubble-float-left {
-	display: inline-block;
-	position: relative;
-	transition-duration: $defaultDuration;
-	transition-property: transform;
-
-	@include hideTapHighlightColor();
-	@include hardwareAccel();
-	@include improveAntiAlias();
-
-	&:before {
-		pointer-events: none;
-		position: absolute;
-		z-index: -1;
-		content: '';
-		top: calc(50% - #{$tipHeight});
-		left: 0;
-		// border-style: solid;
-		border-width: $tipHeight $tipWidth $tipHeight 0;
-		border-color: transparent $tipColour transparent transparent;
-		transition-duration: $defaultDuration;
-		transition-property: left;
-	}
-
-	&:hover {
-		transform: translateX(5px);
-	}
-
-	&:hover:before {
-		left: -($tipWidth);
-	}
-}
-
-.i-arrow-right {
-    visibility: hidden;
-    position: absolute;
-    right: 10px;
-    top: 60px;
-    transition: all 0.5s;
-    opacity: 0;
-    width: 100px;
-}
-
-.card-body:hover .i-arrow-right {
-    position: absolute;
-    visibility: visible;
-    right: 10px;
-    opacity: 1;
-}
-
-/* Translate Y Logo Livewire */
-
-.floating {
-    animation-name: floating;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-@keyframes floating {
-    from {
-        transform: translateY(0px);
-        -webkit-transform: translateY(0px);
-        -moz-transform: translateY(0px);
-        -ms-transform: translateY(0px);
-        -o-transform: translateY(0px);
-    }
-    to {
-        transform: translateY(20px);
-        -webkit-transform: translateY(20px);
-        -moz-transform: translateY(20px);
-        -ms-transform: translateY(20px);
-        -o-transform: translateY(20px);
-    }
-  }
-
-// Animación mejorada para el spinner
 @keyframes loader-spin {
     0% {
         transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(180deg);
-        border-width: 0.15em;
     }
     100% {
         transform: rotate(360deg);
@@ -762,7 +284,419 @@ $tipColour: $primaryColour;
 }
 
 .button-loader::after {
-    content: "Enviando";
+    content: "";
     animation: dots 1.5s infinite;
     font-weight: 500;
+}
+
+// Glass styles
+.glass-badge {
+    background: linear-gradient(135deg, rgba(213, 64, 64, 0.2), rgba(213, 64, 64, 0.5)) !important;
+    border: 1px solid rgba(213, 64, 64, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+}
+
+.glass-input-icon {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+// Glass Card Styles
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-body {
+    padding: 2rem;
+}
+
+// Estilos para las tarjetas y los iconos
+.atvImg {
+    border-radius: 15px;
+    transform-style: preserve-3d;
+    -webkit-tap-highlight-color: rgba(#000, 0);
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: perspective(1200px);
+}
+
+.atvImg-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    transition: all 0.2s ease-out;
+}
+
+.atvImg-container.over {
+    .atvImg-shadow {
+        box-shadow: 0 45px 100px rgba(14,21,47,0.4), 0 16px 40px rgba(14,21,47,0.4);
+    }
+}
+
+.atvImg-layers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.atvImg-shadow {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 8px 30px rgba(14,21,47,0.6);
+}
+
+.custom-card {
+    position: relative;
+    border: none;
+    border-radius: 8px;
+    background: rgba(25, 28, 41, 0.8);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    
+    &::before {
+        content: "";
+        width: 102%;
+        height: 102%;
+        border-radius: 8px;
+        background-image: linear-gradient(
+            var(--rotate), 
+            #FF1CF7,
+            #b249f8 43%,
+            #6e00ff
+        );
+        position: absolute;
+        z-index: -1;
+        top: -1%;
+        left: -1%;
+        animation: spin 3s linear infinite;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    &::after {
+        position: absolute;
+        content: "";
+        top: calc(200px / 6);
+        left: 0;
+        right: 0;
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        transform: scale(0.8);
+        filter: blur(calc(200px / 6));
+        background-image: linear-gradient(
+            var(--rotate), 
+            #FF1CF7,
+            #b249f8 43%,
+            #6e00ff
+        );
+        opacity: 0;
+        transition: opacity 0.5s;
+        animation: spin 3s linear infinite;
+    }
+
+    .atvImg:hover & {
+        &::before {
+            opacity: 1;
+        }
+        &::after {
+            opacity: 0.5;
+        }
+    }
+
+    .card-body {
+        position: relative;
+        z-index: 2;
+        transform-style: preserve-3d;
+        padding: 1.8rem;
+        background: rgba(25, 28, 41, 0.95);
+        border-radius: 12px;
+        height: 100%;
+        
+        .feature-icon {
+            transform: translateZ(60px);
+            transition: transform 0.3s ease;
+            width: 64px;
+            height: 64px;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                filter: drop-shadow(0 0 8px rgba(255,28,247,0.3));
+            }
+        }
+
+        .card-title {
+            transform: translateZ(40px);
+            transition: transform 0.3s ease;
+            margin-bottom: 0;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255,28,247,0.3);
+        }
+
+        .card-text {
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+        --rotate: 0deg;
+    }
+    100% {
+        --rotate: 360deg;
+    }
+}
+
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+}
+
+// Animaciones para el logo y tarjetas
+.animate__fadeIn {
+    animation-duration: 1.5s;
+}
+
+.animate__fadeInLeft,
+.animate__fadeInRight {
+    animation-duration: 0.8s;
+}
+
+// Actualizar otros elementos para usar la nueva paleta morada
+.btn-primary {
+    background-color: $brand-purple;
+    &:hover {
+        background-color: darken($brand-purple, 10%);
+    }
+}
+
+.badge-primary {
+    background-color: $brand-purple;
+}
+
+.text-primary {
+    color: $light-purple !important;
+}
+
+// Estilos para las flechas y animaciones
+.arrow {
+    position: fixed;
+    z-index: 0;
+    opacity: 0.3;
+    
+    &.arrow--top {
+        top: 0;
+        left: 2%;
+    }
+    
+    &.arrow--bottom {
+        bottom: 0;
+        right: 2%;
+    }
+}
+
+.geo-arrow {
+    fill: none;
+    stroke: $light-purple;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s ease;
+}
+
+.draw-in {
+    opacity: 0.2;
+}
+
+.item-to {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+// Animaciones de bounce
+.bounce-1 {
+    animation-delay: 0.2s;
+}
+
+.bounce-2 {
+    animation-delay: 0.4s;
+}
+
+.bounce-3 {
+    animation-delay: 0.6s;
+}
+
+// Estilos para las tarjetas
+.custom-card {
+    transition: all 0.3s ease;
+    border: none;
+    
+    &.bg-glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba($brand-purple, 0.2);
+        
+        .i-arrow-right {
+            transform: translateX(10px);
+        }
+    }
+}
+
+@keyframes borderGlow {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+// Animación de la flecha derecha
+.i-arrow-right {
+    transition: transform 0.3s ease;
+    position: relative;
+    top: -5px;
+}
+
+// Animación bubble float
+.bubble-float-left {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    position: relative;
+    transition: all 0.3s ease;
+    
+    &::before {
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+        content: '';
+        top: calc(50% - 10px);
+        left: 0;
+        border-style: solid;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent rgba($light-purple, 0.2) transparent transparent;
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+    
+    &:hover::before {
+        left: -10px;
+        opacity: 1;
+    }
+}
+
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.cube-shape {
+    position: absolute;
+    opacity: 0.25;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: screen;
+
+    svg {
+        fill: none;
+        stroke: rgba(147, 51, 234, 0.6); // Light purple with opacity
+        stroke-width: 1.8;
+        filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.3));
+        
+        &.animate-cube {
+            animation: floatCube 8s ease-in-out infinite;
+        }
+    }
+
+    &.cube-1 {
+        top: 15%;
+        left: 10%;
+        transform: scale(1.5);
+        svg { 
+            stroke: rgba(168, 85, 247, 0.8);  // Más brillante
+            filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.4));
+        }
+    }
+
+    &.cube-2 {
+        top: 45%;
+        right: 15%;
+        transform: scale(2);
+        svg { 
+            stroke: rgba(147, 51, 234, 0.7);  // Medio
+            filter: drop-shadow(0 0 12px rgba(147, 51, 234, 0.3));
+        }
+    }
+
+    &.cube-3 {
+        bottom: 20%;
+        left: 25%;
+        transform: scale(1.8);
+        svg { 
+            stroke: rgba(107, 33, 168, 0.6);  // Más oscuro
+            filter: drop-shadow(0 0 12px rgba(107, 33, 168, 0.3));
+        }
+    }
+}
+
+@keyframes floatCube {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
 }
