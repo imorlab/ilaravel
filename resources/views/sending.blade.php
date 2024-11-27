@@ -60,14 +60,6 @@
                 </div>
             </form>
         </div>
-
-        <h5 class="text-center" style="color: #d54040">#ImlBeonww2024</h5>
-
-        <a href="{{ route('home') }}"
-           class="btn btn-outline-warning btn-circle p-0"
-           aria-label="{{ __('Ir a inicio') }}">
-            <i class="bi bi-house-fill p-0"></i>
-        </a>
     </div>
 </div>
 

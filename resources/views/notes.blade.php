@@ -90,14 +90,6 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col text-center">
-            <h5 class="text-center" style="color: #d54040">#ImlBeonww2024</h5>
-            <a href="{{ '/' }}" type="button" class="btn btn-outline-warning btn-circle p-0">
-                <i class="bi bi-house-fill p-0"></i>
-            </a>
-        </div>
-    </div>
 </div>
 
 <!-- Modal Nueva Nota -->

@@ -2,18 +2,18 @@
 
 @section('content')
 <div class="container">
-    <div class="row min-vh-100 align-items-center justify-content-center position-relative">
+    <div class="row min-vh-100 align-items-center justify-content-center">
         <!-- Contenido Principal -->
-        <div class="col-12">
-            <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="">
                 <div class="text-center mb-4">
                     <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
                 </div>
                 <div class="card shadow glass-card">
+                <div class="card-header glass-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0 text-light">iDashboard</h2>
+                </div>
                     <div class="card-body glass-body">
-                        <div class="card-header glass-header mb-4">
-                            <h2 class="mb-0 text-light">iDashboard</h2>
-                        </div>
                         <!-- Tarjetas de Resumen -->
                         <div class="row mb-4">
                             <div class="col-md-3">
@@ -76,14 +76,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Botón Home -->
-        <div class="home-button">
-            <h5 class="text-center" style="color: #d54040">#ImlBeonww2024</h5>
-            <a href="{{ '/' }}" type="button" class="btn btn-outline-warning btn-circle">
-                <i class="bi bi-house-fill"></i>
-            </a>
         </div>
     </div>
 </div>
@@ -281,40 +273,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.home-button {
-    position: fixed;
-    bottom: 0.1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    z-index: 1000;
-}
-
-.btn-circle {
-    width: 45px;
-    height: 45px;
-    padding: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.btn-circle:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    background: rgba(255, 193, 7, 0.2);
-}
-
-.btn-circle i {
-    font-size: 1.4rem;
 }
 </style>
 

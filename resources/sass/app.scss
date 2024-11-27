@@ -5,6 +5,39 @@
 // Variables
 @import 'variables';
 
+// Custom Variables
+$brand-accent: #d54040;
+$sidebar-accent: #6366f1; // Indigo color for sidebar
+
+// Shared button styles
+@mixin circle-button-base {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    i {
+        font-size: 1.2rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    &:active {
+        transform: translateY(-2px) scale(0.95);
+    }
+}
+
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -92,6 +125,10 @@ body {
     }
 }
 
+.brand-text {
+    color: $brand-accent;
+}
+
 .btn-register {
     background-color: $secondary;
     border: 2px solid $secondary;
@@ -150,17 +187,32 @@ body {
 }
 
 .btn-circle {
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.42857;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    @include circle-button-base;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+
+    &:hover {
+        background: rgba(255, 193, 7, 0.15);
+        border-color: rgba(255, 193, 7, 0.4);
+        color: #ffc107;
+    }
+}
+
+.btn-sidebar-toggle {
+    @include circle-button-base;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: $sidebar-accent;
+
+    &:hover {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.4);
+        color: $sidebar-accent;
+    }
+
+    &.active {
+        background: rgba(99, 102, 241, 0.2);
+        color: $sidebar-accent;
+    }
 }
 
 .rubik {

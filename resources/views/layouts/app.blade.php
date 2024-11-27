@@ -81,6 +81,7 @@
             @yield('content')
 
         </main>
+        <x-footer-nav />
     </div>
 
     <!-- Scripts -->
