@@ -7,7 +7,27 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="{{ config('app.name', 'iLaravel') }}">
+    <meta property="og:description" content="Herramientas para desarrolladores">
+    <meta property="og:image" content="{{ asset('img/laravel_hero.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config('app.name', 'iLaravel') }}">
+    <meta name="twitter:description" content="Herramientas para desarrolladores">
+    <meta name="twitter:image" content="{{ asset('img/laravel_hero.png') }}">
+
+    <title>{{ config('app.name', 'iLaravel') }}</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/laravel_96.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/laravel_96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/laravel_96.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/laravel_96.png') }}">
+    <link rel="shortcut icon" href="{{ asset('img/laravel_96.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

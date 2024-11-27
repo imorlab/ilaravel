@@ -1,12 +1,12 @@
 <div>
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-8 mb-3">
+    <div class="container-fluid p-0">
+        <div class="row g-4">
+            <div class="col-12 mb-3">
                 <form wire:submit.prevent="store">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control custom-border" placeholder="New Task..." wire:model.defer="task" wire:keydown.enter="store">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-plus-lg"></i> Add
+                    <div class="input-group">
+                        <input type="text" class="form-control glass-input" placeholder="Nueva tarea..." wire:model.defer="task" wire:keydown.enter="store">
+                        <button type="submit" class="btn btn-danger glass-danger">
+                            <i class="bi bi-plus-lg me-1"></i>Añadir
                         </button>
                     </div>
                     @error('task')
@@ -17,40 +17,53 @@
         </div>
 
         <!-- Columnas de tareas -->
-        <div class="row">
-            @foreach(['open' => '🌟 To Do', 'doing' => '💫 Doing', 'done' => '🏆 Done', 'trash' => '❌ Trash'] as $status => $title)
+        <div class="row g-4">
+            @foreach(['open' => '📝 Por hacer', 'doing' => '⚡ En progreso', 'done' => '✅ Completado', 'trash' => '🗑️ Papelera'] as $status => $title)
             <div class="col-md-3">
-                <div class="card mb-3">
-                    <div class="card-header text-center text-light fs-5 m-0">{{ $title }}</div>
-                    <hr class="text-light m-0">
-                    <ul class="list-group list-group-flush" id="{{ $status }}" style="min-height: 3rem;"
-                        ondrop="drop(event)" ondragover="allowDrop(event)" data-status="{{ $status }}">
-                        @foreach($todos->where('status', $status) as $todo)
-                        <li class="list-group-item {{ $this->getTaskClass($todo->status) }} rounded m-2 ps-0" style="cursor: pointer;"
-                            draggable="true" ondragstart="drag(event)" id="task-{{ $todo->id }}" data-id="{{ $todo->id }}">
-                            <div class="d-flex">
-                                <i class="bi bi-grip-vertical fs-3 m-0 p-0" style="cursor: move;"></i>
-                                <p class="pt-2">{{ $todo->task }}</p>
-                            </div>
-                            @if($todo->status === 'doing' || $todo->status === 'done')
-
-                            <div class="text-end">
-                                <span class="fs-5" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}">{{ $this->formattedTimeSpent($todo->time_spent) }}</span>
-
-                                @if ($todo->status === 'doing')
-                                    <button class="btn btn-sm btn-success py-0" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}" wire:ignore>
-                                        <i class="bi {{ $todo->is_paused ? 'bi-pause' : 'bi-play-fill' }} fs-4"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-secondary py-0" onclick="stopTimer({{ $todo->id }})" wire:ignore><i class="bi bi-floppy fs-4"></i></button>
+                <div class="card glass-card mb-0">
+                    <div class="shine"></div>
+                    <div class="card-header glass-header text-center text-light fs-5 m-0">
+                        {{ $title }}
+                    </div>
+                    <div class="card-body p-2">
+                        <ul class="list-group list-group-flush glass-list" id="{{ $status }}" style="min-height: 3rem;"
+                            ondrop="drop(event)" ondragover="allowDrop(event)" data-status="{{ $status }}">
+                            @foreach($todos->where('status', $status) as $todo)
+                            <li class="list-group-item glass-item {{ $this->getTaskClass($todo->status) }} rounded m-2" 
+                                draggable="true" ondragstart="drag(event)" id="task-{{ $todo->id }}" data-id="{{ $todo->id }}">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-grip-vertical fs-5 text-light me-2" style="cursor: move;"></i>
+                                    <span class="text-light">{{ $todo->task }}</span>
+                                </div>
+                                @if($todo->status === 'doing' || $todo->status === 'done')
+                                <div class="timer-controls mt-2">
+                                    <div class="d-flex align-items-center glass-timer px-2 py-1 rounded">
+                                        <i class="bi bi-clock-history text-light me-2"></i>
+                                        <span class="timer-text" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}">
+                                            {{ $this->formattedTimeSpent($todo->time_spent) }}
+                                        </span>
+                                    </div>
+                                    @if ($todo->status === 'doing')
+                                    <div class="d-flex mt-2 justify-content-end">
+                                        <button class="btn glass-button-timer me-2" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}" wire:ignore>
+                                            <i class="bi {{ $todo->is_paused ? 'bi-play-circle-fill' : 'bi-pause-circle-fill' }}"></i>
+                                        </button>
+                                        <button class="btn glass-button-timer" onclick="stopTimer({{ $todo->id }})" wire:ignore>
+                                            <i class="bi bi-check-circle-fill"></i>
+                                        </button>
+                                    </div>
+                                    @endif
+                                </div>
                                 @endif
-                            </div>
-                            @endif
-                        </li>
-                        @endforeach
-                    </ul>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @if ($status == 'trash' && $todos->where('status', $status)->count() > 0)
-                        <div class="card-footer text-center">
-                            <a href="#" class="text-decoration-none text-light" wire:click="delete"> 🗑️ Delete </a>
+                        <div class="card-footer glass-footer text-center">
+                            <button class="btn btn-sm glass-danger" wire:click="delete">
+                                <i class="bi bi-trash me-1"></i>Eliminar todo
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -172,4 +185,77 @@
         }
 
     </script>
+    <style>
+    .glass-input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    .glass-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+    .glass-input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+    .glass-danger {
+        background: rgba(220, 53, 69, 0.7);
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        backdrop-filter: blur(10px);
+        color: white;
+    }
+    .glass-danger:hover {
+        background: rgba(220, 53, 69, 0.8);
+        color: white;
+    }
+    .glass-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+    .glass-list {
+        background: transparent;
+    }
+    .glass-badge {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    .glass-timer {
+        background: rgba(13, 110, 253, 0.2);
+        border: 1px solid rgba(13, 110, 253, 0.3);
+        backdrop-filter: blur(10px);
+        width: 100%;
+    }
+    .timer-text {
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-family: 'Courier New', monospace;
+    }
+    .timer-controls {
+        width: 100%;
+    }
+    .glass-button-timer {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 0.25rem 0.5rem;
+        color: white;
+        transition: all 0.3s ease;
+    }
+    .glass-button-timer:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        transform: translateY(-1px);
+    }
+    .glass-button-timer i {
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+        font-size: 1.2rem;
+    }
+    </style>
 </div>
