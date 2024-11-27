@@ -15,12 +15,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite([
+        'resources/sass/app.scss', 
+        'resources/js/app.js', 
+        'resources/js/card-effects.js'
+    ])
 
     <!-- Scripts -->
     @livewireStyles
 </head>
 <body class="bg-gray-100">
+    <div class="preload" id="preloader">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div id="app" class="relative min-h-screen">
         <div class="background-shapes">
             <div class="cube-shape cube-1">
@@ -56,7 +65,11 @@
             @yield('content')
 
         </main>
-        <x-footer-nav />
+        @if(Route::currentRouteName() !== '/')
+            <x-footer-nav />
+        @endif
+        <!-- Sidebar Component -->
+            <livewire:sidebar />
     </div>
 
     <!-- Scripts -->
@@ -64,5 +77,13 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
     @stack('scripts')
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('preloader').classList.add('loaded');
+            setTimeout(function() {
+                document.getElementById('preloader').style.display = 'none';
+            }, 500);
+        });
+    </script>
 </body>
 </html>

@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Newsletter;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderShipped;
+use Illuminate\Support\HtmlString;
 
 class Sending extends Component
 {
@@ -28,6 +29,14 @@ class Sending extends Component
     {
         $this->email = '';
         $this->html = '';
+    }
+
+    public function getPreviewHtmlProperty()
+    {
+        if (empty($this->html)) {
+            return new HtmlString('<div class="text-muted">La vista previa aparecerá aquí...</div>');
+        }
+        return new HtmlString($this->html);
     }
 
     public function updated($field)

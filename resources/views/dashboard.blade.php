@@ -9,7 +9,7 @@
                 <div class="text-center mb-4">
                     <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
                 </div>
-                <div class="card shadow glass-card">
+                <div class="card glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0 text-light">iDashboard</h2>
                 </div>
@@ -18,6 +18,7 @@
                         <div class="row mb-4">
                             <div class="col-md-3">
                                 <div class="card glass-stat success">
+                                    <div class="shine"></div>
                                     <div class="card-body">
                                         <h5 class="card-title text-light">Newsletters</h5>
                                         <h2 class="card-text text-light">{{ App\Models\Newsletter::countThisMonth() }}</h2>
@@ -27,6 +28,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="card glass-stat">
+                                    <div class="shine"></div>
                                     <div class="card-body">
                                         <h5 class="card-title text-light">Tareas Pendientes</h5>
                                         <h2 class="card-text text-light">{{ App\Models\Todo::getPendingTasksCount() }}</h2>
@@ -36,6 +38,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="card glass-stat">
+                                    <div class="shine"></div>
                                     <div class="card-body">
                                         <h5 class="card-title text-light">Tareas Completadas</h5>
                                         <h2 class="card-text text-light">{{ App\Models\Todo::getCompletedTasksThisWeek() }}</h2>
@@ -45,6 +48,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="card glass-stat warning">
+                                    <div class="shine"></div>
                                     <div class="card-body">
                                         <h5 class="card-title text-light">Notas</h5>
                                         <h2 class="card-text text-light">{{ App\Models\Note::getActiveNotesCount() }}</h2>
@@ -79,9 +83,6 @@
         </div>
     </div>
 </div>
-
-<!-- Sidebar Component -->
-<livewire:sidebar />
 
 <style>
 /* Estilos base para glassmorphism */
@@ -191,16 +192,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para el sidebar */
-@media (min-width: 992px) {
-    .sidebar-sticky {
-        position: sticky;
-        top: 1rem;
-        height: calc(100vh - 2rem);
-        overflow-y: auto;
-    }
-}
-
 /* Ajustes para el contenido principal */
 .main-content {
     margin-bottom: 2rem;
@@ -274,10 +265,39 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #fff, #fff);
+    background-size: 400px 400px;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    filter: blur(30px);
+    opacity: 0.5;
+    transform: translateZ(0);
+    animation: shine 3s ease-out infinite;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
 </style>
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('js/card-effects.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Gráfica de newsletters

@@ -10,8 +10,11 @@
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0 text-light">iNotas</h2>
-                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#newNoteModal">
-                        <i class="bi bi-plus-lg"></i> Nueva Nota
+                    <button type="button" class="ibtn-outline" data-bs-toggle="modal" data-bs-target="#newNoteModal">
+                        <div class="button-content">
+                            <i class="bi bi-plus-lg"></i>
+                            Nueva Nota
+                        </div>
                     </button>
                 </div>
                 <div class="card-body glass-body">
@@ -122,7 +125,7 @@
                 </div>
                 <div class="modal-footer glass-header">
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-register">Guardar Nota</button>
+                        <button type="submit" class="ibtn">Guardar Nota</button>
                         <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
@@ -162,8 +165,8 @@
                 </div>
                 <div class="modal-footer glass-header">
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-register">Actualizar Nota</button>
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="ibtn">Actualizar Nota</button>
+                        <button type="button" class="ibtn-outline" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </form>
@@ -296,6 +299,32 @@ select.glass-input:focus {
 
 .favorite-btn:hover {
     color: #ffc107;
+}
+
+.ibtn-outline {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ibtn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.ibtn-outline .button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ibtn-outline .button-content i {
+    margin-right: 10px;
 }
 </style>
 

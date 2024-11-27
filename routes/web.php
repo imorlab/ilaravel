@@ -19,7 +19,7 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('/');
 });
 
 // View Routes
@@ -33,7 +33,7 @@ Route::post('/send', [MailController::class, 'store']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
 // To Do
 Route::get('/todo', [App\Http\Controllers\HomeController::class, 'todo'])->name('todo');
