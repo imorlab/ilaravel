@@ -2,54 +2,51 @@
     {{-- Care about people's approval and you will be their prisoner. --}}
     <p class="text-center text-light mb-4">{{ __('Asegúrate de pegar el HTML de la newsletter que quieres enviar') }}</p>
 
-    <form wire:submit="send" novalidate>
+    <form wire:submit.prevent="send" novalidate>
         <div class="row justify-content-center mb-5">
             <div class="col-md-10">
                 <div class="form-group mb-4">
                     <div class="input-group">
                         <span class="input-group-text glass-input-icon">
-                            <i class="bi bi-envelope"></i>
+                            <i class="fas fa-envelope"></i>
                         </span>
-                        <input type="email"
+                        <input type="email" 
+                               class="form-control glass-input @error('email') is-invalid @enderror" 
+                               wire:model="email"
                                placeholder="{{ __('Email') }}"
                                list="mailOptions"
-                               class="form-control glass-input @error('email') is-invalid @enderror"
-                               wire:model="email"
-                               required
-                               autocomplete="email">
+                               required>
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <datalist id="mailOptions">
                         @foreach(['iml@beonww.com', 'i13morenolabrador@gmail.com', 'rg@beonww.com',
                                 'cci@beonww.com', 'gg@beonww.com', 'jo@beonww.com'] as $email)
-                            <option value="{{ __($email) }}">
+                            <option value="{{ $email }}">
                         @endforeach
                     </datalist>
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
 
                 <div class="form-group mb-4">
                     <div class="input-group">
                         <span class="input-group-text glass-input-icon">
-                            <i class="bi bi-code-square"></i>
+                            <i class="fas fa-code"></i>
                         </span>
-                        <textarea class="form-control glass-input @error('html') is-invalid @enderror"
+                        <textarea class="form-control glass-input @error('html') is-invalid @enderror" 
                                   wire:model="html"
-                                  rows="8"
                                   placeholder="{{ __('Pega aquí tu HTML') }}"
+                                  rows="10"
                                   required></textarea>
+                        @error('html')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
-
-                    @error('html')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
             </div>
         </div>
@@ -60,13 +57,15 @@
                         class="btn btn-mail"
                         wire:loading.attr="disabled"
                         wire:target="send">
-                    <span class="button-content" wire:loading.remove wire:target="send">
-                        <i class="bi bi-send me-2"></i>
+                    <div class="button-content">
+                        <i class="fas fa-paper-plane me-2"></i>
                         {{ __('Enviar') }}
-                    </span>
-                    <span class="button-loader" wire:loading wire:target="send">
-                        <span class="spinner-border" role="status" aria-hidden="true"></span>
-                    </span>
+                    </div>
+                    <div class="button-loader">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 </button>
             </div>
         </div>

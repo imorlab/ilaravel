@@ -9,32 +9,42 @@ use App\Mail\OrderShipped;
 
 class Sending extends Component
 {
-    public $email;
-    public $html;
+    public $email = '';
+    public $html = '';
 
     protected $rules = [
-        'email' => 'required|email',
-        'html' => 'required'
+        'email' => 'required|email:rfc,dns',
+        'html' => 'required|min:10'
     ];
 
     protected $messages = [
         'email.required' => 'El email es obligatorio',
-        'email.email' => 'El email debe ser válido',
-        'html.required' => 'El contenido HTML es obligatorio'
+        'email.email' => 'El formato del email no es válido',
+        'html.required' => 'El contenido HTML es obligatorio',
+        'html.min' => 'El contenido HTML debe tener al menos 10 caracteres'
     ];
+
+    public function mount()
+    {
+        $this->email = '';
+        $this->html = '';
+    }
+
+    public function updated($field)
+    {
+        $this->resetErrorBag($field);
+    }
 
     public function send()
     {
+        $validatedData = $this->validate();
+
         try {
-            $this->validate();
+            Mail::to($validatedData['email'])->send(new OrderShipped($validatedData['html']));
 
-            // Enviar el email
-            Mail::to($this->email)->send(new OrderShipped($this->html));
-
-            // Registrar el envío
             Newsletter::create([
-                'email' => $this->email,
-                'content' => $this->html,
+                'email' => $validatedData['email'],
+                'content' => $validatedData['html'],
                 'sent_at' => now(),
                 'status' => 'sent'
             ]);
@@ -49,10 +59,12 @@ class Sending extends Component
             $this->reset(['email', 'html']);
         } catch (\Exception $e) {
             \Log::error('Error al enviar newsletter: ' . $e->getMessage());
+            
             $this->dispatch('swal:error', [
                 'position' => 'top-end',
                 'icon' => 'error',
                 'title' => 'Error al enviar la newsletter',
+                'text' => 'Hubo un problema al enviar el correo. Por favor, inténtalo de nuevo.',
                 'showConfirmButton' => false,
                 'timer' => 1500
             ]);
