@@ -13,7 +13,7 @@
     <meta property="og:image" content="{{ asset('img/laravel_hero.png') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config('app.name', 'iLaravel') }}">
@@ -34,10 +34,10 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     @vite([
-        'resources/sass/app.scss', 
-        'resources/js/app.js', 
+        'resources/sass/app.scss',
+        'resources/js/app.js',
         'resources/js/card-effects.js'
     ])
 
@@ -80,16 +80,19 @@
                 </svg>
             </div>
         </div>
+
+        <x-auth-button />
+        
         <main>
-
             @yield('content')
-
         </main>
+
         @if(Route::currentRouteName() !== '/')
             <x-footer-nav />
         @endif
+
         <!-- Sidebar Component -->
-            <livewire:sidebar />
+        <livewire:sidebar />
     </div>
 
     <!-- Scripts -->
