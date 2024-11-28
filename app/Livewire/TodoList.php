@@ -15,16 +15,19 @@ class TodoList extends Component
     public $updateMode = false;
 
     protected $listeners = [
-        'updateTaskStatus' => 'updateTaskStatus',
-        'updateTimeSpent' => 'updateTimeSpent',
-        'stopTask' => 'stopTask',
-        'pauseTask' => 'pauseTask',
-        'resumeTask' => 'resumeTask'
+        'updateTaskStatus',
+        'startTimer',
+        'stopAndSaveTimer'
     ];
 
     public function mount()
     {
         $this->loadTodos();
+        // Asegurarnos que todas las tareas nuevas en 'doing' empiecen pausadas
+        Todo::where('status', 'doing')
+            ->where('is_paused', false)
+            ->where('last_started_at', null)
+            ->update(['is_paused' => true]);
     }
 
     public function render()
@@ -44,7 +47,8 @@ class TodoList extends Component
 
     private function loadTodos()
     {
-        $this->todos = Todo::orderBy('order')->get();
+        $this->todos = Todo::orderBy('created_at', 'desc')->get();
+        $this->dispatch('timersUpdated');
     }
 
     public function store()
@@ -100,51 +104,62 @@ class TodoList extends Component
         }
     }
 
-    public function pauseTask($taskId, $timeSpent)
+    public function startTimer($taskId)
     {
         $todo = Todo::find($taskId);
-        if ($todo) {
-            $todo->update([
-                'time_spent' => $timeSpent,
-                'is_paused' => true
-            ]);
+        if (!$todo || $todo->status !== 'doing') return;
+
+        // Calculamos el tiempo transcurrido si el timer estaba corriendo
+        if (!$todo->is_paused && $todo->last_started_at) {
+            $todo->time_spent += now()->diffInSeconds($todo->last_started_at);
         }
+
+        // Cambiamos el estado del timer
+        $todo->is_paused = !$todo->is_paused;
+        $todo->last_started_at = $todo->is_paused ? null : now();
+        $todo->save();
+
+        $message = $todo->is_paused ? 'detenido' : 'iniciado';
+
+        $this->dispatch('timersUpdated');
+        $this->js("
+            Swal.fire({
+                title: 'Timer {$message}',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        ");
     }
 
-    public function resumeTask($taskId)
+    public function updateTodoOrder($items)
     {
-        $todo = Todo::find($taskId);
-        if ($todo) {
-            $todo->update([
-                'is_paused' => false,
-                'last_started_at' => now()
-            ]);
+        foreach ($items as $item) {
+            $todo = Todo::find($item['value']);
+            if ($todo) {
+                $newStatus = $item['status'];
+                $oldStatus = $todo->status;
+
+                // Si la tarea sale o entra en 'doing', asegurarnos que esté pausada
+                if ($newStatus === 'doing' || $oldStatus === 'doing') {
+                    // Si el timer estaba corriendo, guardar el tiempo transcurrido
+                    if (!$todo->is_paused && $todo->last_started_at) {
+                        $todo->time_spent += now()->diffInSeconds($todo->last_started_at);
+                    }
+
+                    $todo->is_paused = true;
+                    $todo->last_started_at = null;
+                }
+
+                $todo->status = $newStatus;
+                $todo->order = $item['order'];
+                $todo->save();
+            }
         }
-    }
 
-    public function stopTask($taskId, $timeSpent)
-    {
-        $todo = Todo::find($taskId);
-        if ($todo) {
-            $parts = explode(':', $timeSpent);
-            $hours = isset($parts[0]) ? (int)$parts[0] : 0;
-            $minutes = isset($parts[1]) ? (int)$parts[1] : 0;
-            $seconds = isset($parts[2]) ? (int)$parts[2] : 0;
-
-            $totalSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
-
-            $todo->update([
-                'time_spent' => $totalSeconds,
-                'is_paused' => true,
-                'last_started_at' => null
-            ]);
-
-            $this->alert('success', 'Tiempo registrado con éxito', [
-                'position' => 'top-end',
-                'timer' => 1000,
-            ]);
-
-        }
+        $this->dispatch('timersUpdated');
     }
 
     public function getTaskClass($status)
@@ -177,4 +192,3 @@ class TodoList extends Component
         return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
     }
 }
-

@@ -29,30 +29,37 @@
                         <ul class="list-group list-group-flush glass-list" id="{{ $status }}" style="min-height: 3rem;"
                             ondrop="drop(event)" ondragover="allowDrop(event)" data-status="{{ $status }}">
                             @foreach($todos->where('status', $status) as $todo)
-                            <li class="list-group-item glass-item {{ $this->getTaskClass($todo->status) }} rounded m-2" 
+                            <li class="list-group-item glass-item todo-{{ $todo->status }} rounded m-2"
                                 draggable="true" ondragstart="drag(event)" id="task-{{ $todo->id }}" data-id="{{ $todo->id }}">
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-grip-vertical fs-5 text-light me-2" style="cursor: move;"></i>
                                     <span class="text-light">{{ $todo->task }}</span>
                                 </div>
                                 @if($todo->status === 'doing' || $todo->status === 'done')
-                                <div class="timer-controls mt-2">
-                                    <div class="d-flex align-items-center glass-timer px-2 py-1 rounded">
-                                        <i class="bi bi-clock-history text-light me-2"></i>
-                                        <span class="timer-text" id="timer-{{ $todo->id }}" data-time="{{ $todo->time_spent }}">
-                                            {{ $this->formattedTimeSpent($todo->time_spent) }}
-                                        </span>
-                                    </div>
-                                    @if ($todo->status === 'doing')
-                                    <div class="d-flex mt-2 justify-content-end">
-                                        <button class="btn glass-button-timer me-2" onclick="pauseTimer({{ $todo->id }})" id="pause-{{ $todo->id }}" wire:ignore>
-                                            <i class="bi {{ $todo->is_paused ? 'bi-play-circle-fill' : 'bi-pause-circle-fill' }}"></i>
+                                <div class="timer-controls">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="glass-timer">
+                                            <i class="bi bi-clock-history me-2"></i>
+                                            <span class="timer-text" id="timer-{{ $todo->id }}"
+                                                  data-time-spent="{{ $todo->time_spent }}"
+                                                  data-is-running="{{ !$todo->is_paused }}"
+                                                  data-status="{{ $todo->status }}">
+                                                00:00:00
+                                            </span>
+                                        </div>
+                                        @if($todo->status === 'doing')
+                                        <button type="button" class="glass-button-timer" id="play-{{ $todo->id }}"
+                                                wire:click="startTimer({{ $todo->id }})"
+                                                style="display: {{ !$todo->is_paused ? 'none' : 'inline-block' }}">
+                                            <i class="bi bi-play-circle-fill"></i>
                                         </button>
-                                        <button class="btn glass-button-timer" onclick="stopTimer({{ $todo->id }})" wire:ignore>
-                                            <i class="bi bi-check-circle-fill"></i>
+                                        <button type="button" class="glass-button-timer" id="stop-{{ $todo->id }}"
+                                                wire:click="startTimer({{ $todo->id }})"
+                                                style="display: {{ $todo->is_paused ? 'none' : 'inline-block' }}">
+                                            <i class="bi bi-stop-circle-fill"></i>
                                         </button>
+                                        @endif
                                     </div>
-                                    @endif
                                 </div>
                                 @endif
                             </li>
@@ -98,92 +105,69 @@
             }));
         }
 
-        const timers = {};
-        const pausedTimes = {};
+        document.addEventListener('livewire:initialized', () => {
+            const timers = {};
+            const savedTimes = {};
 
-        document.addEventListener('DOMContentLoaded', function () {
-            initializeTimers();
-        });
-
-        function initializeTimers() {
-            document.querySelectorAll('[id^="timer-"]').forEach(timerElement => {
-                const taskId = timerElement.id.replace('timer-', '');
-                const savedTime = parseInt(timerElement.getAttribute('data-time')); // Recupera el tiempo desde el atributo
-                pausedTimes[taskId] = savedTime || 0; // Inicializa el tiempo pausado con el valor de la base de datos o 0
-                timerElement.textContent = formatTime(pausedTimes[taskId]); // Muestra el tiempo almacenado al cargar
-            });
-        }
-
-        function startTimer(taskId) {
-            if (timers[taskId]) {
-                clearInterval(timers[taskId]);
+            function formatTime(seconds) {
+                const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                const secs = (seconds % 60).toString().padStart(2, '0');
+                return `${hrs}:${mins}:${secs}`;
             }
 
-            pausedTimes[taskId] = pausedTimes[taskId] || 0;
-            const startTime = Date.now() - (pausedTimes[taskId] * 1000);
-
-            timers[taskId] = setInterval(() => {
-                const totalElapsed = Math.floor((Date.now() - startTime) / 1000);
-                document.getElementById(`timer-${taskId}`).textContent = formatTime(totalElapsed);
-            }, 1000);
-        }
-
-        function pauseTimer(taskId) {
-            const timerElement = document.getElementById(`timer-${taskId}`);
-            const button = document.getElementById(`pause-${taskId}`);
-            const isPaused = button.classList.contains('paused');
-
-            if (isPaused) {
-                clearInterval(timers[taskId]);
-                const currentTime = timerElement.textContent;
-                pausedTimes[taskId] = convertTimeToSeconds(currentTime);
-                button.classList.remove('paused');
-                button.querySelector('i').classList.remove('bi-pause');
-                button.querySelector('i').classList.add('bi-play-fill');
-            } else {
-                startTimer(taskId);
-                button.classList.add('paused');
-                button.querySelector('i').classList.remove('bi-play-fill');
-                button.querySelector('i').classList.add('bi-pause');
-            }
-        }
-
-
-        function stopTimer(taskId) {
-            clearInterval(timers[taskId]);
-            const timerElement = document.getElementById(`timer-${taskId}`);
-            const button = document.getElementById(`pause-${taskId}`);
-            const timeSpent = timerElement.textContent;
-
-            button.classList.remove('paused');
-            button.querySelector('i').classList.remove('bi-pause');
-            button.querySelector('i').classList.add('bi-play-fill');
-
-            pausedTimes[taskId] = convertTimeToSeconds(timeSpent);
-
-            timerElement.textContent = formatTime(pausedTimes[taskId]);
-
-            window.dispatchEvent(new CustomEvent('updateTimeSpent', {
-                detail: {
-                    taskId: taskId,
-                    timeSpent: timeSpent
+            function updateDisplay(taskId) {
+                const display = document.getElementById(`timer-${taskId}`);
+                if (display) {
+                    display.textContent = formatTime(savedTimes[taskId] || 0);
                 }
-            }));
-        }
+            }
 
+            function clearTimer(taskId) {
+                if (timers[taskId]) {
+                    clearInterval(timers[taskId]);
+                    delete timers[taskId];
+                }
+            }
 
-        function formatTime(seconds) {
-            const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
-            const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-            const secs = String(seconds % 60).padStart(2, '0');
-            return `${hrs}:${mins}:${secs}`;
-        }
+            function initializeTimer(element) {
+                const taskId = element.id.replace('timer-', '');
+                const timeSpent = parseInt(element.getAttribute('data-time-spent')) || 0;
+                const isRunning = element.getAttribute('data-is-running') === 'true';
+                const status = element.getAttribute('data-status');
 
-        function convertTimeToSeconds(time) {
-            const [hrs, mins, secs] = time.split(':').map(Number);
-            return (hrs * 3600) + (mins * 60) + secs;
-        }
+                // Limpiar timer existente
+                clearTimer(taskId);
 
+                // Actualizar el tiempo guardado y el display
+                savedTimes[taskId] = timeSpent;
+                updateDisplay(taskId);
+
+                // Si está en 'doing' y no está pausado, iniciar el timer
+                if (status === 'doing' && isRunning) {
+                    timers[taskId] = setInterval(() => {
+                        savedTimes[taskId]++;
+                        updateDisplay(taskId);
+                    }, 1000);
+                }
+            }
+
+            function initializeAllTimers() {
+                // Inicializar todos los timers
+                document.querySelectorAll('[id^="timer-"]').forEach(initializeTimer);
+            }
+
+            // Inicializar al cargar
+            initializeAllTimers();
+
+            // Reinicializar en actualizaciones de Livewire
+            Livewire.on('timersUpdated', initializeAllTimers);
+
+            // Manejar cambios por arrastre
+            document.addEventListener('dragend', () => {
+                setTimeout(initializeAllTimers, 100);
+            });
+        });
     </script>
     <style>
     .glass-input {

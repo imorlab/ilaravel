@@ -813,18 +813,92 @@ body {
     }
 }
 
-// Animación para el texto "Enviando..."
-@keyframes dots {
-    0%, 20% { content: "Enviando"; }
-    40% { content: "Enviando."; }
-    60% { content: "Enviando.."; }
-    80%, 100% { content: "Enviando..."; }
+// Estilos del cronómetro
+.glass-timer {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+
+    .timer-text {
+        color: #fff;
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .bi-clock-history {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
 }
 
-.button-loader::after {
-    content: "";
-    animation: dots 1.5s infinite;
-    font-weight: 500;
+// Botón del cronómetro
+.glass-button-timer {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    backdrop-filter: blur(10px);
+    color: white;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    margin-left: 0.75rem;
+
+    i {
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .bi-play-circle-fill {
+        color: #28a745;
+    }
+
+    .bi-stop-circle-fill {
+        color: #dc3545;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+
+        .bi-play-circle-fill {
+            color: lighten(#28a745, 10%);
+        }
+
+        .bi-stop-circle-fill {
+            color: lighten(#dc3545, 10%);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// Contenedor de los controles del temporizador
+.timer-controls {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+    
+    .d-flex {
+        gap: 0.5rem;
+    }
 }
 
 // Glass styles
@@ -1457,4 +1531,193 @@ body {
             text-decoration: none;
         }
     }
+}
+
+// Estilos del cronómetro
+.glass-timer {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+
+    .timer-text {
+        color: #fff;
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .bi-clock-history {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
+}
+
+// Botón del cronómetro
+.glass-button-timer {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    backdrop-filter: blur(10px);
+    color: white;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    margin-left: 0.75rem;
+
+    i {
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .bi-play-circle-fill {
+        color: #28a745;
+    }
+
+    .bi-stop-circle-fill {
+        color: #dc3545;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+
+        .bi-play-circle-fill {
+            color: lighten(#28a745, 10%);
+        }
+
+        .bi-stop-circle-fill {
+            color: lighten(#dc3545, 10%);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// Contenedor de los controles del temporizador
+.timer-controls {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+    
+    .d-flex {
+        gap: 0.5rem;
+    }
+}
+
+// Ajustes para el contenedor de la lista
+.glass-list {
+    background: transparent !important;
+    border: none !important;
+    padding: 0.25rem !important;
+    width: 100% !important;
+}
+
+// Ajustes para la tarjeta
+.glass-card {
+    min-width: 250px;
+    
+    .card-body {
+        padding: 0.5rem !important;
+    }
+}
+
+// Estilos para los items de la lista
+.list-group-item.glass-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+    padding: 1rem;
+    width: auto;
+    max-width: 100%;
+    overflow: hidden;
+
+    // Estado: Abierto (Rojo)
+    &.todo-open {
+        background: rgba(220, 53, 69, 0.15) !important;
+        border: 1px solid rgba(220, 53, 69, 0.3) !important;
+        border-left: 5px solid #dc3545 !important;
+
+        &:hover {
+            background: rgba(220, 53, 69, 0.2) !important;
+        }
+    }
+
+    // Estado: En proceso (Amarillo)
+    &.todo-doing {
+        background: rgba(255, 193, 7, 0.15) !important;
+        border: 1px solid rgba(255, 193, 7, 0.3) !important;
+        border-left: 5px solid #ffc107 !important;
+
+        &:hover {
+            background: rgba(255, 193, 7, 0.2) !important;
+        }
+
+        .text-light {
+            color: #000 !important;
+        }
+    }
+
+    // Estado: Completado (Verde)
+    &.todo-done {
+        background: rgba(40, 167, 69, 0.15) !important;
+        border: 1px solid rgba(40, 167, 69, 0.3) !important;
+        border-left: 5px solid #28a745 !important;
+
+        &:hover {
+            background: rgba(40, 167, 69, 0.2) !important;
+        }
+    }
+
+    // Estado: Papelera (Gris)
+    &.todo-trash {
+        background: rgba(108, 117, 125, 0.15) !important;
+        border: 1px solid rgba(108, 117, 125, 0.3) !important;
+        border-left: 5px solid #6c757d !important;
+        opacity: 0.8;
+
+        &:hover {
+            background: rgba(108, 117, 125, 0.2) !important;
+            opacity: 0.9;
+        }
+    }
+
+    // Efectos comunes
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    .text-light {
+        color: #fff !important;
+    }
+
+    .bi-grip-vertical {
+        opacity: 0.7;
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// Asegurarse de que los estilos no sean sobrescritos
+.list-group-flush .list-group-item {
+    background-color: transparent;
 }
