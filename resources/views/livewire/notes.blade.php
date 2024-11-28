@@ -1,10 +1,10 @@
 <div>
-    <div class="container">
+    <div class="container justify-content-center align-items-center mt-5 pt-5">
         <div class="card shadow glass-card">
             <div class="card-header glass-header d-flex justify-content-between align-items-center">
                 <h2 class="mb-0 text-light">iNotas</h2>
-                <button wire:click="$dispatch('showNoteForm')" class="btn btn-primary">
-                    <i class="bi bi-plus-lg"></i> Nueva Nota
+                <button wire:click="$dispatch('showNoteForm')" class="ibtn">
+                    <i class="bi bi-plus-lg me-2"></i> Nueva Nota
                 </button>
             </div>
             <div class="card-body">
@@ -27,14 +27,14 @@
                 <!-- Lista de notas -->
                 <div class="row">
                     @forelse($notes as $note)
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-4">
                             <div class="card glass-card h-100">
                                 <div class="card-header glass-header py-2">
-                                    <h6 class="card-title mb-0 text-white">{{ $note->title }}</h6>
+                                    <h5 class="card-title mb-0 text-white">{{ $note->title }}</h5>
                                 </div>
-                                <div class="card-body glass-body py-2 d-flex flex-column">
-                                    <p class="card-text text-white mb-2" style="font-size: 0.9rem;">{{ $note->content }}</p>
-                                    <div class="mt-2">
+                                <div class="card-body glass-body">
+                                    <p class="card-text text-white m-0" style="font-size: 0.9rem;">{{ $note->content }}</p>
+                                    <div class="fixed-bottom px-4">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex align-items-center gap-2">
                                                 @if($note->category)

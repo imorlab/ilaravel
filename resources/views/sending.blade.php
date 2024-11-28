@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center align-items-center min-vh-100 mt-5 pt-5">
         <div class="col-lg-8">
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">

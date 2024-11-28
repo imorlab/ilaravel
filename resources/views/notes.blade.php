@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mt-4">
+<div class="mt-4 pt-5">
     @livewire('notes')
 </div>
 @endsection

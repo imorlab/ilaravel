@@ -1,16 +1,16 @@
-<div class="mt-4">
+<div class="mt-3">
     <p class="text-center text-light mb-4">{{ __('Asegúrate de pegar el HTML de la newsletter que quieres enviar') }}</p>
 
     <form wire:submit.prevent="send" novalidate>
-        <div class="row mb-5">
+        <div class="row">
             <div class="col-md-12">
                 <div class="form-group mb-4">
                     <div class="input-group">
                         <span class="input-group-text glass-input-icon">
                             <i class="fas fa-envelope"></i>
                         </span>
-                        <input type="email" 
-                               class="form-control glass-input @error('email') is-invalid @enderror" 
+                        <input type="email"
+                               class="form-control glass-input @error('email') is-invalid @enderror"
                                wire:model="email"
                                placeholder="{{ __('Email') }}"
                                list="mailOptions"
@@ -35,7 +35,7 @@
                         <span class="input-group-text glass-input-icon">
                             <i class="fas fa-code"></i>
                         </span>
-                        <textarea class="form-control glass-input @error('html') is-invalid @enderror" 
+                        <textarea class="form-control glass-input @error('html') is-invalid @enderror"
                                   wire:model.live="html"
                                   placeholder="{{ __('Pega aquí tu HTML') }}"
                                   rows="8"
@@ -68,8 +68,8 @@
                 @endif
 
                 <div class="d-flex justify-content-center">
-                    <button type="submit" 
-                            class="btn btn-primary"
+                    <button type="submit"
+                            class="ibtn"
                             wire:loading.attr="disabled"
                             wire:target="send">
                         <span wire:loading.remove wire:target="send">
