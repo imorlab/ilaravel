@@ -1,179 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100">
-        <div class="col-md-10">
-            <!-- <div class="col-auto floating text-center mb-4">
-                <img src="{{ asset('/img/underwater_jelly.svg') }}" class="img-fluid ms-auto me-auto d-block mb-1">
-            </div> -->
-            <div class="card shadow glass-card">
-                <div class="card-header glass-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0 text-light">iNotas</h2>
-                    <button type="button" class="ibtn-outline" data-bs-toggle="modal" data-bs-target="#newNoteModal">
-                        <div class="button-content">
-                            <i class="bi bi-plus-lg"></i>
-                            Nueva Nota
-                        </div>
-                    </button>
-                </div>
-                <div class="card-body glass-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <!-- Categorías -->
-                            <div class="list-group glass-list">
-                                <a href="#" class="list-group-item list-group-item-action active glass-item" data-category="all">
-                                    Todas las Notas
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action glass-item" data-category="favorites">
-                                    <i class="bi bi-star-fill text-warning"></i> Favoritos
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action glass-item" data-category="trabajo">
-                                    <i class="bi bi-folder"></i> Trabajo
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action glass-item" data-category="personal">
-                                    <i class="bi bi-folder"></i> Personal
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action glass-item" data-category="ideas">
-                                    <i class="bi bi-folder"></i> Ideas
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <!-- Buscador -->
-                            <div class="form-group mb-3">
-                                <input type="text" 
-                                       class="form-control glass-input"
-                                       id="searchNote"
-                                       placeholder="Buscar notas...">
-                            </div>
-                            
-                            <!-- Lista de Notas -->
-                            <div class="row row-cols-1 row-cols-md-2 g-4" id="notesList">
-                                @foreach($notes as $note)
-                                <div class="col note-item" data-category="{{ $note->category }}">
-                                    <div class="card h-100 glass-note">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h5 class="card-title text-light mb-0">{{ $note->title }}</h5>
-                                                <button class="btn btn-link p-0 favorite-btn" data-note-id="{{ $note->id }}">
-                                                    <i class="bi {{ $note->is_favorite ? 'bi-star-fill' : 'bi-star' }} text-warning"></i>
-                                                </button>
-                                            </div>
-                                            <p class="card-text text-light">{{ $note->content }}</p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <small class="text-light">{{ $note->updated_at->diffForHumans() }}</small>
-                                                <div>
-                                                    <button class="btn btn-sm btn-outline-light edit-note" 
-                                                            data-note-id="{{ $note->id }}"
-                                                            data-note-title="{{ $note->title }}"
-                                                            data-note-content="{{ $note->content }}"
-                                                            data-note-category="{{ $note->category }}"
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#editNoteModal">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                    <form action="{{ route('notes.destroy', $note) }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro?')">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="mt-4">
+    @livewire('notes')
 </div>
+@endsection
 
-<!-- Modal Nueva Nota -->
-<div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content glass-card">
-            <div class="modal-header glass-header">
-                <h5 class="modal-title text-light" id="newNoteModalLabel">Nueva Nota</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('notes.store') }}" method="POST">
-                @csrf
-                <div class="modal-body glass-body">
-                    <div class="mb-3">
-                        <label for="title" class="form-label text-light">Título</label>
-                        <input type="text" class="form-control glass-input" id="title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label text-light">Contenido</label>
-                        <textarea class="form-control glass-input" id="content" name="content" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="category" class="form-label text-light">Categoría</label>
-                        <select class="form-control glass-input" id="category" name="category" required>
-                            <option value="trabajo">Trabajo</option>
-                            <option value="personal">Personal</option>
-                            <option value="ideas">Ideas</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer glass-header">
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="ibtn">Guardar Nota</button>
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Editar Nota -->
-<div class="modal fade" id="editNoteModal" tabindex="-1" aria-labelledby="editNoteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content glass-card">
-            <div class="modal-header glass-header">
-                <h5 class="modal-title text-light" id="editNoteModalLabel">Editar Nota</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="editNoteForm" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body glass-body">
-                    <div class="mb-3">
-                        <label for="editTitle" class="form-label text-light">Título</label>
-                        <input type="text" class="form-control glass-input" id="editTitle" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editContent" class="form-label text-light">Contenido</label>
-                        <textarea class="form-control glass-input" id="editContent" name="content" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editCategory" class="form-label text-light">Categoría</label>
-                        <select class="form-control glass-input" id="editCategory" name="category" required>
-                            <option value="trabajo">Trabajo</option>
-                            <option value="personal">Personal</option>
-                            <option value="ideas">Ideas</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer glass-header">
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="ibtn">Actualizar Nota</button>
-                        <button type="button" class="ibtn-outline" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
+@push('styles')
 <style>
 .glass-card {
     background: rgba(255, 255, 255, 0.05);
@@ -190,81 +23,55 @@
     background: transparent;
 }
 
+/* Estilos para inputs y selects */
 .glass-input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     backdrop-filter: blur(5px);
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .glass-input:focus {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
-    box-shadow: none;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+    outline: none;
 }
 
 .glass-input::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Estilos para el select */
-select.glass-input {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-select.glass-input option {
+.glass-input option {
     background-color: #1f1b1b;
     color: white;
+    padding: 8px;
 }
 
-select.glass-input:focus {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: white;
+/* Para quitar la flecha en inputs de tipo number */
+.glass-input::-webkit-outer-spin-button,
+.glass-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-/* Estilos para el botón de actualizar */
-.btn-register {
-    background: linear-gradient(45deg, #d54040, #3d0b46);
-    border: none;
-    color: white;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(213, 64, 64, 0.3);
-    color: white;
-}
-
-.btn-register:active {
-    transform: translateY(0);
-}
-
-.btn-register::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.btn-register:hover::before {
-    left: 100%;
+/* Para Firefox */
+.glass-input[type=number] {
+    -moz-appearance: textfield;
 }
 
 .glass-list .glass-item {
@@ -326,98 +133,49 @@ select.glass-input:focus {
 .ibtn-outline .button-content i {
     margin-right: 10px;
 }
+
+.glass-modal {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+.glass-modal .modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-modal .modal-header,
+.glass-modal .modal-footer {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.glass-modal .modal-title {
+    color: #fff;
+}
+
+.glass-modal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
 </style>
+@endpush
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Manejar edición de notas
-    const editButtons = document.querySelectorAll('.edit-note');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const noteId = this.dataset.noteId;
-            const noteTitle = this.dataset.noteTitle;
-            const noteContent = this.dataset.noteContent;
-            const noteCategory = this.dataset.noteCategory;
-            
-            document.getElementById('editTitle').value = noteTitle;
-            document.getElementById('editContent').value = noteContent;
-            document.getElementById('editCategory').value = noteCategory;
-            
-            const form = document.getElementById('editNoteForm');
-            form.action = `/notes/${noteId}`;
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('show-modal', ({ id }) => {
+            const modal = new bootstrap.Modal(document.getElementById(id));
+            modal.show();
         });
-    });
 
-    // Manejar favoritos
-    const favoriteButtons = document.querySelectorAll('.favorite-btn');
-    favoriteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const noteId = this.dataset.noteId;
-            fetch(`/notes/${noteId}/toggle-favorite`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const icon = this.querySelector('i');
-                if (data.is_favorite) {
-                    icon.classList.remove('bi-star');
-                    icon.classList.add('bi-star-fill');
-                } else {
-                    icon.classList.remove('bi-star-fill');
-                    icon.classList.add('bi-star');
-                }
-            });
-        });
-    });
-
-    // Filtrar por categoría
-    const categoryLinks = document.querySelectorAll('.glass-list .glass-item');
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Actualizar clase activa
-            categoryLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            
-            const category = this.dataset.category;
-            const notes = document.querySelectorAll('.note-item');
-            
-            if (category === 'all') {
-                notes.forEach(note => note.style.display = '');
-            } else if (category === 'favorites') {
-                notes.forEach(note => {
-                    const isFavorite = note.querySelector('.bi-star-fill') !== null;
-                    note.style.display = isFavorite ? '' : 'none';
-                });
-            } else {
-                notes.forEach(note => {
-                    note.style.display = note.dataset.category === category ? '' : 'none';
-                });
+        Livewire.on('hide-modal', ({ id }) => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById(id));
+            if (modal) {
+                modal.hide();
             }
         });
     });
-
-    // Buscador
-    const searchInput = document.getElementById('searchNote');
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const notes = document.querySelectorAll('.note-item');
-        
-        notes.forEach(note => {
-            const title = note.querySelector('.card-title').textContent.toLowerCase();
-            const content = note.querySelector('.card-text').textContent.toLowerCase();
-            const matches = title.includes(searchTerm) || content.includes(searchTerm);
-            note.style.display = matches ? '' : 'none';
-        });
-    });
-});
 </script>
 @endpush
-
-@endsection

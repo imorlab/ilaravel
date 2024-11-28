@@ -46,6 +46,16 @@ class Sending extends Component
 
     public function send()
     {
+        if (!auth()->check()) {
+            $this->dispatch('swal:auth', [
+                'title' => 'Autenticación requerida',
+                'text' => 'Para enviar newsletters, necesitas iniciar sesión o registrarte.',
+                'showLoginButton' => true,
+                'showRegisterButton' => true
+            ]);
+            return;
+        }
+
         $validatedData = $this->validate();
 
         try {

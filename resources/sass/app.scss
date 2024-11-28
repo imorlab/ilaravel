@@ -125,31 +125,232 @@ $sidebar-accent: #6366f1; // Indigo color for sidebar
     top: 20px;
 }
 
-.btn-login, .btn-register {
-    @include circle-button-base;
+// Estilos base para botón de login
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    width: auto;
-    height: auto;
+    bottom: 20px;
+    left: 20px; // Posicionado a la izquierda
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
     font-weight: 500;
+    z-index: 1050;
+    transform: translateZ(0);
+    will-change: transform;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    i {
+        font-size: 1.2rem;
+        margin-right: 0;
+    }
+
+    // Ocultar el texto por defecto
+    span {
+        display: none;
+    }
 
     &:hover {
-        border-radius: 0.5rem;
         width: auto;
-        height: auto;
+        padding: 0 20px;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.2);
+
+        i {
+            margin-right: 8px;
+        }
+
+        // Mostrar el texto en hover
+        span {
+            display: inline;
+        }
     }
 }
 
-.btn-login {
+// Estilos para el nombre de usuario
+.user-name {
+    display: flex;
+    align-items: center;
+    position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+    z-index: 1050;
+    transform: translateZ(0);
+    will-change: transform;
+    transition: all 0.3s ease;
+
+    i {
+        font-size: 1.2rem;
+        margin-right: 0;
+    }
+
+    span {
+        display: none;
+        margin-left: 8px;
+        font-weight: 500;
+    }
+
+    &:hover {
+        width: auto;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.2);
+
+        span {
+            display: inline;
+        }
+    }
 }
 
-.btn-register {
+// Estilos para el menú de usuario
+.user-menu {
+    position: fixed;
     bottom: 20px;
-    right: 250px;
+    left: 20px;
+    z-index: 1050;
+
+    .user-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        min-width: 45px;
+        height: 45px;
+        padding: 0;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        backdrop-filter: blur(10px);
+        transform: translateZ(0);
+        will-change: transform;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        border: none;
+        overflow: hidden;
+        white-space: nowrap;
+
+        i {
+            font-size: 1.2rem;
+            min-width: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            &.menu-arrow {
+                display: none;
+                font-size: 0.8rem;
+                margin-left: 8px;
+                min-width: 0.8rem;
+            }
+        }
+
+        span {
+            display: none;
+            margin-left: 8px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover, &.active {
+            width: auto;
+            padding: 0 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+
+            i {
+                &.menu-arrow {
+                    display: inline-block;
+                }
+            }
+
+            span {
+                display: inline-block;
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        &.active .menu-arrow {
+            transform: rotate(180deg);
+        }
+    }
+
+    .user-dropdown {
+        position: absolute;
+        display: none;
+        bottom: calc(100% + 10px);
+        left: 0;
+        min-width: 200px;
+        background: rgba(26, 26, 26, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1051;
+
+        &.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+
+            i {
+                margin-right: 8px;
+                font-size: 1rem;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            &:first-child {
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+            }
+
+            &:last-child {
+                border-bottom-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+            }
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            background: inherit;
+            transform: rotate(45deg);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
 }
 
 .sidebar-menu {
@@ -198,6 +399,32 @@ $sidebar-accent: #6366f1; // Indigo color for sidebar
     i {
         transition: transform 0.3s ease;
     }
+}
+
+// Estilos base para botones de autenticación
+%auth-button-base {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    width: auto !important; // Forzar el ancho automático
+    height: auto !important; // Forzar el alto automático
+    min-width: max-content; // Asegurar que el contenido no se rompa
+    backdrop-filter: blur(10px);
+    font-weight: 500;
+    z-index: 1050;
+    transform: translateZ(0);
+    will-change: transform;
+    white-space: nowrap; // Evitar que el texto se rompa
+    isolation: isolate; // Crear un nuevo contexto de apilamiento
+}
+
+// Asegurar que los botones estén por encima del contenido de notas
+.container {
+    position: relative;
+    z-index: 1;
 }
 
 // Bootstrap
@@ -472,30 +699,117 @@ body {
 }
 
 .spinner-border {
-    display: inline-block;
     width: 1rem;
     height: 1rem;
-    margin-right: 0.5rem;
-    border: 0.2em solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: spinner-border .75s linear infinite;
-}
-
-.d-none {
-    display: none !important;
-}
-
-@keyframes spinner-border {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes loader-spin {
-    0% {
-        transform: rotate(0deg);
+    border-width: 0.2em;
+    background: transparent;
+    &.text-primary {
+        border-color: $light-purple;
+        border-right-color: transparent;
+        background: transparent;
     }
-    100% {
-        transform: rotate(360deg);
+}
+
+.button-loader {
+    .spinner-border {
+        border-color: white;
+        border-right-color: transparent;
+        background: transparent;
+    }
+}
+
+.sidebar-menu {
+    z-index: 1000;
+}
+
+.auth-card {
+    position: relative;
+    background: rgba(25, 28, 41, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 2px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --rotate: 0deg;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 2px;
+        border-radius: 4px;
+        background: linear-gradient(
+            var(--rotate),
+            #FF1CF7,
+            #b249f8 43%,
+            #6e00ff
+        );
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 1;
+        animation: spin 2.5s linear infinite;
+    }
+
+    .card-body {
+        position: relative;
+        padding: 1.8rem;
+        background: rgba(25, 28, 41, 0.95);
+        height: 100%;
+        border-radius: 4px;
+        backdrop-filter: blur(10px);
+    }
+
+    // Estilos específicos para los formularios de autenticación
+    .form-control {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: none !important;
+        border-radius: 0.5rem !important;
+        color: white !important;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+            background: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 0 0 2px rgba(110, 0, 255, 0.5) !important;
+        }
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    .input-group-text {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: none !important;
+        border-radius: 0.5rem !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .form-check-input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+
+        &:checked {
+            background-color: #6e00ff;
+            border-color: #6e00ff;
+        }
+    }
+
+    a {
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: white;
+            text-decoration: none;
+        }
     }
 }
 
@@ -543,12 +857,16 @@ body {
 
 // Glass Card Styles
 .glass-card {
+    position: relative;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
 }
 
 .glass-body {
+    position: relative;
+    z-index: 2;
     padding: 2rem;
 }
 

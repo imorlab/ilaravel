@@ -1,17 +1,46 @@
 @if (Route::has('login'))
     @auth
-        <a href="{{ url('/home') }}" class="btn-home">
-            <i class="fas fa-home"></i>
-        </a>
+        <div class="user-menu">
+            <button class="user-name" onclick="toggleUserMenu()">
+                <i class="fas fa-user"></i>
+                <span>{{ Auth::user()->name }}</span>
+                <i class="fas fa-chevron-up menu-arrow"></i>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
     @else
         <a href="{{ route('login') }}" class="btn-login">
-            <i class="fas fa-sign-in-alt me-2"></i> {{ __('Iniciar sesión') }}
+            <i class="fas fa-sign-in-alt"></i><span>Accede</span>
         </a>
-
-        @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="btn-register">
-                <i class="fas fa-user-plus me-2"></i> {{ __('Registrarse') }}
-            </a>
-        @endif
     @endauth
 @endif
+
+@push('scripts')
+<script>
+function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    const button = document.querySelector('.user-name');
+    dropdown.classList.toggle('show');
+    button.classList.toggle('active');
+}
+
+// Cerrar el menú al hacer clic fuera
+window.addEventListener('click', function(e) {
+    if (!e.target.closest('.user-menu')) {
+        const dropdown = document.getElementById('userDropdown');
+        const button = document.querySelector('.user-name');
+        if (dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+            button.classList.remove('active');
+        }
+    }
+});
+</script>
+@endpush
