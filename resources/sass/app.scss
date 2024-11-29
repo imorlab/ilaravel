@@ -961,12 +961,6 @@ body {
     transition: all 0.2s ease-out;
 }
 
-.atvImg-container.over {
-    .atvImg-shadow {
-        box-shadow: 0 45px 100px rgba(14,21,47,0.4), 0 16px 40px rgba(14,21,47,0.4);
-    }
-}
-
 .atvImg-layers {
     position: relative;
     width: 100%;
