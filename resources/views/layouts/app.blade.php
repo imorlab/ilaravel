@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,20 +43,16 @@
 
     <!-- Scripts -->
     @livewireStyles
-    @livewireScripts
-
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
-    <div class="preload" id="preloader">
-        <div class="preloader-inner">
-            <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
+    <div id="app" class="min-vh-100">
+        <div class="preload" id="preloader">
+            <div class="preloader-inner">
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="app" class="min-vh-100">
         <div class="background-shapes">
             <div class="cube-shape cube-1">
                 <svg x-data="{ animate: false }" x-init="setTimeout(() => animate = true, 0)" :class="{ 'animate-cube': animate }" class="text-primary" width="46" height="53" viewBox="0 0 46 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,6 +101,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @livewireScripts
     <x-livewire-alert::scripts />
     @stack('scripts')
@@ -114,6 +111,18 @@
             setTimeout(function() {
                 document.getElementById('preloader').style.display = 'none';
             }, 500);
+        });
+        
+        // Prevenir múltiples inicializaciones
+        if (typeof window.livewireInitialized === 'undefined') {
+            window.livewireInitialized = false;
+        }
+        
+        document.addEventListener('livewire:initialized', () => {
+            if (!window.livewireInitialized) {
+                window.livewireInitialized = true;
+                console.log('Livewire initialized once');
+            }
         });
     </script>
 </body>
