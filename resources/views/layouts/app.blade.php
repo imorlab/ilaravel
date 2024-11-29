@@ -46,6 +46,7 @@
 </head>
 <body class="bg-gray-100">
     <div id="app" class="min-vh-100">
+        <x-notch-nav />
         <div class="preload" id="preloader">
             <div class="preloader-inner">
                 <div class="spinner-border text-light" role="status">
@@ -83,20 +84,23 @@
             </div>
         </div>
 
-        {{-- @include('layouts.navigation') --}}
-        <x-auth-button />
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            {{-- @include('layouts.navigation') --}}
+            <x-auth-button />
 
-        <main>
-            @yield('content')
-        </main>
+            <main>
+                @yield('content')
+            </main>
 
-        @if(Route::currentRouteName() !== '/')
-            <x-footer-nav />
-        @endif
+            @if(Route::currentRouteName() !== '/')
+                <x-footer-nav />
+            @endif
 
-        <!-- Sidebar Component -->
-        <livewire:sidebar />
+            <!-- Sidebar Component -->
+            <livewire:sidebar />
 
+
+        </div>
 
     </div>
 
