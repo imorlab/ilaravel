@@ -92,13 +92,12 @@
                 @yield('content')
             </main>
 
-            @if(Route::currentRouteName() !== '/')
+            <!-- @if(Route::currentRouteName() !== '/')
                 <x-footer-nav />
-            @endif
+            @endif -->
 
             <!-- Sidebar Component -->
             <livewire:sidebar />
-
 
         </div>
 
