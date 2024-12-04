@@ -19,6 +19,7 @@ class AdminUserSeeder extends Seeder
             'email' => 'iml@admin.com',
             'password' => Hash::make('iml13Secret_$'),
             'email_verified_at' => now(),
+            'role' => 'admin',
         ]);
     }
 }
