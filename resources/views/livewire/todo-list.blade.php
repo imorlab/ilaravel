@@ -37,9 +37,16 @@
                                     </div>
                                     @if($todo->status === 'doing' || $todo->status === 'done')
                                     <div class="timer-controls" id="timer-controls-{{ $todo->id }}">
-                                        <div class="d-flex align-items-center gap-2">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <div class="timer-container" id="timer-container-{{ $todo->id }}">
-                                                <span class="timer-text" 
+                                                @if($todo->status === 'doing')
+                                                <button type="button" class="glass-button-timer" id="start-timer-{{ $todo->id }}"
+                                                        onclick="handleTimerClick(event, {{ $todo->id }}, 'start')"
+                                                        style="display: inline-block;">
+                                                    <i class="bi bi-play-circle-fill"></i>
+                                                </button>
+                                                @endif
+                                                <span class="fs-4 timer-text"
                                                       id="timer-{{ $todo->id }}"
                                                       data-todo-id="{{ $todo->id }}"
                                                       data-time-spent="{{ $todo->time_spent }}"
@@ -49,22 +56,29 @@
                                                     {{ $this->formattedTimeSpent($todo->time_spent) }}
                                                 </span>
                                                 @if($todo->status === 'doing')
-                                                <div class="timer-buttons">
-                                                    <button type="button" class="glass-button-timer" id="start-timer-{{ $todo->id }}"
-                                                            onclick="handleTimerClick(event, {{ $todo->id }}, 'start')"
-                                                            style="display: inline-block;">
-                                                        <i class="bi bi-play-circle-fill"></i>
-                                                    </button>
-                                                    <button type="button" class="glass-button-timer" id="stop-timer-{{ $todo->id }}"
-                                                            onclick="handleTimerClick(event, {{ $todo->id }}, 'stop')"
-                                                            style="display: inline-block;">
-                                                        <i class="bi bi-stop-circle-fill"></i>
-                                                    </button>
-                                                </div>
+                                                <button type="button" class="glass-button-timer" id="stop-timer-{{ $todo->id }}"
+                                                        onclick="handleTimerClick(event, {{ $todo->id }}, 'stop')"
+                                                        style="display: inline-block;">
+                                                    <i class="bi bi-stop-circle-fill"></i>
+                                                </button>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- @if($todo->status === 'doing')
+                                    <div class="timer-buttons d-flex justify-content-between align-items-center mt-2">
+                                        <button type="button" class="glass-button-timer" id="start-timer-{{ $todo->id }}"
+                                                onclick="handleTimerClick(event, {{ $todo->id }}, 'start')"
+                                                style="display: inline-block;">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </button>
+                                        <button type="button" class="glass-button-timer" id="stop-timer-{{ $todo->id }}"
+                                                onclick="handleTimerClick(event, {{ $todo->id }}, 'stop')"
+                                                style="display: inline-block;">
+                                            <i class="bi bi-stop-circle-fill"></i>
+                                        </button>
+                                    </div>
+                                    @endif --}}
                                     @endif
                                 </li>
                                 @endforeach
@@ -91,7 +105,7 @@
             runningTasks: new Set(),
             timerIntervals: new Map(),
             isInitialized: false,
-            
+
             // Método seguro para obtener elementos
             getTimerElements(id) {
                 const timer = document.getElementById(`timer-${id}`);
@@ -110,13 +124,13 @@
         function syncButtonStates() {
             document.querySelectorAll('.timer-text').forEach(timer => {
                 if (!timer?.dataset) return;
-                
+
                 const id = timer.dataset.todoId;
                 if (!id) return;
-                
+
                 const isRunning = timer.dataset.isRunning === "1";
                 const status = timer.dataset.status;
-                
+
                 updateButtonVisibility(id, status, isRunning);
             });
         }
@@ -127,10 +141,10 @@
                 console.log('Ya hay una inicialización en proceso...');
                 return;
             }
-            
+
             window.todoApp.isInitializing = true;
             console.log('Inicializando temporizadores...');
-            
+
             try {
                 document.querySelectorAll('.timer-text').forEach(timer => {
                     if (!timer?.dataset) return;
@@ -146,7 +160,7 @@
                     // Solo procesar tareas en estado 'doing'
                     if (status === 'doing') {
                         console.log(`Inicializando tarea ${id}: running=${isRunning}, status=${status}`);
-                        
+
                         // Verificar si los elementos existen
                         const elements = window.todoApp.getTimerElements(id);
                         if (!elements.timer) {
@@ -191,7 +205,7 @@
 
             try {
                 window.todoApp.buttonStates.set(id, { status, isRunning });
-                
+
                 if (isRunning) {
                     window.todoApp.runningTasks.add(id);
                     elements.startBtn.style.display = 'inline-block';
@@ -242,12 +256,12 @@
             const timeSpent = parseInt(elements.timer.dataset.timeSpent) || 0;
             const startDate = new Date(startTime);
             let lastSyncTime = Date.now();
-            
+
             const interval = setInterval(() => {
                 const now = new Date();
                 const elapsedSeconds = Math.floor((now - startDate) / 1000);
                 const totalSeconds = timeSpent + elapsedSeconds;
-                
+
                 // Actualizar display
                 updateTimerDisplay(id, totalSeconds);
                 elements.timer.dataset.timeSpent = totalSeconds.toString();
@@ -270,14 +284,14 @@
                 clearInterval(window.todoApp.timerIntervals.get(id));
                 window.todoApp.timerIntervals.delete(id);
                 window.todoApp.activeTimers.delete(id);
-                
+
                 // Sincronizar una última vez al detener
                 const elements = window.todoApp.getTimerElements(id);
                 if (elements.timer) {
                     const timeSpent = parseInt(elements.timer.dataset.timeSpent) || 0;
                     syncTimerWithServer(id, timeSpent);
                 }
-                
+
                 console.log(`Timer detenido para tarea ${id}`);
             }
         }
@@ -316,8 +330,8 @@
 
             try {
                 const isCurrentlyRunning = elements.timer.dataset.isRunning === "1";
-                
-                if ((action === 'start' && isCurrentlyRunning) || 
+
+                if ((action === 'start' && isCurrentlyRunning) ||
                     (action === 'stop' && !isCurrentlyRunning)) {
                     console.log(`Estado del timer ya coincide con la acción solicitada: ${action}`);
                     return;
@@ -332,12 +346,12 @@
                 if (action === 'start') {
                     console.log(`Iniciando temporizador para tarea: ${id}`);
                     const result = await component.call('startTimer', id);
-                    
+
                     if (result !== false) {
                         const status = elements.timer.dataset.status;
                         elements.timer.dataset.isRunning = "1";
                         elements.timer.dataset.lastStarted = new Date().toISOString();
-                        
+
                         startTimer(id, new Date().toISOString());
                         await updateButtonVisibility(id, status, true);
                         console.log(`Timer iniciado y botones actualizados para tarea ${id}`);
@@ -346,7 +360,7 @@
                     console.log(`Deteniendo temporizador para tarea: ${id}`);
                     const timeSpent = parseInt(elements.timer.dataset.timeSpent) || 0;
                     const result = await component.call('stopAndSaveTimer', id, timeSpent);
-                    
+
                     if (result !== false) {
                         const status = elements.timer.dataset.status;
                         elements.timer.dataset.isRunning = "0";
@@ -375,7 +389,7 @@
 
                 const isRunning = elements.timer.dataset.isRunning === "1";
                 const status = elements.timer.dataset.status;
-                
+
                 if (status === 'doing') {
                     updateButtonVisibility(data.id, status, isRunning);
                     if (isRunning && !window.todoApp.activeTimers.has(data.id)) {
@@ -399,20 +413,20 @@
                     console.log('Ignorando reinicialización durante actualización Livewire');
                     return;
                 }
-                
+
                 // Solo reinicializar si hay cambios relevantes
                 const hasTimerChanges = message.response.effects.html?.includes('timer-text');
                 if (hasTimerChanges) {
                     console.log('Cambios detectados en timers, actualizando estados...');
                     document.querySelectorAll('.timer-text').forEach(timer => {
                         if (!timer?.dataset) return;
-                        
+
                         const id = timer.dataset.todoId;
                         if (!id) return;
-                        
+
                         const isRunning = timer.dataset.isRunning === "1";
                         const status = timer.dataset.status;
-                        
+
                         if (status === 'doing') {
                             updateButtonVisibility(id, status, isRunning);
                             if (isRunning && !window.todoApp.activeTimers.has(id)) {
@@ -431,7 +445,7 @@
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Iniciando inicialización de TodoApp...');
-            
+
             // Limpiar estados anteriores
             console.log('Iniciando limpieza...');
             window.todoApp.activeTimers.forEach(id => stopTimer(id));
@@ -440,12 +454,12 @@
             window.todoApp.runningTasks.clear();
             window.todoApp.timerIntervals.clear();
             console.log('Limpieza completada');
-            
+
             // Inicializar componentes
             initializeTimers();
             setupDragAndDrop();
             setupEventListeners();
-            
+
             console.log('TodoApp inicializada correctamente');
         });
 
@@ -607,10 +621,5 @@
         transform: scale(0.95);
     }
 
-    .timer-controls {
-        margin-top: 0.5rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
     </style>
 </div>
