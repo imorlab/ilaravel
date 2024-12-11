@@ -35,7 +35,7 @@
             /* What it does: Tells the email client that both light and dark styles are provided */
             color-scheme: light;
             supported-color-schemes: light;
-            background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ffffff' }};
+            background-color: {{ $blocks['settings']['content']['background_color'] ?? '#fafafa' }};
         }
 
         /* What it does: Remove spaces around the email design added by some email clients. */
@@ -161,8 +161,8 @@
             }
             .email-template td.button-td-primary,
             .email-template td.button-td-primary a {
-                background: #ffffff !important;
-                border-color: #ffffff !important;
+                background: #fafafa !important;
+                border-color: #fafafa !important;
                 color: #222222 !important;
             }
             .email-template td.button-td-primary:hover,
@@ -179,10 +179,10 @@
         }
     </style>
 </head>
-<body class="email-template" width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ffffff' }} !important;" class="email-bg">
-    <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ffffff' }} !important;" class="email-bg">
+<body class="email-template" width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
+    <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
         <!--[if mso | IE]>
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ffffff' }} !important;" class="email-bg">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
         <tr>
         <td>
         <![endif]-->
@@ -195,7 +195,7 @@
 
         <!-- Preview Text Spacing Hack : BEGIN -->
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-            &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+            &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
         <!-- Preview Text Spacing Hack : END -->
 
@@ -211,10 +211,10 @@
                 @foreach($blocks as $blockName => $block)
                     @if($block['active'] && $blockName !== 'settings')
                         <tr>
-                            <td style="background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }}; padding: 0px;">
+                            <td style="background-color: {{ $block['content']['background_color'] ?? '#fafafa' }}; padding: 0px;">
                                 @if($blockName == 'hero')
                                 <tr>
-                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: center; background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }};">
+                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: center; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
                                         <img src="{{ $block['content']['image'] }}" 
                                             alt="{{ $block['content']['alt'] }}"
                                             width="{{ $block['content']['width'] ?? '600' }}"
@@ -224,25 +224,59 @@
                                 </tr>
                                 @elseif($blockName == 'header')
                                 <tr>
-                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: {{ $block['content']['alignment'] ?? 'center' }}; background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }};">
+                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: {{ $block['content']['alignment'] ?? 'center' }}; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
                                         <img src="{{ $block['content']['image'] }}" 
                                              width="{{ $block['content']['width'] ?? '200' }}"
                                              height="{{ $block['content']['height'] ?? '50' }}"
                                              alt="{{ $block['content']['alt'] }}"
                                              border="0"
-                                             style="height: auto; background: {{ $block['content']['image_background_color'] ?? '#dddddd' }}; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                             style="height: auto; background: {{ $block['content']['image_background_color'] ?? '#fafafa' }}; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
                                     </td>
                                 </tr>
                                 @elseif($blockName == 'content')
-                                <h1 style="margin: 0 0 10px 0; font-size: 25px; line-height: 30px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#ffffff' : '#333333' }}; font-weight: normal;">
-                                    {{ $block['content']['title'] }}
-                                </h1>
-                                <p style="margin: 0; font-size: 16px; line-height: 22px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#aaaaaa' : '#555555' }};">
-                                    {{ $block['content']['text'] }}
-                                </p>
-                                <div style="text-align: center; margin-top: 20px;">
-                                    <a href="{{ $block['content']['button']['url'] }}" style="background: {{ $blocks['settings']['content']['dark_mode'] ? '#ffffff' : '#222222' }}; color: {{ $blocks['settings']['content']['dark_mode'] ? '#222222' : '#ffffff' }}; text-decoration: none; padding: 13px 17px; border-radius: 4px; display: inline-block;">{{ $block['content']['button']['text'] }}</a>
-                                </div>
+                                <tr>
+                                    <td style="background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                            <tr>
+                                                <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">
+                                                    @if(isset($block['content']['title']))
+                                                    <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['title_size'] ?? '25' }}px; line-height: {{ $block['content']['title_line_height'] ?? '30' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important; font-weight: {{ $block['content']['title_weight'] ?? 'normal' }};">
+                                                        {{ $block['content']['title'] }}
+                                                    </h1>
+                                                    @endif
+                                                    @if(isset($block['content']['text']))
+                                                    <p style="margin: 0; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">{{ $block['content']['text'] }}</p>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @if(isset($block['content']['subtitle']) || isset($block['content']['list_items']) || isset($block['content']['secondary_text']))
+                                            <tr>
+                                                <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#555555' }};">
+                                                    @if(isset($block['content']['subtitle']))
+                                                    <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['subtitle_size'] ?? '18' }}px; line-height: {{ $block['content']['subtitle_line_height'] ?? '22' }}px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#fafafa' : '#333333' }}; font-weight: {{ $block['content']['subtitle_weight'] ?? 'bold' }};">
+                                                        {{ $block['content']['subtitle'] }}
+                                                    </h2>
+                                                    @endif
+                                                    @if(isset($block['content']['list_items']) && !empty($block['content']['list_items']))
+                                                    <ul style="padding: 0; margin: 0 0 10px 0; list-style-type: disc;">
+                                                        @foreach(explode("\n", $block['content']['list_items']) as $item)
+                                                            @if(!empty(trim($item)))
+                                                            <li style="margin: {{ $loop->last ? '0 0 10px 30px' : '0 0 0 30px' }}; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;" class="{{ $loop->first ? 'list-item-first' : ($loop->last ? 'list-item-last' : '') }}">
+                                                                {{ $item }}
+                                                            </li>
+                                                            @endif
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
+                                                    @if(isset($block['content']['secondary_text']))
+                                                    <p style="margin: 0;">{{ $block['content']['secondary_text'] }}</p>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endif
+                                        </table>
+                                    </td>
+                                </tr>
                                 @elseif($blockName == 'two_columns')
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
@@ -259,7 +293,7 @@
                                 @elseif($blockName == 'button')
                                 <!-- Button Block : BEGIN -->
                                 <tr>
-                                    <td style="padding: 0; background-color: {{ $block['content']['background_color'] ?? '#ffffff' }};">
+                                    <td style="padding: 0; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};">
                                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
                                                 <td width="{{ $block['content']['container_width'] ?? '250' }}" 
