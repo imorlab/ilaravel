@@ -7,9 +7,9 @@
                     <i class="bi bi-envelope"></i>
                     <span class="nav-text">Envíos</span>
                 </a>
-                <a href="/todo" class="nav-item" data-side="left">
-                    <i class="bi bi-check2-square"></i>
-                    <span class="nav-text">Todo</span>
+                <a href="/cerberus" class="nav-item" data-side="right">
+                    <i class="bi bi-speedometer2"></i>
+                    <span class="nav-text">Cerberus</span>
                 </a>
             </div>
 
@@ -24,9 +24,9 @@
                     <i class="bi bi-journal-text"></i>
                     <span class="nav-text">Notas</span>
                 </a>
-                <a href="/dashboard" class="nav-item" data-side="right">
-                    <i class="bi bi-speedometer2"></i>
-                    <span class="nav-text">Panel</span>
+                <a href="/todo" class="nav-item" data-side="left">
+                    <i class="bi bi-check2-square"></i>
+                    <span class="nav-text">Todo</span>
                 </a>
             </div>
         </div>
@@ -36,11 +36,11 @@
 <style>
 /* Variables */
 :root {
-    --nav-height: 50px;
+    --nav-height: 20px;
     --notch-height: 35px;
     --notch-expanded-width: 270px;
     --notch-collapsed-width: 50px;
-    --primary-color: rgba(25, 25, 25, 0.95);
+    --primary-color: rgba(25, 25, 25, 1);
     --secondary-color: rgba(40, 40, 40, 0.95);
     --text-color: #fff;
     --animation-speed: 1s;
@@ -54,12 +54,13 @@
     right: 0;
     height: var(--nav-height);
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
+    background-color: var(--primary-color);
 }
 
 .nav-content {
     position: relative;
-    height: 100%;
+    height: 50px;
     width: var(--notch-collapsed-width);
     margin: 0 auto;
     transition: width var(--animation-speed) cubic-bezier(0.34, 1.56, 0.64, 1);

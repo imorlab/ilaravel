@@ -53,7 +53,7 @@ class CerberusEditor extends Component
             'header' => [
                 'active' => true,
                 'content' => [
-                    'logo' => 'https://via.placeholder.com/200x50',
+                    'logo' => 'https://picsum.photos/200/50.webp?random=1',
                     'alt' => 'Logo',
                     'width' => '600',
                     'alignment' => 'center',
@@ -63,7 +63,7 @@ class CerberusEditor extends Component
             'hero' => [
                 'active' => true,
                 'content' => [
-                    'image' => 'https://via.placeholder.com/600x300',
+                    'image' => 'https://picsum.photos/600/300.webp?random=1',
                     'alt' => 'Hero image',
                     'background_color' => '#ffffff',
                     'width' => '600',
@@ -86,11 +86,11 @@ class CerberusEditor extends Component
                 'active' => true,
                 'content' => [
                     'left' => [
-                        'image' => 'https://via.placeholder.com/270x270',
+                        'image' => 'https://picsum.photos/270/270.webp?random=1',
                         'text' => 'Left column content'
                     ],
                     'right' => [
-                        'image' => 'https://via.placeholder.com/270x270',
+                        'image' => 'https://picsum.photos/270/270.webp?random=1',
                         'text' => 'Right column content'
                     ],
                     'background_color' => '#f8f8f8'

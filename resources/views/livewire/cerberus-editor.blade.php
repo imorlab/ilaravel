@@ -1,7 +1,7 @@
 <div>
-    <div class="container-fluid">
+    <div class="container-fluid pt-5">
         <div class="row">
-            <div class="col-md-4 bg-light p-4">
+            <div class="col-md-4 bg-light p-4 rounded-3 shadow-sm">
                 <h4>Bloques de Contenido</h4>
                 <div class="list-group mt-4">
                     <!-- Configuración Global -->
@@ -10,7 +10,7 @@
                     <!-- Bloques de Contenido -->
                     @foreach($blocks as $key => $block)
                         @if($key !== 'settings')
-                            <div class="list-group-item mb-3">
+                            <div class="list-group-item rounded-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0">{{ ucfirst($key) }}</h5>
                                     <div>
@@ -64,10 +64,10 @@
             </div>
 
             <div class="col-md-8">
-                <div class="bg-white p-4 shadow-sm">
+                <div class="bg-light p-4 rounded-3 shadow-sm">
                     <h4>Vista Previa</h4>
-                    <div class="border p-3 mt-3">
-                        <div wire:poll.5s id="preview-container" style="width: 100%; height: 600px; overflow: auto;">
+                    <div class="border rounded-3 p-3 mt-3 bg-white">
+                        <div wire:poll.5s id="preview-container" style="width: 100%; height: 600px; overflow: auto; background: #fff;">
                             {!! $previewHtml !!}
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-<div class="list-group-item mb-3">
+<div class="list-group-item rounded-3 mb-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Configuración Global</h5>
     </div>
