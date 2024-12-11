@@ -12,14 +12,21 @@
 </div>
 
 <div class="row g-3 mt-1">
-    <div class="col-md-6">
-        <label class="form-label">Ancho de la imagen (px)</label>
+    <div class="col-md-4">
+        <label class="form-label">Ancho imagen (px)</label>
         <input type="number" class="form-control" 
                wire:model.live="blocks.{{ $blockKey }}.content.width"
                value="{{ $content['width'] ?? '600' }}"
                min="1" max="1200">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <label class="form-label">Padding (px)</label>
+        <input type="number" class="form-control" 
+               wire:model.live="blocks.{{ $blockKey }}.content.padding"
+               value="{{ $content['padding'] ?? '0' }}"
+               min="0" max="100">
+    </div>
+    <div class="col-md-4">
         <label class="form-label">Alineación</label>
         <select class="form-select" wire:model.live="blocks.{{ $blockKey }}.content.alignment">
             <option value="left">Izquierda</option>
@@ -29,6 +36,4 @@
     </div>
 </div>
 
-<div class="mt-3">
-    <x-email-blocks.color-picker :blockKey="$blockKey" :blockContent="$content" />
-</div>
+<x-email-blocks.color-picker :blockKey="$blockKey" :blockContent="$content" />

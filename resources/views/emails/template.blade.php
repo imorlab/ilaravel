@@ -212,16 +212,27 @@
                     @if($block['active'] && $blockName !== 'settings')
                         <tr>
                             <td style="background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }}; padding: 0px;">
-                                @if($blockName == 'header')
-                                <img src="{{ $block['content']['logo'] }}" 
-                                     alt="{{ $block['content']['alt'] }}"
-                                     style="width: {{ $block['content']['width'] ?? '200' }}px; max-width: 600px;">
-                                @elseif($blockName == 'hero')
-                                <img src="{{ $block['content']['image'] }}" 
-                                     alt="{{ $block['content']['alt'] }}"
-                                     width="{{ $block['content']['width'] ?? '600' }}"
-                                     style="width: {{ $block['content']['width'] ?? '600' }}px; max-width: 600px; height: auto; margin: {{ $block['content']['alignment'] == 'center' ? '0 auto' : ($block['content']['alignment'] == 'right' ? '0 0 0 auto' : '0') }}; display: block;"
-                                     class="g-img">
+                                @if($blockName == 'hero')
+                                <tr>
+                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: center; background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }};">
+                                        <img src="{{ $block['content']['image'] }}" 
+                                            alt="{{ $block['content']['alt'] }}"
+                                            width="{{ $block['content']['width'] ?? '600' }}"
+                                            style="width: {{ $block['content']['width'] ?? '600' }}px; max-width: 600px; height: auto; margin: {{ $block['content']['alignment'] == 'center' ? '0 auto' : ($block['content']['alignment'] == 'right' ? '0 0 0 auto' : '0') }}; display: block;"
+                                            class="g-img">
+                                    </td>
+                                </tr>
+                                @elseif($blockName == 'header')
+                                <tr>
+                                    <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: {{ $block['content']['alignment'] ?? 'center' }}; background-color: {{ $block['content']['background_color'] ?? '#f8f8f8' }};">
+                                        <img src="{{ $block['content']['image'] }}" 
+                                             width="{{ $block['content']['width'] ?? '200' }}"
+                                             height="{{ $block['content']['height'] ?? '50' }}"
+                                             alt="{{ $block['content']['alt'] }}"
+                                             border="0"
+                                             style="height: auto; background: {{ $block['content']['image_background_color'] ?? '#dddddd' }}; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                    </td>
+                                </tr>
                                 @elseif($blockName == 'content')
                                 <h1 style="margin: 0 0 10px 0; font-size: 25px; line-height: 30px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#ffffff' : '#333333' }}; font-weight: normal;">
                                     {{ $block['content']['title'] }}
@@ -257,7 +268,7 @@
                                                            padding-bottom: {{ $block['content']['padding_bottom'] ?? '0' }}px;
                                                            padding-left: {{ $block['content']['padding_left'] ?? '0' }}px;
                                                            padding-right: {{ $block['content']['padding_right'] ?? '0' }}px;">
-                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="{{ $block['content']['width'] ?? '100' }}" 
+                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="{{ $block['content']['width'] ?? '100' }}" align="{{ $block['content']['alignment'] ?? 'left' }}" 
                                                            style="margin: {{ $block['content']['alignment'] == 'center' ? '0 auto' : '0' }};">
                                                         <tr>
                                                             <td align="{{ $block['content']['alignment'] ?? 'left' }}" 
