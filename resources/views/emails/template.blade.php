@@ -30,7 +30,7 @@
         :root {
             color-scheme: light;
         }
-        
+
         .email-template {
             /* What it does: Tells the email client that both light and dark styles are provided */
             color-scheme: light;
@@ -195,7 +195,7 @@
 
         <!-- Preview Text Spacing Hack : BEGIN -->
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-            &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+            &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
         <!-- Preview Text Spacing Hack : END -->
 
@@ -215,7 +215,7 @@
                                 @if($blockName == 'hero')
                                 <tr>
                                     <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: center; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
-                                        <img src="{{ $block['content']['image'] }}" 
+                                        <img src="{{ $block['content']['image'] }}"
                                             alt="{{ $block['content']['alt'] }}"
                                             width="{{ $block['content']['width'] ?? '600' }}"
                                             style="width: {{ $block['content']['width'] ?? '600' }}px; max-width: 600px; height: auto; margin: {{ $block['content']['alignment'] == 'center' ? '0 auto' : ($block['content']['alignment'] == 'right' ? '0 0 0 auto' : '0') }}; display: block;"
@@ -225,7 +225,7 @@
                                 @elseif($blockName == 'header')
                                 <tr>
                                     <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: {{ $block['content']['alignment'] ?? 'center' }}; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
-                                        <img src="{{ $block['content']['image'] }}" 
+                                        <img src="{{ $block['content']['image'] }}"
                                              width="{{ $block['content']['width'] ?? '200' }}"
                                              height="{{ $block['content']['height'] ?? '50' }}"
                                              alt="{{ $block['content']['alt'] }}"
@@ -280,7 +280,7 @@
                                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                                     @if(isset($block['content']['left']['icon']) || isset($block['content']['left']['label']))
                                                     <tr>
-                                                        <td valign="top" width="250" align="center">
+                                                        <td valign="middle" width="250" align="center">
                                                             <table cellspacing="0" cellpadding="0" border="0" width="250" align="center">
                                                                 <tr>
                                                                     @if(isset($block['content']['left']['icon']))
@@ -315,7 +315,7 @@
                                                     @if(isset($block['content']['left']['title']))
                                                     <tr>
                                                         <td align="left">
-                                                            <p style="font-family: Century Gothic, sans-serif; padding: 0; font-size: 26px; font-weight: 700; line-height: 30px; color: #000000; text-align: left; margin: 0;">
+                                                            <p style="font-family: Century Gothic, sans-serif; padding: 0; font-size: 26px; font-weight: 700; line-height: 30px; color: #000000; text-align: left; margin: 0 0 0 20px;">
                                                                 @if(isset($block['content']['left']['highlight_text']))
                                                                 <span style="color: {{ $block['content']['left']['highlight_color'] ?? '#78CBCF' }};">{{ $block['content']['left']['highlight_text'] }}</span>
                                                                 @endif
@@ -333,7 +333,7 @@
                                                     @if(isset($block['content']['left']['text']))
                                                     <tr>
                                                         <td align="left">
-                                                            <p style="font-family: Arial, Helvetica, sans-serif; padding: 0; font-size: 14px; font-weight: 400; line-height: 20px; color: #000000; text-align: left; margin: 0;">
+                                                            <p style="font-family: Arial, Helvetica, sans-serif; padding: 0; font-size: 14px; font-weight: 400; line-height: 20px; color: #000000; text-align: left; margin: 0 0 0 20px;">
                                                                 {{ $block['content']['left']['text'] }}
                                                             </p>
                                                         </td>
@@ -347,24 +347,24 @@
                                                     @endif
                                                     @if(isset($block['content']['left']['button_text']) && isset($block['content']['left']['button_url']))
                                                     <tr>
-                                                        <td width="250" align="center" style="font-weight: bold; text-align: center; font-family: sans-serif; font-size: 12px; line-height: 20px; color: #000000; padding-top: 25px; padding-bottom: 30px; background-color: #fafafa; margin: 0;" class="darkmode-bg">
-                                                            <table cellspacing="0" cellpadding="0" border="0" width="250" align="center">
+                                                        <td width="250" align="{{ $block['content']['left']['button_alignment'] ?? 'center' }}" style="font-weight: bold; text-align: {{ $block['content']['left']['button_alignment'] ?? 'center' }}; font-family: sans-serif; font-size: 12px; line-height: 20px; color: #000000; padding: 20px; background-color: #fafafa; margin: 0;" class="darkmode-bg">
+                                                            <table cellspacing="0" cellpadding="0" border="0" width="250" align="{{ $block['content']['left']['button_alignment'] ?? 'center' }}">
                                                                 <tr>
-                                                                    <td align="center" style="font-family: Arial, Helvetica, sans-serif; text-align: center; vertical-align: middle;">
+                                                                    <td align="{{ $block['content']['left']['button_alignment'] ?? 'center' }}" style="font-family: Arial, Helvetica, sans-serif; text-align: {{ $block['content']['left']['button_alignment'] ?? 'center' }}; vertical-align: middle;">
                                                                         <div class="btn-rounded" style="font-family: Arial, Helvetica, sans-serif;">
                                                                             <!--[if mso]>
                                                                             <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
                                                                                 href="{{ $block['content']['left']['button_url'] }}"
-                                                                                style="height:34px;v-text-anchor:middle;width:100px;" arcsize="95%" stroke="f" fillcolor="#FFD102">
+                                                                                style="height:34px;v-text-anchor:middle;width:100px;" arcsize="95%" stroke="f" fillcolor="{{ $block['content']['left']['button_background'] ?? '#007bff' }}">
                                                                                 <w:anchorlock/>
-                                                                                <center style="font-family: Arial, Helvetica, sans-serif; color:#000000; font-size:12px; font-weight:bold; line-height:16px; text-align:center; display: block; margin: auto 0;">
+                                                                                <center style="font-family: Arial, Helvetica, sans-serif; color:{{ $block['content']['left']['button_text_color'] ?? '#fafafa' }}; font-size:12px; font-weight:bold; line-height:16px; text-align:center; display: block; margin: auto 0;">
                                                                                     {{ $block['content']['left']['button_text'] }}
                                                                                 </center>
                                                                             </v:roundrect>
                                                                             <![endif]-->
                                                                             <!--[if !mso]><!-->
                                                                             <a class="keep-black" href="{{ $block['content']['left']['button_url'] }}"
-                                                                                style="display: inline-block; font-weight: bold; background-color: #FFD102; border-radius:32px; color:#000000; font-family: Arial, Helvetica, sans-serif; font-size:12px; line-height:34px; text-align:center; text-decoration:none; width:100px; -webkit-text-size-adjust:none; height: 34px; vertical-align: middle;">
+                                                                                style="display: inline-block; font-weight: bold; background-color: {{ $block['content']['left']['button_background'] ?? '#007bff' }}; border-radius:32px; color: {{ $block['content']['left']['button_text_color'] ?? '#fafafa' }}; font-family: Arial, Helvetica, sans-serif; font-size:12px; line-height:34px; text-align:center; text-decoration:none; width:100px; -webkit-text-size-adjust:none; height: 34px; vertical-align: middle;">
                                                                                 {{ $block['content']['left']['button_text'] }}
                                                                             </a>
                                                                             <!--<![endif]-->
@@ -382,10 +382,10 @@
                                             </td>
                                             <td width="{{ $block['content']['right']['width'] ?? '280' }}" valign="middle" align="center" style="text-align: right;">
                                                 <img src="{{ $block['content']['right']['image'] }}"
-                                                    alt="{{ $block['content']['right']['alt'] ?? '' }}" 
-                                                    width="{{ $block['content']['right']['width'] ?? '280' }}" 
+                                                    alt="{{ $block['content']['right']['alt'] ?? '' }}"
+                                                    width="{{ $block['content']['right']['width'] ?? '280' }}"
                                                     height="" border="0" align="center"
-                                                    class="darkmode-bg" 
+                                                    class="darkmode-bg"
                                                     style="width: {{ $block['content']['right']['width'] ?? '280' }}px; max-width: {{ $block['content']['right']['width'] ?? '280' }}px; height: auto; background: #fafafa; mso-height-rule: exactly;">
                                             </td>
                                         </tr>
@@ -396,28 +396,28 @@
                                     <td style="padding: 0; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
                                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
-                                                <td width="{{ $block['content']['container_width'] ?? '250' }}" 
-                                                    align="{{ $block['content']['alignment'] ?? 'left' }}" 
+                                                <td width="{{ $block['content']['container_width'] ?? '250' }}"
+                                                    align="{{ $block['content']['alignment'] ?? 'left' }}"
                                                     style="padding-top: {{ $block['content']['padding_top'] ?? '0' }}px;
                                                            padding-bottom: {{ $block['content']['padding_bottom'] ?? '0' }}px;
                                                            padding-left: {{ $block['content']['padding_left'] ?? '0' }}px;
                                                            padding-right: {{ $block['content']['padding_right'] ?? '0' }}px;">
-                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="{{ $block['content']['width'] ?? '100' }}" align="{{ $block['content']['alignment'] ?? 'left' }}" 
+                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="{{ $block['content']['width'] ?? '100' }}" align="{{ $block['content']['alignment'] ?? 'left' }}"
                                                            style="margin: {{ $block['content']['alignment'] == 'center' ? '0 auto' : '0' }};">
                                                         <tr>
-                                                            <td align="{{ $block['content']['alignment'] ?? 'left' }}" 
-                                                                valign="middle" 
+                                                            <td align="{{ $block['content']['alignment'] ?? 'left' }}"
+                                                                valign="middle"
                                                                 style="text-align: {{ $block['content']['alignment'] ?? 'left' }};">
                                                                 <div class="btn-rounded">
                                                                     <!--[if mso]>
-                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" 
-                                                                               xmlns:w="urn:schemas-microsoft-com:office:word" 
+                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                               xmlns:w="urn:schemas-microsoft-com:office:word"
                                                                                href="{{ $block['content']['url'] ?? '#' }}"
                                                                                style="height:{{ $block['content']['height'] ?? '34' }}px;
                                                                                       v-text-anchor:middle;
-                                                                                      width:{{ $block['content']['width'] ?? '100' }}px;" 
-                                                                               arcsize="{{ $block['content']['border_radius'] ?? '32' }}%" 
-                                                                               stroke="f" 
+                                                                                      width:{{ $block['content']['width'] ?? '100' }}px;"
+                                                                               arcsize="{{ $block['content']['border_radius'] ?? '32' }}%"
+                                                                               stroke="f"
                                                                                fillcolor="{{ $block['content']['button_background_color'] ?? '#FFD102' }}">
                                                                         <w:anchorlock/>
                                                                         <center style="color:{{ $block['content']['text_color'] ?? '#000000' }};
@@ -430,19 +430,19 @@
                                                                     </v:roundrect>
                                                                     <![endif]-->
                                                                     <!--[if !mso]><!-->
-                                                                    <a href="{{ $block['content']['url'] ?? '#' }}" 
+                                                                    <a href="{{ $block['content']['url'] ?? '#' }}"
                                                                        class="keep-black"
-                                                                       style="background-color: {{ $block['content']['button_background_color'] ?? '#FFD102' }}; 
-                                                                              border-radius: {{ $block['content']['border_radius'] ?? '32' }}px; 
-                                                                              color: {{ $block['content']['text_color'] ?? '#000000' }}; 
-                                                                              display: inline-block; 
-                                                                              font-family: Arial, sans-serif; 
-                                                                              font-size: {{ $block['content']['font_size'] ?? '12' }}px; 
-                                                                              font-weight: {{ $block['content']['font_weight'] ?? 'bold' }}; 
-                                                                              line-height: {{ $block['content']['height'] ?? '34' }}px; 
-                                                                              text-align: center; 
-                                                                              text-decoration: none; 
-                                                                              width: {{ $block['content']['width'] ?? '100' }}px; 
+                                                                       style="background-color: {{ $block['content']['button_background_color'] ?? '#FFD102' }};
+                                                                              border-radius: {{ $block['content']['border_radius'] ?? '32' }}px;
+                                                                              color: {{ $block['content']['text_color'] ?? '#000000' }};
+                                                                              display: inline-block;
+                                                                              font-family: Arial, sans-serif;
+                                                                              font-size: {{ $block['content']['font_size'] ?? '12' }}px;
+                                                                              font-weight: {{ $block['content']['font_weight'] ?? 'bold' }};
+                                                                              line-height: {{ $block['content']['height'] ?? '34' }}px;
+                                                                              text-align: center;
+                                                                              text-decoration: none;
+                                                                              width: {{ $block['content']['width'] ?? '100' }}px;
                                                                               height: {{ $block['content']['height'] ?? '34' }}px;
                                                                               vertical-align: middle;
                                                                               -webkit-text-size-adjust: none;">

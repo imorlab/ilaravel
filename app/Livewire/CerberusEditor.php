@@ -15,7 +15,7 @@ class CerberusEditor extends Component
     public function mount()
     {
         $template = CerberusTemplate::where('is_active', true)->first();
-        
+
         if ($template) {
             $defaultBlocks = $this->getDefaultBlocks();
             $this->blocks = $template->blocks;
@@ -35,7 +35,7 @@ class CerberusEditor extends Component
         } else {
             $this->blocks = $this->getDefaultBlocks();
         }
-        
+
         $this->templateId = $template->id ?? null;
         $this->updatePreview();
     }
@@ -46,18 +46,19 @@ class CerberusEditor extends Component
             'settings' => [
                 'active' => true,
                 'content' => [
-                    'background_color' => '#ffffff',
-                    'container_background' => '#f8f8f8'
+                    'background_color' => '#f9f0ff',
+                    'container_background' => '#fafafa'
                 ]
             ],
             'header' => [
                 'active' => true,
                 'content' => [
-                    'logo' => 'https://picsum.photos/200/50.webp?random=1',
+                    'image' => 'https://picsum.photos/200/50.webp?random=1',
                     'alt' => 'Logo',
-                    'width' => '600',
+                    'width' => '200',
+                    'padding' => '20',
                     'alignment' => 'center',
-                    'background_color' => '#f8f8f8'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'hero' => [
@@ -65,7 +66,7 @@ class CerberusEditor extends Component
                 'content' => [
                     'image' => 'https://picsum.photos/600/300.webp?random=1',
                     'alt' => 'Hero image',
-                    'background_color' => '#ffffff',
+                    'background_color' => '#fafafa',
                     'width' => '600',
                     'alignment' => 'center'
                 ]
@@ -79,21 +80,27 @@ class CerberusEditor extends Component
                         'text' => 'Read More',
                         'url' => '#'
                     ],
-                    'background_color' => '#f8f8f8'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'two_columns' => [
                 'active' => true,
                 'content' => [
                     'left' => [
-                        'image' => 'https://picsum.photos/270/270.webp?random=1',
-                        'text' => 'Left column content'
+                        'icon' => 'https://picsum.photos/270/270.webp?random=1',
+                        'label' => 'Left Column',
+                        'title' => 'Left Column Title',
+                        'text' => 'Left column content',
+                        'button_text' => 'Read More',
+                        'button_url' => '#',
+                        'button_background' => '#007bff',
+                        'button_text_color' => '#fafafa',
+                        'button_alignment' => 'left',
                     ],
                     'right' => [
                         'image' => 'https://picsum.photos/270/270.webp?random=1',
-                        'text' => 'Right column content'
                     ],
-                    'background_color' => '#f8f8f8'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'button' => [
@@ -103,10 +110,10 @@ class CerberusEditor extends Component
                     'url' => '#',
                     'width' => '100',
                     'height' => '34',
-                    'alignment' => 'left',
-                    'background_color' => '#ffffff',
-                    'button_background_color' => '#FFD102',
-                    'text_color' => '#000000',
+                    'alignment' => 'center',
+                    'background_color' => '#fafafa',
+                    'button_background_color' => '#007bff',
+                    'text_color' => '#fafafa',
                     'font_size' => '12',
                     'font_weight' => 'bold',
                     'border_radius' => '32',
@@ -121,7 +128,7 @@ class CerberusEditor extends Component
                     'company' => 'Your Company Name',
                     'address' => '123 Street Name, City, Country',
                     'phone' => '+1 234 567 890',
-                    'background_color' => '#f8f8f8'
+                    'background_color' => '#fafafa'
                 ]
             ]
         ];

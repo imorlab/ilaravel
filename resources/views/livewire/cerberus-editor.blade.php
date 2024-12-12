@@ -1,5 +1,5 @@
 <div>
-    <div class="container-fluid pt-5">
+    <div class="container-fluid py-5">
         <div class="row">
             <div class="col-md-4 bg-light p-4 rounded-3 shadow-sm">
                 <h4>Bloques de Contenido</h4>
@@ -15,7 +15,7 @@
                                     <h5 class="mb-0">{{ ucfirst($key) }}</h5>
                                     <div>
                                         <div class="form-check form-switch d-inline-block me-2">
-                                            <input class="form-check-input" type="checkbox" role="switch" 
+                                            <input class="form-check-input" type="checkbox" role="switch"
                                                 wire:model.live="blocks.{{ $key }}.active"
                                                 id="block_{{ $key }}">
                                         </div>
@@ -55,22 +55,23 @@
                         @endif
                     @endforeach
                 </div>
-                
-                <div class="mt-4">
-                    <button class="btn btn-success" wire:click="downloadTemplate">
-                        Download Template
-                    </button>
-                </div>
+
+
             </div>
 
             <div class="col-md-8">
                 <div class="bg-light p-4 rounded-3 shadow-sm">
                     <h4>Vista Previa</h4>
                     <div class="border rounded-3 p-3 mt-3 bg-white">
-                        <div wire:poll.5s id="preview-container" style="width: 100%; height: 600px; overflow: auto; background: #fff;">
+                        <div wire:poll.5s id="preview-container">
                             {!! $previewHtml !!}
                         </div>
                     </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <button class="btn btn-success" wire:click="downloadTemplate">
+                        Download Template
+                    </button>
                 </div>
             </div>
         </div>

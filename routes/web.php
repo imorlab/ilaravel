@@ -54,6 +54,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/dashboard/refresh-weather', [DashboardController::class, 'refreshWeather'])->name('dashboard.refresh-weather');
 Route::get('/dashboard/refresh-news', [DashboardController::class, 'refreshNews'])->name('dashboard.refresh-news');
 
+// Cerberus
 Route::get('/cerberus', function () {
     return view('cerberus.editor');
 })->name('cerberus.editor');

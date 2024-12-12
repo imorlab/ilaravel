@@ -45,14 +45,14 @@
     <div class="col-md-4 mb-3">
         <label class="form-label">Color del Texto</label>
         <div class="input-group">
-            <input type="color" class="form-control form-control-color" 
+            <input type="color" class="form-control form-control-color"
                 wire:model.live="blocks.{{ $blockKey }}.content.text_color"
-                value="{{ $content['text_color'] ?? '#000000' }}"
+                value="{{ $content['text_color'] ?? '#fafafa' }}"
                 title="Elige el color del texto">
-            <input type="text" class="form-control" 
+            <input type="text" class="form-control"
                 wire:model.live="blocks.{{ $blockKey }}.content.text_color"
-                value="{{ $content['text_color'] ?? '#000000' }}"
-                placeholder="#000000">
+                value="{{ $content['text_color'] ?? '#fafafa' }}"
+                placeholder="#fafafa">
         </div>
     </div>
 </div>
@@ -78,14 +78,14 @@
     <div class="col-md-6 mb-3">
     <label class="form-label">Color de Fondo del Botón</label>
         <div class="input-group">
-            <input type="color" class="form-control form-control-color" 
+            <input type="color" class="form-control form-control-color"
                 wire:model.live="blocks.{{ $blockKey }}.content.button_background_color"
-                value="{{ $content['button_background_color'] ?? '#FFD102' }}"
+                value="{{ $content['button_background_color'] ?? '#007bff' }}"
                 title="Elige el color de fondo del botón">
-            <input type="text" class="form-control" 
+            <input type="text" class="form-control"
                 wire:model.live="blocks.{{ $blockKey }}.content.button_background_color"
-                value="{{ $content['button_background_color'] ?? '#FFD102' }}"
-                placeholder="#FFD102">
+                value="{{ $content['button_background_color'] ?? '#007bff' }}"
+                placeholder="#007bff">
         </div>
     </div>
     <div class="col-md-6 mb-3">
