@@ -153,4 +153,94 @@ Desarrollado por [Imorlab](https://github.com/imorlab)
 
 ---
 
+# iLaravel - Email Template Editor
+
+Un editor de plantillas de correo electrónico construido con Laravel y Livewire.
+
+## Características
+
+- Editor de plantillas de correo electrónico con bloques arrastrables
+- Bloques predefinidos para:
+  - Encabezados con imágenes
+  - Contenido de texto
+  - Botones
+  - Columnas
+  - Pies de página
+- Sistema de guardado de bloques personalizados
+  - Duplicación de bloques existentes
+  - Eliminación de bloques guardados
+  - Organización por categorías
+- Guardado de plantillas completas
+- Vista previa en tiempo real
+- Interfaz intuitiva y responsive
+- Notificaciones con SweetAlert2
+
+## Requisitos
+
+- PHP >= 8.1
+- Laravel >= 10.x
+- Composer
+- Node.js y NPM
+
+## Instalación
+
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/tu-usuario/ilaravel.git
+```
+
+2. Instalar dependencias de PHP:
+```bash
+composer install
+```
+
+3. Copiar el archivo de configuración:
+```bash
+cp .env.example .env
+```
+
+4. Generar la clave de la aplicación:
+```bash
+php artisan key:generate
+```
+
+5. Configurar la base de datos en el archivo .env
+
+6. Ejecutar las migraciones:
+```bash
+php artisan migrate
+```
+
+7. Ejecutar los seeders:
+```bash
+php artisan db:seed
+```
+
+## Uso
+
+1. Iniciar el servidor de desarrollo:
+```bash
+php artisan serve
+```
+
+2. Acceder a la aplicación en `http://localhost:8000`
+
+3. Para editar plantillas:
+   - Arrastra y suelta los bloques predefinidos
+   - Personaliza el contenido de cada bloque
+   - Guarda bloques personalizados para reutilizarlos
+   - Guarda la plantilla completa cuando esté lista
+
+## Contribuir
+
+1. Fork el proyecto
+2. Crea tu rama de características (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
 #Iml2024

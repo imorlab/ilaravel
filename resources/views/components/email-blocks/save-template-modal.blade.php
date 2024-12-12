@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nombre de la Plantilla</label>
-                    <input type="text" class="form-control" wire:model="templateName">
+                    <input type="text" class="form-control" wire:model="templateNameSave">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Descripción (opcional)</label>
@@ -47,7 +47,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" wire:click="saveTemplate">
+                <button type="button" class="btn btn-primary" wire:click="saveAsNewTemplate">
                     Guardar Plantilla
                 </button>
             </div>

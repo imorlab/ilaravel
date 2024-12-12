@@ -21,16 +21,16 @@ class CerberusBlocksSeeder extends Seeder
                     'width' => '200',
                     'padding' => '20',
                     'alignment' => 'center',
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'hero' => [
                 'active' => true,
                 'type' => 'hero',
                 'content' => [
-                    'image' => 'https://picsum.photos/600/300.webp?random=1',
+                    'image' => 'https://picsum.photos/600/300.webp?random=2',
                     'alt' => 'Hero image',
-                    'background_color' => '#ffffff',
+                    'background_color' => '#fafafa',
                     'width' => '600',
                     'alignment' => 'center'
                 ]
@@ -45,7 +45,7 @@ class CerberusBlocksSeeder extends Seeder
                         'text' => 'Read More',
                         'url' => '#'
                     ],
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'two_columns' => [
@@ -53,20 +53,20 @@ class CerberusBlocksSeeder extends Seeder
                 'type' => 'two_columns',
                 'content' => [
                     'left' => [
-                        'icon' => 'https://picsum.photos/270/270.webp?random=1',
+                        'icon' => 'https://picsum.photos/270/270.webp?random=3',
                         'label' => 'Left Column',
                         'title' => 'Left Column Title',
                         'text' => 'Left column content',
                         'button_text' => 'Read More',
                         'button_url' => '#',
                         'button_background' => '#007bff',
-                        'button_text_color' => '#ffffff',
+                        'button_text_color' => '#fafafa',
                         'button_alignment' => 'left',
                     ],
                     'right' => [
-                        'image' => 'https://picsum.photos/270/270.webp?random=1',
+                        'image' => 'https://picsum.photos/270/270.webp?random=4',
                     ],
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'button' => [
@@ -78,9 +78,9 @@ class CerberusBlocksSeeder extends Seeder
                     'width' => '100',
                     'height' => '34',
                     'alignment' => 'center',
-                    'background_color' => '#ffffff',
+                    'background_color' => '#fafafa',
                     'button_background_color' => '#007bff',
-                    'text_color' => '#ffffff',
+                    'text_color' => '#fafafa',
                     'font_size' => '12',
                     'font_weight' => 'bold',
                     'border_radius' => '32',
@@ -96,7 +96,7 @@ class CerberusBlocksSeeder extends Seeder
                     'company' => 'Your Company Name',
                     'address' => '123 Street Name, City, Country',
                     'phone' => '+1 234 567 890',
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ]
         ];

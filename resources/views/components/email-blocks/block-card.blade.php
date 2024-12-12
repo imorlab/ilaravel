@@ -8,17 +8,25 @@
                 <small class="text-muted">{{ $block['type'] ?? $blockKey }}</small>
             </div>
             <div class="btn-group">
-                <button class="btn btn-sm btn-outline-primary" 
-                        wire:click="duplicateBlock('{{ $blockKey }}')"
-                        title="Duplicar bloque">
-                    <i class="bi bi-files"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#saveBlockModal{{ $blockKey }}"
-                        title="Guardar bloque">
-                    <i class="bi bi-bookmark-plus"></i>
-                </button>
+                @if(!str_starts_with($blockKey, 'saved_'))
+                    <button class="btn btn-sm btn-outline-primary" 
+                            wire:click="duplicateBlock('{{ $blockKey }}')"
+                            title="Duplicar bloque">
+                        <i class="bi bi-files"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#saveBlockModal{{ $blockKey }}"
+                            title="Guardar bloque">
+                        <i class="bi bi-bookmark-plus"></i>
+                    </button>
+                @else
+                    <button class="btn btn-sm btn-outline-danger"
+                            wire:click="deleteSavedBlock('{{ $blockKey }}')"
+                            title="Eliminar bloque">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                @endif
             </div>
         </div>
 

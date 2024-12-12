@@ -9,11 +9,12 @@ use App\Models\User;
 class CerberusSavedBlock extends Model
 {
     protected $fillable = [
-        'user_id',
         'name',
-        'category',
         'type',
         'content',
+        'category',
+        'is_active',
+        'user_id',
         'thumbnail',
     ];
 
