@@ -189,7 +189,7 @@
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
-            {{ $preheader ?? 'Newsletter preview text' }}
+            {{ isset($blocks['settings']['content']['preheader']) ? $blocks['settings']['content']['preheader'] : 'Newsletter preview text' }}
         </div>
         <!-- Visually Hidden Preheader Text : END -->
 

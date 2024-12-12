@@ -50,6 +50,15 @@ Este es un sistema de productividad personal desarrollado con Laravel 10, que in
 - Gestión de listas de suscriptores
 - Análisis de engagement
 
+#### Sistema de Plantillas de Email
+- Editor visual de plantillas de email con bloques personalizables
+- Interfaz moderna con pestañas personalizadas para diferentes tipos de bloques (Headers, Contenido, Footers)
+- Vista previa en tiempo real de las plantillas
+- Guardado y reutilización de bloques individuales
+- Sistema de previsualización de plantillas completas
+- Gestión de plantillas activas y archivadas
+- Soporte para plantillas responsivas
+
 #### Dashboard
 - Vista general de estadísticas
 - Gráficos de progreso

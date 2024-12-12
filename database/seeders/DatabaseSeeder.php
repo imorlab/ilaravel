@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\AdminUserSeeder;
 use Database\Seeders\NotesSeeder;
 use Database\Seeders\TodoSeeder;
+use Database\Seeders\CerberusBlocksSeeder;
+use Database\Seeders\CerberusTemplatesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +26,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdminUserSeeder::class,
+            CerberusBlocksSeeder::class,
+            CerberusTemplatesSeeder::class,
             NotesSeeder::class,
             TodoSeeder::class,
         ]);

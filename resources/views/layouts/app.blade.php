@@ -103,10 +103,9 @@
 
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @livewireScripts
     <x-livewire-alert::scripts />
+    @livewireScripts
     @stack('scripts')
     <script>
         window.addEventListener('load', function() {
@@ -115,12 +114,12 @@
                 document.getElementById('preloader').style.display = 'none';
             }, 500);
         });
-        
+
         // Prevenir múltiples inicializaciones
         if (typeof window.livewireInitialized === 'undefined') {
             window.livewireInitialized = false;
         }
-        
+
         document.addEventListener('livewire:initialized', () => {
             if (!window.livewireInitialized) {
                 window.livewireInitialized = true;
