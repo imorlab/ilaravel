@@ -109,7 +109,6 @@
     @stack('scripts')
     <script>
         window.addEventListener('load', function() {
-            document.getElementById('preloader').classList.add('loaded');
             setTimeout(function() {
                 document.getElementById('preloader').style.display = 'none';
             }, 500);
@@ -123,7 +122,18 @@
         document.addEventListener('livewire:initialized', () => {
             if (!window.livewireInitialized) {
                 window.livewireInitialized = true;
-                console.log('Livewire initialized once');
+                // Inicializar componentes de Bootstrap
+                const accordionElements = document.querySelectorAll('.accordion-collapse');
+                accordionElements.forEach(element => {
+                    new bootstrap.Collapse(element, {
+                        toggle: false
+                    });
+                });
+
+                const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
+                tabElements.forEach(element => {
+                    new bootstrap.Tab(element);
+                });
             }
         });
     </script>

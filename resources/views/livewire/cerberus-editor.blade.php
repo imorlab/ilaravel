@@ -1,4 +1,3 @@
-
 <div>
     <style>
         .nav-tabs-custom {
@@ -45,80 +44,84 @@
                     </button>
                 </div>
 
-                <div class="accordion" id="blocksAccordion">
-                    <!-- Bloques del Sistema -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemBlocks">
-                                Bloques Disponibles
-                            </button>
-                        </h2>
-                        <div id="systemBlocks" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                <ul class="nav nav-tabs-custom mb-3">
-                                    <li class="nav-item-custom">
-                                        <a class="nav-link-custom active" data-bs-toggle="tab" href="#headers">Headers</a>
-                                    </li>
-                                    <li class="nav-item-custom">
-                                        <a class="nav-link-custom" data-bs-toggle="tab" href="#content">Contenido</a>
-                                    </li>
-                                    <li class="nav-item-custom">
-                                        <a class="nav-link-custom" data-bs-toggle="tab" href="#footers">Footers</a>
-                                    </li>
-                                </ul>
+                <div wire:ignore>
+                    <div class="accordion" id="blocksAccordion">
+                        <!-- Bloques del Sistema -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemBlocks">
+                                    Bloques Disponibles
+                                </button>
+                            </h2>
+                            <div id="systemBlocks" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <div wire:ignore>
+                                        <ul class="nav nav-tabs-custom mb-3">
+                                            <li class="nav-item-custom">
+                                                <a class="nav-link-custom active" data-bs-toggle="tab" href="#headers">Headers</a>
+                                            </li>
+                                            <li class="nav-item-custom">
+                                                <a class="nav-link-custom" data-bs-toggle="tab" href="#content">Contenido</a>
+                                            </li>
+                                            <li class="nav-item-custom">
+                                                <a class="nav-link-custom" data-bs-toggle="tab" href="#footers">Footers</a>
+                                            </li>
+                                        </ul>
+                                    </div>
 
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="headers">
-                                        @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['header', 'hero']))
-                                                <x-email-blocks.block-card :block="$block" :blockKey="$key" />
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="tab-pane fade" id="content">
-                                        @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['text', 'two_columns', 'button']))
-                                                <x-email-blocks.block-card :block="$block" :blockKey="$key" />
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="tab-pane fade" id="footers">
-                                        @foreach($blocks as $key => $block)
-                                            @if($key === 'footer')
-                                                <x-email-blocks.block-card :block="$block" :blockKey="$key" />
-                                            @endif
-                                        @endforeach
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="headers">
+                                            @foreach($blocks as $key => $block)
+                                                @if(in_array($key, ['header', 'hero']))
+                                                    <x-email-blocks.block-card :block="$block" :blockKey="$key" />
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <div class="tab-pane fade" id="content">
+                                            @foreach($blocks as $key => $block)
+                                                @if(in_array($key, ['text', 'two_columns', 'button']))
+                                                    <x-email-blocks.block-card :block="$block" :blockKey="$key" />
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <div class="tab-pane fade" id="footers">
+                                            @foreach($blocks as $key => $block)
+                                                @if($key === 'footer')
+                                                    <x-email-blocks.block-card :block="$block" :blockKey="$key" />
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Bloques Guardados -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#savedBlocks">
-                                Mis Bloques Guardados ({{ $savedBlocksCount ?? 0 }}/10)
-                            </button>
-                        </h2>
-                        <div id="savedBlocks" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <div class="row g-2">
-                                    @forelse($savedBlocks ?? [] as $savedBlock)
-                                        <div class="col-6">
-                                            <div class="card">
-                                                <img src="{{ $savedBlock->thumbnail }}" class="card-img-top" alt="{{ $savedBlock->name }}">
-                                                <div class="card-body p-2">
-                                                    <h6 class="card-title mb-0">{{ $savedBlock->name }}</h6>
-                                                    <small class="text-muted">{{ $savedBlock->category }}</small>
+                        <!-- Bloques Guardados -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#savedBlocks">
+                                    Mis Bloques Guardados ({{ $savedBlocksCount ?? 0 }}/10)
+                                </button>
+                            </h2>
+                            <div id="savedBlocks" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <div class="row g-2">
+                                        @forelse($savedBlocks ?? [] as $savedBlock)
+                                            <div class="col-6">
+                                                <div class="card">
+                                                    <img src="{{ $savedBlock->thumbnail }}" class="card-img-top" alt="{{ $savedBlock->name }}">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title mb-0">{{ $savedBlock->name }}</h6>
+                                                        <small class="text-muted">{{ $savedBlock->category }}</small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @empty
-                                        <div class="col-12 text-center py-3">
-                                            <p class="text-muted mb-0">No tienes bloques guardados</p>
-                                        </div>
-                                    @endforelse
+                                        @empty
+                                            <div class="col-12 text-center py-3">
+                                                <p class="text-muted mb-0">No tienes bloques guardados</p>
+                                            </div>
+                                        @endforelse
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -165,19 +168,3 @@
         <x-email-blocks.save-block-modal :blockKey="$key" :blockType="$block['type']" :block="$block" />
     @endforeach
 </div>
-
-@push('scripts')
-<script>
-    document.addEventListener('livewire:init', () => {
-        // Inicializar las pestañas de Bootstrap
-        const triggerTabList = [].slice.call(document.querySelectorAll('#systemBlocks .nav-link'));
-        triggerTabList.forEach(function (triggerEl) {
-            const tabTrigger = new bootstrap.Tab(triggerEl);
-            triggerEl.addEventListener('click', function (event) {
-                event.preventDefault();
-                tabTrigger.show();
-            });
-        });
-    });
-</script>
-@endpush
