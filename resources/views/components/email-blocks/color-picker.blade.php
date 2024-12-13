@@ -1,4 +1,4 @@
-@props(['blockKey', 'blockContent', 'label' => 'Fondo del Bloque', 'colorKey' => 'background_color', 'defaultColor' => '#f8f8f8'])
+@props(['blockKey', 'blockContent', 'label' => 'Fondo del Bloque', 'colorKey' => 'background_color', 'defaultColor' => '#ededed'])
 
 <div class="mb-3">
     <label class="form-label">{{ $label }}</label>

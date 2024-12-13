@@ -54,7 +54,7 @@
         }
 
         .email-preview {
-            background-color: #f8f9fa;
+            /* background-color: #f8f9fa; */
             border: 1px solid #dee2e6;
             border-radius: 0.375rem;
         }
@@ -69,119 +69,6 @@
 
         .email-block-content {
             position: relative;
-        }
-
-        .email-block-wrapper:hover .block-controls {
-            opacity: 1 !important;
-        }
-
-        .block-controls {
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 0.375rem;
-            padding: 0.25rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: opacity 0.2s ease;
-        }
-
-        .cursor-move {
-            cursor: move;
-        }
-
-        .sortable-drag {
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0.8;
-        }
-
-        .sortable-ghost {
-            opacity: 0.4;
-            background: #f8f9fa;
-        }
-
-        .sortable-chosen {
-            background: #fff;
-        }
-
-        /* Estilos específicos para el modo edición */
-        .preview-container.editing .email-block-content {
-            outline: 1px dashed #dee2e6;
-        }
-
-        .preview-container.editing .email-block-wrapper:hover .email-block-content {
-            outline: 2px solid #6366f1;
-        }
-
-        .template-block {
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .template-block:hover {
-            transform: translateY(-2px);
-        }
-
-        .email-block-wrapper {
-            transition: all 0.3s ease;
-        }
-
-        .email-block-wrapper:hover {
-            outline: 2px solid rgba(99, 102, 241, 0.3);
-        }
-
-        .email-block-wrapper:hover .block-controls {
-            opacity: 1 !important;
-        }
-
-        .block-controls {
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 0.375rem;
-            padding: 0.25rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .sortable-ghost {
-            opacity: 0.5;
-        }
-
-        .sortable-chosen {
-            position: relative;
-        }
-
-        .sortable-chosen::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(99, 102, 241, 0.1);
-            pointer-events: none;
-        }
-
-        .preview-container {
-            min-height: 200px;
-        }
-
-        .preview-container .border {
-            background-color: #f8f9fa;
-        }
-
-        .preview-wrapper {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .preview-content {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .email-block-wrapper {
-            position: relative;
-            width: 100%;
         }
 
         .email-block-wrapper:hover .block-controls {
@@ -226,9 +113,7 @@
             <div class="col-md-4 bg-light p-4 rounded-3 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4>Bloques de Contenido</h4>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#saveTemplateModal">
-                        Guardar Plantilla
-                    </button>
+                    
                 </div>
 
                 <div class="accordion" id="blocksAccordion">
@@ -244,24 +129,24 @@
                                 <div>
                                     <ul class="nav nav-tabs-custom mb-3">
                                         <li class="nav-item-custom">
-                                            <a class="nav-link-custom active" data-bs-toggle="tab" href="#headers">Imagen</a>
+                                            <a class="nav-link-custom active" data-bs-toggle="tab" href="#headers" wire:ignore.self>Imagen</a>
                                         </li>
                                         <li class="nav-item-custom">
-                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#content">Contenido</a>
+                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#content" wire:ignore.self>Contenido</a>
                                         </li>
                                         <li class="nav-item-custom">
-                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#column">Columnas</a>
+                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#column" wire:ignore.self>Columnas</a>
                                         </li>
                                         <li class="nav-item-custom">
-                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#button">Botones</a>
+                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#button" wire:ignore.self>Botones</a>
                                         </li>
                                         <li class="nav-item-custom">
-                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#footers">Footers</a>
+                                            <a class="nav-link-custom" data-bs-toggle="tab" href="#footers" wire:ignore.self>Footers</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="headers">
+                                    <div class="tab-pane fade show active" id="headers" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
                                             @if(in_array($key, ['header', 'hero']))
                                                 <div class="draggable-block mb-3"
@@ -274,7 +159,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    <div class="tab-pane fade" id="content">
+                                    <div class="tab-pane fade" id="content" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
                                             @if(in_array($key, ['content']))
                                                 <div class="draggable-block mb-3"
@@ -287,7 +172,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    <div class="tab-pane fade" id="column">
+                                    <div class="tab-pane fade" id="column" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
                                             @if(in_array($key, ['two_columns']))
                                                 <div class="draggable-block mb-3"
@@ -300,7 +185,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    <div class="tab-pane fade" id="button">
+                                    <div class="tab-pane fade" id="button" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
                                             @if(in_array($key, ['button']))
                                                 <div class="draggable-block mb-3"
@@ -313,7 +198,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    <div class="tab-pane fade" id="footers">
+                                    <div class="tab-pane fade" id="footers" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
                                             @if($key === 'footer')
                                                 <div class="draggable-block mb-3"
@@ -327,6 +212,20 @@
                                         @endforeach
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración Global -->
+                    <div class="accordion-item" wire:ignore>
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#settingsBlock">
+                                <i class="fas fa-cog"></i> Configuración
+                            </button>
+                        </h2>
+                        <div id="settingsBlock" class="accordion-collapse collapse show" wire:ignore.self>
+                            <div class="accordion-body">
+                                <x-email-blocks.settings />
                             </div>
                         </div>
                     </div>
@@ -362,6 +261,14 @@
             <div class="col-md-8">
                 <div class="bg-light p-4 rounded-3 shadow-sm">
                     <h4>Vista Previa</h4>
+                    <div class="d-flex justify-content-end align-items-center gap-4">
+                        <button class="btn btn-success border-0" wire:click="downloadTemplate">
+                            Descargar <i class="bi bi-download"></i>
+                        </button>
+                        <button class="btn btn-primary border-0" data-bs-toggle="modal" data-bs-target="#saveTemplateModal">
+                            Guardar <i class="bi bi-floppy"></i>
+                        </button>
+                    </div>
                     <div class="preview-container mt-4"
                          ondragover="event.preventDefault()"
                          ondragenter="dragEnter(event)"
@@ -440,11 +347,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 text-center">
-                    <button class="btn btn-success" wire:click="downloadTemplate">
-                        Download Template
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -453,7 +355,9 @@
     <x-email-blocks.save-template-modal :templateId="$templateId" :blocks="$blocks" />
 
     @foreach($blocks as $key => $block)
-        <x-email-blocks.save-block-modal :blockKey="$key" :blockType="$block['type']" :block="$block" />
+        @if(isset($block['type']))
+            <x-email-blocks.save-block-modal :blockKey="$key" :blockType="$block['type']" :block="$block" />
+        @endif
     @endforeach
 
     @push('scripts')
@@ -508,6 +412,49 @@
                         window.location.href = '{{ route("register") }}';
                     }
                 });
+            });
+
+            // Inicializar las pestañas de Bootstrap
+            const triggerTabList = [].slice.call(document.querySelectorAll('.nav-link-custom'));
+            triggerTabList.forEach(function (triggerEl) {
+                const tabTrigger = new bootstrap.Tab(triggerEl);
+                
+                triggerEl.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    tabTrigger.show();
+                });
+            });
+
+            // Mantener la pestaña activa después de las actualizaciones de Livewire
+            const activeTab = document.querySelector('.nav-link-custom.active');
+            if (activeTab) {
+                const tabId = activeTab.getAttribute('href').substring(1);
+                const tabContent = document.getElementById(tabId);
+                if (tabContent) {
+                    document.querySelectorAll('.tab-pane').forEach(pane => {
+                        pane.classList.remove('show', 'active');
+                    });
+                    tabContent.classList.add('show', 'active');
+                }
+            }
+
+            // Escuchar el evento closeModal
+            @this.on('closeModal', (data) => {
+                const modalId = data.modal;
+                const modalElement = document.getElementById(modalId);
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                }
+                // También eliminar el backdrop si existe
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.remove();
+                }
+                // Restaurar el scroll del body
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
             });
         });
     </script>

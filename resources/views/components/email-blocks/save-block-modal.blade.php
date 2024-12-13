@@ -1,4 +1,4 @@
-@props(['blockKey', 'blockType', 'block'])
+@props(['blockKey', 'blockType' => 'content', 'block'])
 
 <div class="modal fade" id="saveBlockModal{{ $blockKey }}" tabindex="-1" aria-labelledby="saveBlockModalLabel{{ $blockKey }}" aria-hidden="true">
     <div class="modal-dialog">

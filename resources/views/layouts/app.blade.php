@@ -38,10 +38,12 @@
     @vite([
         'resources/sass/app.scss',
         'resources/js/app.js',
-        'resources/js/card-effects.js'
+        'resources/js/card-effects.js',
+        'resources/js/sweetalert.js'
     ])
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @livewireStyles
 </head>
 <body class="bg-gray-100">
@@ -103,8 +105,6 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-livewire-alert::scripts />
     @livewireScripts
     @stack('scripts')
     <script>
@@ -112,29 +112,6 @@
             setTimeout(function() {
                 document.getElementById('preloader').style.display = 'none';
             }, 500);
-        });
-
-        // Prevenir múltiples inicializaciones
-        if (typeof window.livewireInitialized === 'undefined') {
-            window.livewireInitialized = false;
-        }
-
-        document.addEventListener('livewire:initialized', () => {
-            if (!window.livewireInitialized) {
-                window.livewireInitialized = true;
-                // Inicializar componentes de Bootstrap
-                const accordionElements = document.querySelectorAll('.accordion-collapse');
-                accordionElements.forEach(element => {
-                    new bootstrap.Collapse(element, {
-                        toggle: false
-                    });
-                });
-
-                const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
-                tabElements.forEach(element => {
-                    new bootstrap.Tab(element);
-                });
-            }
         });
     </script>
 </body>
