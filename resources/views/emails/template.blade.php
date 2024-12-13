@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="x-apple-disable-message-reformatting">
-    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
-    <meta name="color-scheme" content="light">
-    <meta name="supported-color-schemes" content="light">
-    <title>Newsletter Template</title>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>{{ $blocks['settings']['content']['title'] ?? 'Newsletter Template' }}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
     <!--[if gte mso 9]>
     <xml>
         <o:OfficeDocumentSettings>
@@ -18,74 +19,89 @@
     </xml>
     <![endif]-->
 
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 23 - 41 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
     <!--[if mso]>
-    <style>
-        .email-template * {
-            font-family: sans-serif !important;
-        }
-    </style>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
     <![endif]-->
 
-    <style>
-        :root {
-            color-scheme: light;
-        }
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: https://web.archive.org/web/20190717120616/http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
 
-        .email-template {
-            /* What it does: Tells the email client that both light and dark styles are provided */
-            color-scheme: light;
-            supported-color-schemes: light;
-            background-color: {{ $blocks['settings']['content']['background_color'] ?? '#fafafa' }};
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset : BEGIN -->
+    <style>
+
+        /* What it does: Tells the email client that both light and dark styles are provided. A duplicate of meta color-scheme meta tag above. */
+        :root {
+          color-scheme: light dark;
+          supported-color-schemes: light dark;
         }
 
         /* What it does: Remove spaces around the email design added by some email clients. */
         /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
-        .email-template html,
-        .email-template body {
+        html,
+        body {
             margin: 0 auto !important;
             padding: 0 !important;
             height: 100% !important;
             width: 100% !important;
         }
 
-        .email-template * {
+        /* What it does: Stops email clients resizing small text. */
+        * {
             -ms-text-size-adjust: 100%;
             -webkit-text-size-adjust: 100%;
         }
 
-        .email-template div[style*="margin: 16px 0"] {
+        /* What it does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
             margin: 0 !important;
         }
 
-        .email-template #MessageViewBody,
-        .email-template #MessageWebViewDiv{
+        /* What it does: forces Samsung Android mail clients to use the entire viewport */
+        #MessageViewBody, #MessageWebViewDiv{
             width: 100% !important;
         }
 
-        .email-template table,
-        .email-template td {
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
             mso-table-lspace: 0pt !important;
             mso-table-rspace: 0pt !important;
         }
 
-        .email-template table {
+        /* What it does: Fixes webkit padding issue. */
+        table {
             border-spacing: 0 !important;
             border-collapse: collapse !important;
             table-layout: fixed !important;
             margin: 0 auto !important;
         }
 
-        .email-template img {
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
             -ms-interpolation-mode:bicubic;
         }
 
-        .email-template a {
+        /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+        a {
             text-decoration: none;
         }
 
-        .email-template a[x-apple-data-detectors],
-        .email-template .unstyle-auto-detected-links a,
-        .email-template .aBn {
+        /* What it does: A work-around for email clients meddling in triggered links. */
+        a[x-apple-data-detectors],  /* iOS */
+        .unstyle-auto-detected-links a,
+        .aBn {
             border-bottom: 0 !important;
             cursor: default !important;
             color: inherit !important;
@@ -96,90 +112,112 @@
             line-height: inherit !important;
         }
 
-        .email-template .a6S {
+        /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+        .a6S {
             display: none !important;
             opacity: 0.01 !important;
         }
 
-        .email-template .im {
+        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+        .im {
             color: inherit !important;
         }
 
-        .email-template img.g-img + div {
+        /* If the above doesn't work, add a .g-img class to any image in question. */
+        img.g-img + div {
             display: none !important;
         }
 
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
         @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
-            .email-template u ~ div .email-container {
+            u ~ div .email-container {
                 min-width: 320px !important;
             }
         }
+        /* iPhone 6, 6S, 7, 8, and X */
         @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
-            .email-template u ~ div .email-container {
+            u ~ div .email-container {
                 min-width: 375px !important;
             }
         }
+        /* iPhone 6+, 7+, and 8+ */
         @media only screen and (min-device-width: 414px) {
-            .email-template u ~ div .email-container {
+            u ~ div .email-container {
                 min-width: 414px !important;
             }
         }
 
-        /* Progressive Enhancements */
-        .email-template .button-td,
-        .email-template .button-a {
-            transition: all 100ms ease-in;
-        }
-        .email-template .button-td-primary:hover,
-        .email-template .button-a-primary:hover {
-            background: #555555 !important;
-            border-color: #555555 !important;
-        }
+    </style>
+    <!-- CSS Reset : END -->
 
-        @media screen and (max-width: 600px) {
-            .email-template .email-container p {
-                font-size: 17px !important;
-            }
-        }
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
 
-        /* Dark Mode Styles */
-        @media (prefers-color-scheme: dark) {
-            .email-template .email-bg {
-                background: #111111 !important;
-            }
-            .email-template .darkmode-bg {
-                background: #222222 !important;
-            }
-            .email-template h1,
-            .email-template h2,
-            .email-template h3,
-            .email-template p,
-            .email-template li,
-            .email-template .darkmode-text,
-            .email-template .email-container a:not([class]) {
-                color: #F7F7F9 !important;
-            }
-            .email-template td.button-td-primary,
-            .email-template td.button-td-primary a {
+	    /* What it does: Hover styles for buttons */
+	    .button-td,
+	    .button-a {
+	        transition: all 100ms ease-in;
+	    }
+	    .button-td-primary:hover,
+	    .button-a-primary:hover {
+	        background: #555555 !important;
+	        border-color: #555555 !important;
+	    }
+
+	    /* Media Queries */
+	    @media screen and (max-width: 600px) {
+
+	        /* What it does: Adjust typography on small screens to improve readability */
+	        .email-container p {
+	            font-size: 17px !important;
+	        }
+
+	    }
+
+        /* Dark Mode Styles : BEGIN */
+        /* @media (prefers-color-scheme: dark) {
+			.email-bg {
+				background: #ededed !important;
+			}
+            .darkmode-bg {
                 background: #fafafa !important;
-                border-color: #fafafa !important;
-                color: #222222 !important;
             }
-            .email-template td.button-td-primary:hover,
-            .email-template td.button-td-primary a:hover {
-                background: #cccccc !important;
-                border-color: #cccccc !important;
-            }
-            .email-template .footer td {
-                color: #aaaaaa !important;
-            }
-            .email-template .darkmode-fullbleed-bg {
+			h1,
+			h2,
+			h3,
+			p,
+			li,
+			.darkmode-text,
+			.email-container a:not([class]) {
+				color: #F7F7F9 !important;
+			}
+			td.button-td-primary,
+			td.button-td-primary a {
+				background: #ffffff !important;
+				border-color: #ffffff !important;
+				color: #222222 !important;
+			}
+			td.button-td-primary:hover,
+			td.button-td-primary a:hover {
+				background: #cccccc !important;
+				border-color: #cccccc !important;
+			}
+			.footer td {
+				color: #aaaaaa !important;
+			}
+            .darkmode-fullbleed-bg {
                 background-color: #0F3016 !important;
             }
-        }
+		} */
+        /* Dark Mode Styles : END */
     </style>
+    <!-- Progressive Enhancements : END -->
+
 </head>
-<body class="email-template" width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
     <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
         <!--[if mso | IE]>
         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: {{ $blocks['settings']['content']['background_color'] ?? '#ebebeb' }} !important;" class="email-bg">
@@ -189,7 +227,7 @@
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
-            {{ isset($blocks['settings']['content']['preheader']) ? $blocks['settings']['content']['preheader'] : 'Newsletter preview text' }}
+            {{ $blocks['settings']['content']['preheader'] ?? 'Newsletter preview text' }}
         </div>
         <!-- Visually Hidden Preheader Text : END -->
 
@@ -209,15 +247,17 @@
             <!-- Email Body : BEGIN -->
             <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
                 @php
-                    $orderedBlocks = collect($blocks)->filter(function($block, $name) {
-                        return $block['active'] && $name !== 'settings';
-                    })->sortBy(function($block) {
-                        return $block['order'] ?? PHP_INT_MAX;
-                    })->all();
+                    $orderedBlocks = collect($blocks)
+                        ->filter(function($block, $name) {
+                            return $name !== 'settings';
+                        })
+                        ->sortBy(function($block) {
+                            return $block['order'] ?? PHP_INT_MAX;
+                        });
                 @endphp
                 @foreach($orderedBlocks as $blockName => $block)
                     <tr>
-                        <td style="background-color: {{ $block['content']['background_color'] ?? '#fafafa' }}; padding: 0px;">
+                        <td style="background-color: {{ $block['content']['background_color'] ?? '#fafafa' }}; padding: 0px;" class="darkmode-bg">
                             @if($blockName == 'hero')
                             <tr>
                                 <td style="padding: {{ $block['content']['padding'] ?? '0' }}px 0; text-align: center; background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
@@ -240,45 +280,49 @@
                                 </td>
                             </tr>
                             @elseif($blockName == 'content')
-                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                    <tr>
-                                        <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">
-                                            @if(isset($block['content']['title']))
-                                            <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['title_size'] ?? '25' }}px; line-height: {{ $block['content']['title_line_height'] ?? '30' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important; font-weight: {{ $block['content']['title_weight'] ?? 'normal' }};">
-                                                {{ $block['content']['title'] }}
-                                            </h1>
-                                            @endif
-                                            @if(isset($block['content']['text']))
-                                            <p style="margin: 0; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">{{ $block['content']['text'] }}</p>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @if(isset($block['content']['subtitle']) || isset($block['content']['list_items']) || isset($block['content']['secondary_text']))
-                                    <tr>
-                                        <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#555555' }};">
-                                            @if(isset($block['content']['subtitle']))
-                                            <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['subtitle_size'] ?? '18' }}px; line-height: {{ $block['content']['subtitle_line_height'] ?? '22' }}px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#fafafa' : '#333333' }}; font-weight: {{ $block['content']['subtitle_weight'] ?? 'bold' }};">
-                                                {{ $block['content']['subtitle'] }}
-                                            </h2>
-                                            @endif
-                                            @if(isset($block['content']['list_items']) && !empty($block['content']['list_items']))
-                                            <ul style="padding: 0; margin: 0 0 10px 0; list-style-type: disc;">
-                                                @foreach(explode("\n", $block['content']['list_items']) as $item)
-                                                    @if(!empty(trim($item)))
-                                                    <li style="margin: {{ $loop->last ? '0 0 10px 30px' : '0 0 0 30px' }}; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;" class="{{ $loop->first ? 'list-item-first' : ($loop->last ? 'list-item-last' : '') }}">
-                                                        {{ $item }}
-                                                    </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                            @endif
-                                            @if(isset($block['content']['secondary_text']))
-                                            <p style="margin: 0;">{{ $block['content']['secondary_text'] }}</p>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @endif
-                                </table>
+                            <tr>
+                                <td style="background-color: {{ $block['content']['background_color'] ?? '#fafafa' }};" class="darkmode-bg">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                        <tr>
+                                            <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">
+                                                @if(isset($block['content']['title']))
+                                                <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['title_size'] ?? '25' }}px; line-height: {{ $block['content']['title_line_height'] ?? '30' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important; font-weight: {{ $block['content']['title_weight'] ?? 'normal' }};">
+                                                    {{ $block['content']['title'] }}
+                                                </h1>
+                                                @endif
+                                                @if(isset($block['content']['text']))
+                                                <p style="margin: 0; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;">{{ $block['content']['text'] }}</p>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @if(isset($block['content']['subtitle']) || isset($block['content']['list_items']) || isset($block['content']['secondary_text']))
+                                        <tr>
+                                            <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '15' }}px; line-height: {{ $block['content']['line_height'] ?? '20' }}px; color: {{ $block['content']['text_color'] ?? '#555555' }};">
+                                                @if(isset($block['content']['subtitle']))
+                                                <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: {{ $block['content']['subtitle_size'] ?? '18' }}px; line-height: {{ $block['content']['subtitle_line_height'] ?? '22' }}px; color: {{ $blocks['settings']['content']['dark_mode'] ? '#fafafa' : '#333333' }}; font-weight: {{ $block['content']['subtitle_weight'] ?? 'bold' }};">
+                                                    {{ $block['content']['subtitle'] }}
+                                                </h2>
+                                                @endif
+                                                @if(isset($block['content']['list_items']) && !empty($block['content']['list_items']))
+                                                <ul style="padding: 0; margin: 0 0 10px 0; list-style-type: disc;">
+                                                    @foreach(explode("\n", $block['content']['list_items']) as $item)
+                                                        @if(!empty(trim($item)))
+                                                        <li style="margin: {{ $loop->last ? '0 0 10px 30px' : '0 0 0 30px' }}; color: {{ $block['content']['text_color'] ?? '#000000' }} !important;" class="{{ $loop->first ? 'list-item-first' : ($loop->last ? 'list-item-last' : '') }}">
+                                                            {{ $item }}
+                                                        </li>
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+                                                @if(isset($block['content']['secondary_text']))
+                                                <p style="margin: 0;">{{ $block['content']['secondary_text'] }}</p>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </table>
+                                </td>
+                            </tr>
                             @elseif($blockName == 'two_columns')
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
@@ -466,9 +510,23 @@
                             </tr>
                             <!-- Button Block : END -->
                             @elseif($blockName == 'footer')
-                            {{ $block['content']['company'] }}<br>
-                            {{ $block['content']['address'] }}<br>
-                            {{ $block['content']['phone'] }}
+                            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="darkmode-bg">
+                                <tr>
+                                    <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '12' }}px; line-height: {{ $block['content']['line_height'] ?? '15' }}px; text-align: center; color: {{ $block['content']['text_color'] ?? '#888888' }};">
+                                        @if(isset($block['content']['company']))
+                                            <p style="margin: 0;">{{ $block['content']['company'] }}</p>
+                                        @endif
+                                        
+                                        @if(isset($block['content']['address']))
+                                            <p style="margin: 5px 0;">{{ $block['content']['address'] }}</p>
+                                        @endif
+                                        
+                                        @if(isset($block['content']['phone']))
+                                            <p style="margin: 5px 0;">{{ $block['content']['phone'] }}</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
                             @endif
                         </td>
                     </tr>
