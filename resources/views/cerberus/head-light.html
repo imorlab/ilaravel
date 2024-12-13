@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <title>Newsletter Template</title>
+
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+    <!--[if mso]>
+    <style>
+        .email-template * {
+            font-family: sans-serif !important;
+        }
+    </style>
+    <![endif]-->
+
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        .email-template {
+            /* What it does: Tells the email client that both light and dark styles are provided */
+            color-scheme: light;
+            supported-color-schemes: light;
+            background-color: {{ $blocks['settings']['content']['background_color'] ?? '#fafafa' }};
+        }
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        .email-template html,
+        .email-template body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        .email-template * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .email-template div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        .email-template #MessageViewBody,
+        .email-template #MessageWebViewDiv{
+            width: 100% !important;
+        }
+
+        .email-template table,
+        .email-template td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        .email-template table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+
+        .email-template img {
+            -ms-interpolation-mode:bicubic;
+        }
+
+        .email-template a {
+            text-decoration: none;
+        }
+
+        .email-template a[x-apple-data-detectors],
+        .email-template .unstyle-auto-detected-links a,
+        .email-template .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        .email-template .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+
+        .email-template .im {
+            color: inherit !important;
+        }
+
+        .email-template img.g-img + div {
+            display: none !important;
+        }
+
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            .email-template u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            .email-template u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        @media only screen and (min-device-width: 414px) {
+            .email-template u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+
+        /* Progressive Enhancements */
+        .email-template .button-td,
+        .email-template .button-a {
+            transition: all 100ms ease-in;
+        }
+        .email-template .button-td-primary:hover,
+        .email-template .button-a-primary:hover {
+            background: #555555 !important;
+            border-color: #555555 !important;
+        }
+
+        @media screen and (max-width: 600px) {
+            .email-template .email-container p {
+                font-size: 17px !important;
+            }
+        }
+
+        /* Dark Mode Styles */
+        @media (prefers-color-scheme: dark) {
+            .email-template .email-bg {
+                background: #111111 !important;
+            }
+            .email-template .darkmode-bg {
+                background: #222222 !important;
+            }
+            .email-template h1,
+            .email-template h2,
+            .email-template h3,
+            .email-template p,
+            .email-template li,
+            .email-template .darkmode-text,
+            .email-template .email-container a:not([class]) {
+                color: #F7F7F9 !important;
+            }
+            .email-template td.button-td-primary,
+            .email-template td.button-td-primary a {
+                background: #fafafa !important;
+                border-color: #fafafa !important;
+                color: #222222 !important;
+            }
+            .email-template td.button-td-primary:hover,
+            .email-template td.button-td-primary a:hover {
+                background: #cccccc !important;
+                border-color: #cccccc !important;
+            }
+            .email-template .footer td {
+                color: #aaaaaa !important;
+            }
+            .email-template .darkmode-fullbleed-bg {
+                background-color: #0F3016 !important;
+            }
+        }
+    </style>
+</head>
