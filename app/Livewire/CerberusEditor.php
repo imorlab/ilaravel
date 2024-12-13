@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use App\Models\CerberusSavedBlock;
@@ -29,26 +30,72 @@ class CerberusEditor extends Component
     public $templateIdSave = null;
     public $overwriteTemplate = false;
 
-    public function mount()
+    protected $defaultSettings = [
+        'settings' => [
+            'content' => [
+                'background_color' => '#ebebeb',
+                'preheader' => 'Newsletter preview text',
+                'padding' => '0',
+                'alignment' => 'center'
+            ]
+        ]
+    ];
+
+    public function mount($template = null)
     {
-        // Cargar la plantilla activa
-        $activeTemplate = CerberusSavedTemplate::where('is_active', true)->first();
-        Log::info('Active template loaded:', ['template' => $activeTemplate]);
+        // Inicializar con la configuración por defecto
+        $this->blocks = [
+            'settings' => [
+                'content' => [
+                    'background_color' => '#ebebeb',
+                    'preheader' => 'Newsletter preview text',
+                    'title' => 'Newsletter Template',
+                    'padding' => '0',
+                    'alignment' => 'center',
+                    'dark_mode' => false
+                ]
+            ]
+        ];
 
-        if ($activeTemplate) {
-            $this->templateId = $activeTemplate->id;
-            $this->templateName = $activeTemplate->name;
-            $this->blocks = $activeTemplate->blocks;
-
-            // Asegurarse de que cada bloque tenga un orden
-            $order = 0;
-            foreach ($this->blocks as $key => &$block) {
-                if (!isset($block['order'])) {
-                    $block['order'] = $order++;
+        if ($template) {
+            // Cargar la plantilla especificada
+            $selectedTemplate = CerberusSavedTemplate::find($template);
+            if ($selectedTemplate) {
+                $this->templateId = $selectedTemplate->id;
+                $this->templateName = $selectedTemplate->name;
+                
+                // Asegurarse de que los settings existan
+                $templateBlocks = $selectedTemplate->blocks;
+                if (!isset($templateBlocks['settings'])) {
+                    $templateBlocks['settings'] = $this->blocks['settings'];
+                } else {
+                    // Merge settings para asegurar que todos los campos existan
+                    $templateBlocks['settings'] = array_merge_recursive(
+                        $this->blocks['settings'],
+                        $templateBlocks['settings']
+                    );
                 }
+                
+                $this->blocks = $templateBlocks;
             }
-            unset($block);
+        } else {
+            // Si no se especifica template, cargar la plantilla por defecto
+            $defaultTemplate = CerberusSavedTemplate::where('name', 'Default Template')->first();
+            if ($defaultTemplate) {
+                $this->templateId = $defaultTemplate->id;
+                $this->templateName = $defaultTemplate->name;
+                $this->blocks = $defaultTemplate->blocks;
+            }
         }
+
+        // Asegurarse de que cada bloque tenga un orden
+        $order = 0;
+        foreach ($this->blocks as $key => &$block) {
+            if (!isset($block['order']) && $key !== 'settings') {
+                $block['order'] = $order++;
+            }
+        }
+        unset($block);
 
         // Cargar bloques guardados
         $this->loadSavedBlocks();
@@ -61,215 +108,93 @@ class CerberusEditor extends Component
 
     public function saveTemplate()
     {
-        if (!$this->templateIdSave) {
-            $this->showNotification('Por favor, selecciona una plantilla para guardar', 'error');
-            return;
-        }
-
-        $template = CerberusSavedTemplate::find($this->templateIdSave);
-        if ($template) {
-            $template->update([
-                'name' => $this->templateNameSave,
-                'description' => $this->templateDescription,
-                'blocks' => $this->blocks
-            ]);
-
-            $this->showNotification('Plantilla actualizada correctamente');
-        }
-    }
-
-    public function saveAsNewTemplate()
-    {
-        if (empty($this->templateNameSave)) {
-            $this->showNotification('Por favor, ingresa un nombre para la plantilla', 'error');
-            return;
-        }
-
-        // Desactivar todas las plantillas existentes
-        CerberusSavedTemplate::where('is_active', true)->update(['is_active' => false]);
-
-        // Crear la nueva plantilla
-        CerberusSavedTemplate::create([
-            'name' => $this->templateNameSave,
-            'description' => $this->templateDescription,
-            'blocks' => $this->blocks,
-            'is_active' => true
-        ]);
-
-        $this->showNotification('Nueva plantilla guardada correctamente');
-    }
-
-    public function addBlock($blockKey)
-    {
-        if (isset($this->blocks[$blockKey])) {
-            $this->blocks[$blockKey]['active'] = true;
-            $this->saveTemplate();
-            $this->showNotification('Bloque añadido correctamente');
-        }
-    }
-
-    public function toggleBlock($blockKey)
-    {
-        if (isset($this->blocks[$blockKey])) {
-            $this->blocks[$blockKey]['active'] = !($this->blocks[$blockKey]['active'] ?? false);
-            $this->saveTemplate();
-        }
-    }
-
-    public function updateBlockContent($blockKey, $content)
-    {
-        if (isset($this->blocks[$blockKey])) {
-            $this->blocks[$blockKey]['content'] = $content;
-            
-            // Si es un bloque guardado, actualizar en la base de datos
-            if (isset($this->blocks[$blockKey]['saved_block_id'])) {
-                $savedBlock = CerberusSavedBlock::find($this->blocks[$blockKey]['saved_block_id']);
-                if ($savedBlock) {
-                    $savedBlock->update(['content' => $content]);
-                }
+        try {
+            if (empty($this->templateNameSave)) {
+                $this->dispatch('error', ['message' => 'El nombre de la plantilla es requerido']);
+                return;
             }
+
+            if ($this->templateId && $this->overwriteTemplate) {
+                // Actualizar plantilla existente
+                $template = CerberusSavedTemplate::find($this->templateId);
+                if (!$template) {
+                    throw new \Exception('No se encontró la plantilla');
+                }
+                $template->update([
+                    'name' => $this->templateNameSave,
+                    'description' => $this->templateDescription,
+                    'blocks' => $this->blocks,
+                ]);
+                $message = 'Plantilla actualizada correctamente';
+            } else {
+                // Crear nueva plantilla
+                CerberusSavedTemplate::create([
+                    'name' => $this->templateNameSave,
+                    'description' => $this->templateDescription,
+                    'blocks' => $this->blocks,
+                    'user_id' => auth()->id(),
+                ]);
+                $message = 'Plantilla guardada correctamente';
+            }
+
+            // Limpiar los campos del formulario
+            $this->reset(['templateNameSave', 'templateDescription', 'overwriteTemplate']);
             
-            $this->showNotification('Contenido actualizado correctamente');
+            // Disparar evento para cerrar el modal
+            $this->dispatch('closeModal', ['modal' => 'saveTemplateModal']);
+            
+            // Mostrar mensaje de éxito y redireccionar
+            $this->dispatch('success', ['message' => $message]);
+            return redirect()->route('cerberus.editor', ['template' => $this->templateId]);
+
+        } catch (\Exception $e) {
+            $this->dispatch('error', ['message' => 'Error al guardar la plantilla: ' . $e->getMessage()]);
         }
+    }
+
+    protected function loadSavedBlocks()
+    {
+        $this->savedBlocks = CerberusSavedBlock::all();
+        $this->savedBlocksCount = $this->savedBlocks->count();
     }
 
     public function updateBlockOrder($orderedBlocks)
     {
-        Log::info('Updating block order:', ['orderedBlocks' => $orderedBlocks]);
-        
-        $newOrder = 0;
-        foreach ($orderedBlocks as $blockKey) {
-            if (isset($this->blocks[$blockKey])) {
-                $this->blocks[$blockKey]['order'] = $newOrder++;
+        // Actualizar el orden de los bloques
+        foreach ($orderedBlocks as $index => $block) {
+            if (isset($this->blocks[$block['value']])) {
+                $this->blocks[$block['value']]['order'] = $index;
             }
         }
     }
 
     public function downloadTemplate()
     {
-        // Ordenar los bloques antes de pasarlos a la vista
-        $orderedBlocks = collect($this->blocks)
-            ->sortBy(fn($block) => $block['order'] ?? PHP_INT_MAX)
-            ->all();
-
-        return response()->streamDownload(function() use ($orderedBlocks) {
-            echo View::make('emails.template', ['blocks' => $orderedBlocks])->render();
-        }, 'template.html');
-    }
-
-    public function duplicateBlock($blockKey)
-    {
-        if (!auth()->check()) {
-            $this->showAuthAlert();
-            return;
-        }
-
-        $block = $this->blocks[$blockKey];
-        
-        // Determinar la categoría basada en el tipo de bloque
-        $category = $block['type'];
-        
-        // Guardar en la base de datos
-        $savedBlock = CerberusSavedBlock::create([
-            'user_id' => auth()->id(),
-            'name' => $blockKey . ' ' . now()->format('Y-m-d H:i:s'),
-            'type' => $block['type'],
-            'category' => $category,
-            'content' => $block['content'],
-            'is_active' => true,
-        ]);
-
-        // Agregar a la colección de bloques
-        $newKey = 'saved_' . $savedBlock->id;
-        $this->blocks[$newKey] = [
-            'active' => true,
-            'type' => $block['type'],
-            'content' => $block['content'],
-            'saved_block_id' => $savedBlock->id
-        ];
-
-        $this->savedBlocksCount++;
-        $this->showNotification('Bloque duplicado correctamente');
-    }
-
-    public function editSavedBlock($blockId)
-    {
-        $savedBlock = CerberusSavedBlock::find($blockId);
-        if ($savedBlock) {
-            // Redirigir a la página de edición del bloque
-            return redirect()->route('cerberus.edit-block', ['id' => $blockId]);
-        }
-    }
-
-    public function deleteSavedBlock($blockKey)
-    {
-        if (!auth()->check()) {
-            $this->showAuthAlert();
-            return;
-        }
-
-        // Extraer el ID del bloque del blockKey (saved_X)
-        $blockId = str_replace('saved_', '', $blockKey);
-        
-        // Marcar como inactivo en la base de datos
-        $block = CerberusSavedBlock::find($blockId);
-        if ($block) {
-            $block->update(['is_active' => false]);
+        try {
+            // Ordenar los bloques manteniendo 'settings' fuera del ordenamiento
+            $settings = $this->blocks['settings'] ?? [];
             
-            // Eliminar de la colección de bloques
-            unset($this->blocks[$blockKey]);
-            $this->savedBlocksCount--;
-            
-            $this->showNotification('Bloque eliminado correctamente');
+            // Filtrar y ordenar los bloques
+            $blocksToOrder = collect($this->blocks)
+                ->except('settings')
+                ->filter(function ($block) {
+                    return !isset($block['active']) || $block['active'];
+                })
+                ->sortBy(fn($block) => $block['order'] ?? PHP_INT_MAX)
+                ->all();
+
+            $orderedBlocks = array_merge(['settings' => $settings], $blocksToOrder);
+
+            return response()->streamDownload(function() use ($orderedBlocks, $settings) {
+                echo View::make('emails.template', [
+                    'blocks' => $orderedBlocks,
+                    'settings' => $settings
+                ])->render();
+            }, 'template.html');
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al descargar la plantilla: ' . $e->getMessage());
+            return null;
         }
-    }
-
-    protected function loadSavedBlocks()
-    {
-        $savedBlocks = CerberusSavedBlock::where('is_active', true)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        // Convertir los bloques guardados al formato necesario
-        foreach ($savedBlocks as $savedBlock) {
-            $blockKey = 'saved_' . $savedBlock->id;
-            $this->blocks[$blockKey] = [
-                'type' => $savedBlock->type,
-                'content' => $savedBlock->content,
-                'active' => false,
-                'saved_block_id' => $savedBlock->id,
-                'order' => null
-            ];
-        }
-
-        $this->savedBlocksCount = $savedBlocks->count();
-    }
-
-    protected function showNotification($message, $type = 'success')
-    {
-        $this->dispatch('showToast', [
-            'title' => ucfirst($type),
-            'text' => $message,
-            'icon' => $type,
-            'position' => 'top-end',
-            'timer' => 3000,
-            'toast' => true,
-            'showConfirmButton' => false,
-            'timerProgressBar' => true,
-        ]);
-    }
-
-    protected function showAuthAlert()
-    {
-        $this->dispatch('showAuthAlert', [
-            'title' => '¡Necesitas iniciar sesión!',
-            'text' => 'Para guardar y personalizar bloques, necesitas tener una cuenta.',
-            'icon' => 'info',
-            'showCancelButton' => true,
-            'confirmButtonText' => 'Ir a registro',
-            'cancelButtonText' => 'Cancelar',
-            'confirmButtonColor' => '#3085d6',
-            'cancelButtonColor' => '#d33',
-        ]);
     }
 }
