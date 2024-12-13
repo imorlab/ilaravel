@@ -11,25 +11,35 @@ class CerberusTemplatesSeeder extends Seeder
     {
         // Crear la plantilla predefinida
         $defaultBlocks = [
+            'settings' => [
+                'content' => [
+                    'title' => 'Newsletter Template',
+                    'preheader' => 'Welcome to our newsletter',
+                    'background_color' => '#ebebeb',
+                    'dark_mode' => false
+                ]
+            ],
             'header' => [
                 'active' => true,
                 'type' => 'header',
+                'order' => 1,
                 'content' => [
                     'image' => 'https://picsum.photos/200/50.webp?random=1',
                     'alt' => 'Logo',
                     'width' => '200',
                     'padding' => '20',
                     'alignment' => 'center',
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'hero' => [
                 'active' => true,
                 'type' => 'hero',
+                'order' => 2,
                 'content' => [
                     'image' => 'https://picsum.photos/600/300.webp?random=1',
                     'alt' => 'Hero image',
-                    'background_color' => '#ffffff',
+                    'background_color' => '#fafafa',
                     'width' => '600',
                     'alignment' => 'center'
                 ]
@@ -37,6 +47,7 @@ class CerberusTemplatesSeeder extends Seeder
             'content' => [
                 'active' => true,
                 'type' => 'content',
+                'order' => 3,
                 'content' => [
                     'title' => 'Welcome to our newsletter',
                     'text' => 'This is a sample text content.',
@@ -44,12 +55,34 @@ class CerberusTemplatesSeeder extends Seeder
                         'text' => 'Read More',
                         'url' => '#'
                     ],
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
+                ]
+            ],
+            'button' => [
+                'active' => true,
+                'type' => 'button',
+                'order' => 4,
+                'content' => [
+                    'text' => 'ACCEDE',
+                    'url' => '#',
+                    'width' => '100',
+                    'height' => '34',
+                    'alignment' => 'center',
+                    'background_color' => '#fafafa',
+                    'button_background_color' => '#007bff',
+                    'text_color' => '#fafafa',
+                    'font_size' => '12',
+                    'font_weight' => 'bold',
+                    'border_radius' => '32',
+                    'padding_top' => '25',
+                    'padding_bottom' => '30',
+                    'container_width' => '250'
                 ]
             ],
             'two_columns' => [
                 'active' => true,
                 'type' => 'two_columns',
+                'order' => 5,
                 'content' => [
                     'left' => [
                         'icon' => 'https://picsum.photos/270/270.webp?random=1',
@@ -59,43 +92,24 @@ class CerberusTemplatesSeeder extends Seeder
                         'button_text' => 'Read More',
                         'button_url' => '#',
                         'button_background' => '#007bff',
-                        'button_text_color' => '#ffffff',
+                        'button_text_color' => '#fafafa',
                         'button_alignment' => 'left',
                     ],
                     'right' => [
                         'image' => 'https://picsum.photos/270/270.webp?random=1',
                     ],
-                    'background_color' => '#ffffff'
-                ]
-            ],
-            'button' => [
-                'active' => true,
-                'type' => 'button',
-                'content' => [
-                    'text' => 'ACCEDE',
-                    'url' => '#',
-                    'width' => '100',
-                    'height' => '34',
-                    'alignment' => 'center',
-                    'background_color' => '#ffffff',
-                    'button_background_color' => '#007bff',
-                    'text_color' => '#ffffff',
-                    'font_size' => '12',
-                    'font_weight' => 'bold',
-                    'border_radius' => '32',
-                    'padding_top' => '25',
-                    'padding_bottom' => '30',
-                    'container_width' => '250'
+                    'background_color' => '#fafafa'
                 ]
             ],
             'footer' => [
                 'active' => true,
                 'type' => 'footer',
+                'order' => 6,
                 'content' => [
                     'company' => 'Your Company Name',
                     'address' => '123 Street Name, City, Country',
                     'phone' => '+1 234 567 890',
-                    'background_color' => '#ffffff'
+                    'background_color' => '#fafafa'
                 ]
             ]
         ];
