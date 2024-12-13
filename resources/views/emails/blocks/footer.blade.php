@@ -1,4 +1,4 @@
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="darkmode-bg">
     <tr>
         <td style="padding: {{ $block['content']['padding'] ?? '20' }}px; font-family: sans-serif; font-size: {{ $block['content']['font_size'] ?? '12' }}px; line-height: {{ $block['content']['line_height'] ?? '15' }}px; text-align: center; color: {{ $block['content']['text_color'] ?? '#888888' }};">
             @if(isset($block['content']['company']))
