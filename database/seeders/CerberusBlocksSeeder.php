@@ -13,7 +13,7 @@ class CerberusBlocksSeeder extends Seeder
         // Crear la plantilla predefinida
         $defaultBlocks = [
             'header' => [
-                'active' => false,
+                'active' => true,
                 'type' => 'header',
                 'content' => [
                     'image' => 'https://picsum.photos/200/50.webp?random=1',
@@ -25,7 +25,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'hero' => [
-                'active' => false,
+                'active' => true,
                 'type' => 'hero',
                 'content' => [
                     'image' => 'https://picsum.photos/600/300.webp?random=2',
@@ -36,7 +36,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'content' => [
-                'active' => false,
+                'active' => true,
                 'type' => 'content',
                 'content' => [
                     'title' => 'Welcome to our newsletter',
@@ -48,9 +48,9 @@ class CerberusBlocksSeeder extends Seeder
                     'background_color' => '#fafafa'
                 ]
             ],
-            'two_columns' => [
-                'active' => false,
-                'type' => 'two_columns',
+            'two-columns-left' => [
+                'active' => true,
+                'type' => 'two-columns-left',
                 'content' => [
                     'left' => [
                         'icon' => 'https://picsum.photos/270/270.webp?random=3',
@@ -69,8 +69,29 @@ class CerberusBlocksSeeder extends Seeder
                     'background_color' => '#fafafa'
                 ]
             ],
+            'two-columns-right' => [
+                'active' => true,
+                'type' => 'two-columns-right',
+                'content' => [
+                    'left' => [
+                        'image' => 'https://picsum.photos/270/270.webp?random=4',
+                    ],
+                    'right' => [
+                        'icon' => 'https://picsum.photos/270/270.webp?random=3',
+                        'label' => 'Left Column',
+                        'title' => 'Left Column Title',
+                        'text' => 'Left column content',
+                        'button_text' => 'Read More',
+                        'button_url' => '#',
+                        'button_background' => '#007bff',
+                        'button_text_color' => '#fafafa',
+                        'button_alignment' => 'left',
+                    ],
+                    'background_color' => '#fafafa'
+                ]
+            ],
             'button' => [
-                'active' => false,
+                'active' => true,
                 'type' => 'button',
                 'content' => [
                     'text' => 'ACCEDE',
@@ -90,7 +111,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'footer' => [
-                'active' => false,
+                'active' => true,
                 'type' => 'footer',
                 'content' => [
                     'company' => 'Your Company Name',
@@ -102,18 +123,18 @@ class CerberusBlocksSeeder extends Seeder
         ];
 
         // Crear la plantilla predefinida
-        CerberusSavedTemplate::create([
-            'name' => 'Default Template',
-            'description' => 'Plantilla predefinida del sistema',
-            'blocks' => $defaultBlocks,
-            'is_active' => true,
-            'user_id' => 1 // Asumiendo que el admin tiene ID 1
-        ]);
+        // CerberusSavedTemplate::create([
+        //     'name' => 'Default Template',
+        //     'description' => 'Plantilla predefinida del sistema',
+        //     'blocks' => $defaultBlocks,
+        //     'is_active' => true,
+        //     'user_id' => 1 // Asumiendo que el admin tiene ID 1
+        // ]);
 
         // Crear los bloques individuales
         foreach ($defaultBlocks as $key => $block) {
             CerberusSavedBlock::create([
-                'name' => ucfirst($key),
+                'name' => $block['type'],
                 'category' => $block['type'],
                 'type' => $block['type'],
                 'content' => $block['content'],

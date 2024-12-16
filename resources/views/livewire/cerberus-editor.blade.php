@@ -148,7 +148,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="headers" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['header', 'hero']))
+                                            @if(in_array($block['type'], ['header', 'hero']))
                                                 <div class="draggable-block mb-3"
                                                      draggable="true"
                                                      data-block-key="{{ $key }}"
@@ -161,7 +161,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="content" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['content']))
+                                            @if(in_array($block['type'], ['content']))
                                                 <div class="draggable-block mb-3"
                                                      draggable="true"
                                                      data-block-key="{{ $key }}"
@@ -174,7 +174,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="column" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['two_columns']))
+                                            @if(in_array($block['type'], ['two-columns-right', 'two-columns-left']))
                                                 <div class="draggable-block mb-3"
                                                      draggable="true"
                                                      data-block-key="{{ $key }}"
@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="button" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
-                                            @if(in_array($key, ['button']))
+                                            @if(in_array($block['type'], ['button']))
                                                 <div class="draggable-block mb-3"
                                                      draggable="true"
                                                      data-block-key="{{ $key }}"
@@ -200,7 +200,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="footers" wire:ignore.self>
                                         @foreach($blocks as $key => $block)
-                                            @if($key === 'footer')
+                                            @if($block['type'] === 'footer')
                                                 <div class="draggable-block mb-3"
                                                      draggable="true"
                                                      data-block-key="{{ $key }}"
@@ -225,7 +225,7 @@
                         </h2>
                         <div id="settingsBlock" class="accordion-collapse collapse show" wire:ignore.self>
                             <div class="accordion-body">
-                                <x-email-blocks.settings />
+                                <x-email-blocks.settings.edit />
                             </div>
                         </div>
                     </div>
@@ -326,7 +326,10 @@
                                                                             <i class="fas fa-grip-vertical"></i>
                                                                         </span>
                                                                     </div>
-                                                                    @include("emails.blocks.{$block['type']}", ['block' => $block])
+                                                                    @include("components.email-blocks.{$block['type']}.view", [
+                                                                        'blockKey' => $key,
+                                                                        'content' => $block['content'] ?? []
+                                                                    ])
                                                                 </div>
                                                             </td>
                                                         </tr>

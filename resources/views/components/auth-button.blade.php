@@ -27,8 +27,10 @@
 function toggleUserMenu() {
     const dropdown = document.getElementById('userDropdown');
     const button = document.querySelector('.user-name');
-    dropdown.classList.toggle('show');
-    button.classList.toggle('active');
+    if (dropdown && button) {
+        dropdown.classList.toggle('show');
+        button.classList.toggle('active');
+    }
 }
 
 // Cerrar el menú al hacer clic fuera
@@ -36,7 +38,7 @@ window.addEventListener('click', function(e) {
     if (!e.target.closest('.user-menu')) {
         const dropdown = document.getElementById('userDropdown');
         const button = document.querySelector('.user-name');
-        if (dropdown.classList.contains('show')) {
+        if (dropdown && button && dropdown.classList.contains('show')) {
             dropdown.classList.remove('show');
             button.classList.remove('active');
         }

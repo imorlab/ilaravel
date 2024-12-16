@@ -25,7 +25,7 @@
                 <div class="mb-3">
                     <label class="form-label">Vista Previa</label>
                     <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
-                        @include('emails.blocks.' . $blockType, ['block' => $block])
+                        @include('components.email-blocks.' . $blockType . '.view', ['block' => $block])
                     </div>
                 </div>
             </div>

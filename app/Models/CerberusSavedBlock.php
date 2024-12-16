@@ -34,7 +34,11 @@ class CerberusSavedBlock extends Model
         return [
             'header' => 'Cabeceras',
             'content' => 'Contenido',
+            'button' => 'Botones',
+            'hero' => 'Hero',
             'footer' => 'Pie de página',
+            'two-columns-left' => 'Dos columnas izquierda',
+            'two-columns-right' => 'Dos columnas derecha',
         ];
     }
 

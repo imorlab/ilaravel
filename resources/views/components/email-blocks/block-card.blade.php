@@ -41,30 +41,42 @@
 
         @if($block['active'])
             <div class="mt-2">
-                @switch($blockKey)
+                @php
+                    $type = $block['original_type'] ?? $block['type'];
+                @endphp
+                @switch($type)
                     @case('header')
-                        <x-email-blocks.header :blockKey="$blockKey" :content="$block['content']" />
+                        <x-email-blocks.header.edit :blockKey="$blockKey" :content="$block['content']" />
                         @break
 
                     @case('hero')
-                        <x-email-blocks.hero :blockKey="$blockKey" :content="$block['content']" />
+                        <x-email-blocks.hero.edit :blockKey="$blockKey" :content="$block['content']" />
                         @break
 
                     @case('content')
-                        <x-email-blocks.content :blockKey="$blockKey" :content="$block['content']" />
-                        @break
-
-                    @case('two_columns')
-                        <x-email-blocks.two-columns :blockKey="$blockKey" :content="$block['content']" />
+                        <x-email-blocks.content.edit :blockKey="$blockKey" :content="$block['content']" />
                         @break
 
                     @case('button')
-                        <x-email-blocks.button :blockKey="$blockKey" :content="$block['content']" />
+                        <x-email-blocks.button.edit :blockKey="$blockKey" :content="$block['content']" />
                         @break
 
                     @case('footer')
-                        <x-email-blocks.footer :blockKey="$blockKey" :content="$block['content']" />
+                        <x-email-blocks.footer.edit :blockKey="$blockKey" :content="$block['content']" />
                         @break
+
+                    @case('two-columns-left')
+                        <x-email-blocks.two-columns-left.edit :blockKey="$blockKey" :content="$block['content']" />
+                        @break
+
+                    @case('two-columns-right')
+                        <x-email-blocks.two-columns-right.edit :blockKey="$blockKey" :content="$block['content']" />
+                        @break
+
+                    @default
+                        <div class="alert alert-warning">
+                            Tipo de bloque no soportado: {{ $type }}
+                        </div>
                 @endswitch
             </div>
         @endif

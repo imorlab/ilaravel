@@ -92,4 +92,3 @@
         <x-email-blocks.color-picker :blockKey="$blockKey" :blockContent="$content" />
     </div>
 </div>
-

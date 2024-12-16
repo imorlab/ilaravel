@@ -9,20 +9,19 @@ use App\Models\User;
 class CerberusSavedTemplate extends Model
 {
     protected $fillable = [
-        'user_id',
         'name',
         'description',
         'blocks',
-        'thumbnail',
-        'is_active'
+        'is_default',
+        'user_id'
     ];
 
     protected $casts = [
         'blocks' => 'array',
-        'is_active' => 'boolean'
+        'is_default' => 'boolean'
     ];
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

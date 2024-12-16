@@ -41,61 +41,105 @@ class CerberusEditor extends Component
         ]
     ];
 
-    public function mount($template = null)
+    public function mount($templateId = null)
     {
-        // Inicializar con la configuración por defecto
-        $this->blocks = [
-            'settings' => [
-                'content' => [
-                    'background_color' => '#ebebeb',
-                    'preheader' => 'Newsletter preview text',
-                    'title' => 'Newsletter Template',
-                    'padding' => '0',
-                    'alignment' => 'center',
-                    'dark_mode' => false
-                ]
-            ]
-        ];
+        // Si se proporciona un ID de plantilla, cargar esa plantilla
+        if ($templateId) {
+            $template = CerberusSavedTemplate::findOrFail($templateId);
+            $this->templateId = $template->id;
+            $this->templateName = $template->name;
+            $this->blocks = $template->blocks;
 
-        if ($template) {
-            // Cargar la plantilla especificada
-            $selectedTemplate = CerberusSavedTemplate::find($template);
-            if ($selectedTemplate) {
-                $this->templateId = $selectedTemplate->id;
-                $this->templateName = $selectedTemplate->name;
-                
-                // Asegurarse de que los settings existan
-                $templateBlocks = $selectedTemplate->blocks;
-                if (!isset($templateBlocks['settings'])) {
-                    $templateBlocks['settings'] = $this->blocks['settings'];
-                } else {
-                    // Merge settings para asegurar que todos los campos existan
-                    $templateBlocks['settings'] = array_merge_recursive(
-                        $this->blocks['settings'],
-                        $templateBlocks['settings']
-                    );
+            // Asegurarse de que cada bloque tenga un orden
+            $this->blocks = collect($this->blocks)->map(function ($block, $key) {
+                if (!isset($block['order'])) {
+                    $block['order'] = PHP_INT_MAX;
                 }
-                
-                $this->blocks = $templateBlocks;
-            }
+                return $block;
+            })->toArray();
         } else {
-            // Si no se especifica template, cargar la plantilla por defecto
-            $defaultTemplate = CerberusSavedTemplate::where('name', 'Default Template')->first();
-            if ($defaultTemplate) {
-                $this->templateId = $defaultTemplate->id;
-                $this->templateName = $defaultTemplate->name;
-                $this->blocks = $defaultTemplate->blocks;
-            }
-        }
+            // Inicializar con los bloques por defecto
+            $this->blocks = [
+                'settings' => [
+                    'type' => 'settings',
+                    'content' => [
+                        'background_color' => '#ebebeb',
+                        'preheader' => 'Newsletter preview text'
+                    ]
+                ]
+            ];
 
-        // Asegurarse de que cada bloque tenga un orden
-        $order = 0;
-        foreach ($this->blocks as $key => &$block) {
-            if (!isset($block['order']) && $key !== 'settings') {
-                $block['order'] = $order++;
+            // Agregar todos los tipos de bloques disponibles
+            $blockTypes = [
+                'header' => [
+                    'title' => 'Header Title',
+                    'subtitle' => 'Header Subtitle',
+                    'alignment' => 'left'
+                ],
+                'hero' => [
+                    'title' => 'Hero Title',
+                    'subtitle' => 'Hero Subtitle',
+                    'image' => '',
+                    'alignment' => 'left'
+                ],
+                'content' => [
+                    'title' => 'Content Title',
+                    'content' => 'Content text goes here',
+                    'alignment' => 'left'
+                ],
+                'button' => [
+                    'text' => 'Click me',
+                    'url' => '#',
+                    'alignment' => 'left',
+                    'background_color' => '#007bff',
+                    'text_color' => '#ffffff'
+                ],
+                'footer' => [
+                    'content' => 'Footer content',
+                    'alignment' => 'center'
+                ],
+                'two-columns-left' => [
+                    'left' => [
+                        'title' => 'Left Column Title',
+                        'content' => 'Left column content goes here',
+                        'button_text' => 'Learn More',
+                        'button_url' => '#',
+                        'button_alignment' => 'center'
+                    ],
+                    'right' => [
+                        'image' => 'https://via.placeholder.com/280x200',
+                        'alt' => 'Right column image',
+                        'width' => '280'
+                    ],
+                    'alignment' => 'left'
+                ],
+                'two-columns-right' => [
+                    'left' => [
+                        'image' => 'https://via.placeholder.com/280x200',
+                        'alt' => 'Left column image',
+                        'width' => '280'
+                    ],
+                    'right' => [
+                        'title' => 'Right Column Title',
+                        'content' => 'Right column content goes here',
+                        'button_text' => 'Learn More',
+                        'button_url' => '#',
+                        'button_alignment' => 'center'
+                    ],
+                    'alignment' => 'left'
+                ]
+            ];
+
+            foreach ($blockTypes as $type => $defaultContent) {
+                $this->blocks[$type] = [
+                    'active' => false,
+                    'type' => $type,
+                    'content' => $defaultContent
+                ];
             }
+
+            $this->templateName = 'Nueva Plantilla';
         }
-        unset($block);
 
         // Cargar bloques guardados
         $this->loadSavedBlocks();
@@ -162,13 +206,13 @@ class CerberusEditor extends Component
         foreach ($this->savedBlocks as $index => $savedBlock) {
             $key = 'saved_' . $savedBlock->id;
             $this->blocks[$key] = [
-                'active' => (bool) $savedBlock->is_active, // Convertir explícitamente a booleano
-                'type' => $savedBlock->type,
+                'active' => (bool) $savedBlock->is_active,
+                'type' => $savedBlock->type, // Tipo original del bloque (header, content, etc.)
+                'original_type' => $savedBlock->type, // Guardamos el tipo original para la vista
                 'content' => $savedBlock->content,
                 'name' => $savedBlock->name,
                 'category' => $savedBlock->category,
-                'order' => $index + 1000,  // Asignar un orden alto para que aparezcan después de los bloques normales
-                'saved_block_id' => $savedBlock->id  // Guardar el ID del bloque para actualizarlo después
+                'is_saved_block' => true
             ];
         }
     }

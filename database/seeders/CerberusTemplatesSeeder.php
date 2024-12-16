@@ -20,7 +20,7 @@ class CerberusTemplatesSeeder extends Seeder
                 ]
             ],
             'header' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'header',
                 'order' => 1,
                 'content' => [
@@ -33,7 +33,7 @@ class CerberusTemplatesSeeder extends Seeder
                 ]
             ],
             'hero' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'hero',
                 'order' => 2,
                 'content' => [
@@ -45,7 +45,7 @@ class CerberusTemplatesSeeder extends Seeder
                 ]
             ],
             'content' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'content',
                 'order' => 3,
                 'content' => [
@@ -59,7 +59,7 @@ class CerberusTemplatesSeeder extends Seeder
                 ]
             ],
             'button' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'button',
                 'order' => 4,
                 'content' => [
@@ -79,9 +79,9 @@ class CerberusTemplatesSeeder extends Seeder
                     'container_width' => '250'
                 ]
             ],
-            'two_columns' => [
-                'active' => true,
-                'type' => 'two_columns',
+            'two-columns-left' => [
+                'active' => false,
+                'type' => 'two-columns-left',
                 'order' => 5,
                 'content' => [
                     'left' => [
@@ -101,8 +101,30 @@ class CerberusTemplatesSeeder extends Seeder
                     'background_color' => '#fafafa'
                 ]
             ],
+            'two-columns-right' => [
+                'active' => false,
+                'type' => 'two-columns-right',
+                'order' => 5,
+                'content' => [
+                    'left' => [
+                        'image' => 'https://picsum.photos/270/270.webp?random=1',
+                    ],
+                    'right' => [
+                        'icon' => 'https://picsum.photos/270/270.webp?random=1',
+                        'label' => 'Left Column',
+                        'title' => 'Left Column Title',
+                        'text' => 'Left column content',
+                        'button_text' => 'Read More',
+                        'button_url' => '#',
+                        'button_background' => '#007bff',
+                        'button_text_color' => '#fafafa',
+                        'button_alignment' => 'left',
+                    ],
+                    'background_color' => '#fafafa'
+                ]
+            ],
             'footer' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'footer',
                 'order' => 6,
                 'content' => [
@@ -119,6 +141,8 @@ class CerberusTemplatesSeeder extends Seeder
             'name' => 'Default Template',
             'description' => 'Plantilla predefinida del sistema',
             'blocks' => $defaultBlocks,
+            'is_default' => true,
+            'thumbnail' => asset('img/cerberus/default-template.jpg'),
             'is_active' => true,
             'user_id' => 1 // Asumiendo que el admin tiene ID 1
         ]);
