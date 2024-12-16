@@ -13,7 +13,7 @@ class CerberusBlocksSeeder extends Seeder
         // Crear la plantilla predefinida
         $defaultBlocks = [
             'header' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'header',
                 'content' => [
                     'image' => 'https://picsum.photos/200/50.webp?random=1',
@@ -25,7 +25,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'hero' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'hero',
                 'content' => [
                     'image' => 'https://picsum.photos/600/300.webp?random=2',
@@ -36,7 +36,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'content' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'content',
                 'content' => [
                     'title' => 'Welcome to our newsletter',
@@ -49,7 +49,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'two_columns' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'two_columns',
                 'content' => [
                     'left' => [
@@ -70,7 +70,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'button' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'button',
                 'content' => [
                     'text' => 'ACCEDE',
@@ -90,7 +90,7 @@ class CerberusBlocksSeeder extends Seeder
                 ]
             ],
             'footer' => [
-                'active' => true,
+                'active' => false,
                 'type' => 'footer',
                 'content' => [
                     'company' => 'Your Company Name',

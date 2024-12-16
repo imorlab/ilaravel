@@ -154,8 +154,51 @@ class CerberusEditor extends Component
 
     protected function loadSavedBlocks()
     {
+        // Cargar todos los bloques guardados, sin filtrar por is_active
         $this->savedBlocks = CerberusSavedBlock::all();
         $this->savedBlocksCount = $this->savedBlocks->count();
+        
+        // Agregar los bloques guardados al array $blocks con el prefijo 'saved_'
+        foreach ($this->savedBlocks as $index => $savedBlock) {
+            $key = 'saved_' . $savedBlock->id;
+            $this->blocks[$key] = [
+                'active' => (bool) $savedBlock->is_active, // Convertir explícitamente a booleano
+                'type' => $savedBlock->type,
+                'content' => $savedBlock->content,
+                'name' => $savedBlock->name,
+                'category' => $savedBlock->category,
+                'order' => $index + 1000,  // Asignar un orden alto para que aparezcan después de los bloques normales
+                'saved_block_id' => $savedBlock->id  // Guardar el ID del bloque para actualizarlo después
+            ];
+        }
+    }
+
+    public function updatedBlocks($value, $key)
+    {
+        // Si el cambio es en un bloque guardado y es el campo 'active'
+        if (str_starts_with($key, 'saved_') && str_ends_with($key, '.active')) {
+            // Extraer el ID del bloque guardado
+            $blockKey = explode('.', $key)[0];
+            $savedBlockId = $this->blocks[$blockKey]['saved_block_id'] ?? null;
+            
+            if ($savedBlockId) {
+                try {
+                    // Actualizar el estado en la base de datos
+                    CerberusSavedBlock::where('id', $savedBlockId)
+                        ->update(['is_active' => $value]);
+
+                    $this->dispatch('notify', [
+                        'type' => 'success',
+                        'message' => 'Estado del bloque actualizado correctamente'
+                    ]);
+                } catch (\Exception $e) {
+                    $this->dispatch('notify', [
+                        'type' => 'error',
+                        'message' => 'Error al actualizar el estado del bloque'
+                    ]);
+                }
+            }
+        }
     }
 
     public function updateBlockOrder($orderedBlocks)
@@ -178,7 +221,8 @@ class CerberusEditor extends Component
             $blocksToOrder = collect($this->blocks)
                 ->except('settings')
                 ->filter(function ($block) {
-                    return !isset($block['active']) || $block['active'];
+                    // Solo filtrar por active si existe la clave
+                    return !array_key_exists('active', $block) || $block['active'];
                 })
                 ->sortBy(fn($block) => $block['order'] ?? PHP_INT_MAX)
                 ->all();

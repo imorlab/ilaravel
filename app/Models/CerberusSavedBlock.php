@@ -20,6 +20,7 @@ class CerberusSavedBlock extends Model
 
     protected $casts = [
         'content' => 'array',
+        'is_active' => 'boolean',
     ];
 
     public function user(): BelongsTo

@@ -121,7 +121,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemBlocks">
-                                Bloques Disponibles
+                            <i class="fa-solid fa-briefcase me-2"></i> Bloques Disponibles
                             </button>
                         </h2>
                         <div id="systemBlocks" class="accordion-collapse collapse show">
@@ -220,7 +220,7 @@
                     <div class="accordion-item" wire:ignore>
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#settingsBlock">
-                                <i class="fas fa-cog"></i> Configuración
+                                <i class="fas fa-cog me-2"></i> Configuración
                             </button>
                         </h2>
                         <div id="settingsBlock" class="accordion-collapse collapse show" wire:ignore.self>
@@ -234,7 +234,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#savedBlocks">
-                                Bloques Guardados ({{ $savedBlocksCount }})
+                            <i class="fa-solid fa-user-plus me-2"></i> Bloques Guardados ({{ $savedBlocksCount }}/10)
                             </button>
                         </h2>
                         <div id="savedBlocks" class="accordion-collapse collapse show">
