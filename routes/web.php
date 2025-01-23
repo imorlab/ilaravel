@@ -63,6 +63,10 @@ Route::get('/cerberus/editor/{template?}', function($template = null) {
     return view('cerberus.editor', ['template' => $template]);
 })->name('cerberus.editor');
 
+Route::get('/pro360-newsletter', function () {
+    return view('pro360-newsletter');
+})->name('pro360.newsletter');
+
 // Eliminar estas rutas antiguas ya que ahora usamos los componentes Livewire
 // Route::get('/cerberus', function () {
 //     return view('cerberus.editor');
