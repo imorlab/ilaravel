@@ -437,16 +437,30 @@ $sidebar-accent: #6366f1; // Indigo color for sidebar
 // Colors
 
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: 'Source Code Pro', sans-serif;
     background: linear-gradient(180deg,
         rgba(15, 15, 20, 1) 0%,
         rgba(35, 17, 44, 1) 50%,
         rgba(59, 7, 100, 1) 100%
-    );
+    ) fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
     min-height: 100vh;
     font-size: $font-size-base;
     line-height: $line-height-base;
+    margin: 0;
+    padding: 0;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+    height: 100%;
+    background: transparent;
 }
 
 .custom-border {
