@@ -1,4 +1,23 @@
 <div class="mt-3">
+    <style>
+        .glass-input option:hover,
+        .glass-input option:focus,
+        .glass-input option:active,
+        .glass-input option:checked {
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: #fff !important;
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .glass-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
     <div class="row justify-content-center align-items-center">
         <div class="col-lg-8">
             <div class="card shadow glass-card">
@@ -82,14 +101,13 @@
                                 </button>
                             
                                 <div class="form-group mb-4" style="width: 150px;">
-                                    <!-- <label for="selectedSheet" class="form-label text-light">Selecciona el idioma</label> -->
                                     <div class="input-group">
-                                        <select wire:model="selectedSheet" class="form-select glass-input">
-                                            <option value="ESP">ES</option>
-                                            <option value="EN">EN</option>
-                                            <option value="DE">DE</option>
-                                            <option value="PT">PT</option>
-                                            <option value="PTBR">PTBR</option>
+                                        <select wire:model="selectedSheet" class="form-select glass-input" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;">
+                                            <option value="ESP" style="background: #1a1a1a; color: #fff;">ES</option>
+                                            <option value="EN" style="background: #1a1a1a; color: #fff;">EN</option>
+                                            <option value="DE" style="background: #1a1a1a; color: #fff;">DE</option>
+                                            <option value="PT" style="background: #1a1a1a; color: #fff;">PT</option>
+                                            <option value="PTBR" style="background: #1a1a1a; color: #fff;">PTBR</option>
                                         </select>
                                         <button type="button" 
                                                 wire:click="updatePreview" 
