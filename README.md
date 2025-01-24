@@ -243,4 +243,4 @@ php artisan serve
 
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-#Iml2024
+#Iml{{ date('Y') }}

@@ -1,54 +1,100 @@
-<div class="p-6">
-    <div class="max-w-7xl mx-auto">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <h2 class="text-2xl font-bold mb-4">Generador de Newsletter PRO360</h2>
-            
-            <div class="mb-6">
-                <form wire:submit.prevent="updatedExcelFile">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="excel">
-                            Archivo Excel
-                        </label>
-                        <input type="file" 
-                               wire:model="excelFile" 
-                               id="excel"
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                               accept=".xlsx,.xls">
-                        @error('excelFile') 
-                            <span class="text-red-500 text-xs italic">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                type="submit"
-                                wire:loading.attr="disabled">
-                            <span wire:loading.remove wire:target="updatedExcelFile">Generar Newsletter</span>
-                            <span wire:loading wire:target="updatedExcelFile">Procesando...</span>
-                        </button>
-                        
-                        @if($generatedHtml)
-                            <button wire:click="downloadNewsletter" 
-                                    type="button"
-                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Descargar HTML
-                            </button>
-                        @endif
-                    </div>
-                </form>
-            </div>
-            
-            @if($generatedHtml)
-                <div class="mt-6">
-                    <h3 class="text-lg font-semibold mb-2">Vista previa:</h3>
-                    <div class="border p-4 rounded-lg bg-gray-50">
-                        <iframe srcdoc="{{ $generatedHtml }}" 
-                                class="w-full h-[600px] border-0"
-                                sandbox="allow-same-origin">
-                        </iframe>
-                    </div>
+<div class="mt-3">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-8">
+            <div class="card shadow glass-card">
+                <div class="card-header glass-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0 text-light">{{ __('PRO360') }}</h2>
+                    <span class="badge glass-badge">
+                        <i class="bi bi-envelope-paper me-1"></i>
+                        {{ __('Newsletter') }}
+                    </span>
                 </div>
-            @endif
+                <div class="card-body">
+                    <p class="text-center text-light my-4">{{ __('Genera tu newsletter PRO360 desde un archivo Excel') }}</p>
+
+                    <form wire:submit.prevent="updatedExcelFile" novalidate>
+                        <div class="form-group mb-4">
+                            <div class="input-group">
+                                <span class="input-group-text glass-input-icon">
+                                    <img src="{{ asset('icons/excel-icon.webp') }}" alt="Excel Icon" style="width: 18px; height: 18px;">
+                                </span>
+                                <input type="file" 
+                                    wire:model="excelFile" 
+                                    id="excel"
+                                    class="form-control glass-input @error('excelFile') is-invalid @enderror"
+                                    accept=".xlsx,.xls">
+                                @error('excelFile')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        @if($generatedHtml)
+                            <div class="card glass-card mt-4">
+                                <div class="card-header glass-header d-flex align-items-center">
+                                    <i class="fas fa-eye me-2"></i>
+                                    <h5 class="mb-0">{{ __('Vista Previa') }}</h5>
+                                </div>
+                                <div class="card-body preview-container">
+                                    <div wire:loading wire:target="updatedExcelFile" class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">{{ __('Cargando...') }}</span>
+                                        </div>
+                                    </div>
+                                    <div wire:loading.remove wire:target="updatedExcelFile">
+                                        <iframe srcdoc="{{ $generatedHtml }}" 
+                                                class="w-100"
+                                                style="height: 600px; border: none; background: white;"
+                                                frameborder="0"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="submit"
+                                    class="ibtn"
+                                    wire:loading.attr="disabled"
+                                    wire:target="updatedExcelFile">
+                                <span wire:loading.remove wire:target="updatedExcelFile">
+                                    <i class="fas fa-wand-magic-sparkles me-2"></i>
+                                    {{ __('Generar Newsletter') }}
+                                </span>
+                                <span wire:loading wire:target="updatedExcelFile">
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    {{ __('Procesando...') }}
+                                </span>
+                            </button>
+
+                            @if($generatedHtml)
+                                <button wire:click="downloadNewsletter" 
+                                        type="button"
+                                        class="ibtn btn-glass">
+                                    <i class="fas fa-download me-2"></i>
+                                    {{ __('Descargar HTML') }}
+                                </button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Notificaciones -->
+    @if (session()->has('message'))
+        <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-3" role="alert">
+            {{ session('message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show position-fixed bottom-0 end-0 m-3" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 </div>
