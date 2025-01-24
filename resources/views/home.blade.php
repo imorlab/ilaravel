@@ -30,7 +30,9 @@
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-8">
             <div class="col-auto text-center mb-5 position-relative">
+                @if(env('SHOW_CHRISTMAS_ELEMENTS', false))
                 <img src="{{ asset('img/christmas-hat.png') }}" class="position-absolute" style="width: 45px; top: -5px; left: calc(50% - 60px); z-index: 100;">
+                @endif
                 <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1 animate__animated animate__fadeIn">
             </div>
             <div class="row g-4">

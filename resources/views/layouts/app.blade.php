@@ -85,8 +85,10 @@
                 </svg>
             </div>
         </div>
-
+        
+        @if(env('SHOW_CHRISTMAS_ELEMENTS', false))
         <x-snowflakes />
+        @endif
         
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             {{-- @include('layouts.navigation') --}}
