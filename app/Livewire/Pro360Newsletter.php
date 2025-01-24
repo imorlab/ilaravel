@@ -204,6 +204,9 @@ class Pro360Newsletter extends Component
 
             $html = str_replace('<!-- NOTICIA -->', $secondaryHtml, $html);
 
+            // Reemplazar el botón después de procesar todas las plantillas
+            $html = str_replace('btn-es.png', "btn-{$langConfig['image_code']}.png", $html);
+
             $this->generatedHtml = $html;
 
         } catch (\Exception $e) {
@@ -215,6 +218,9 @@ class Pro360Newsletter extends Component
     protected function generatePrincipalHtml($data)
     {
         $html = $this->principalTemplate;
+
+        // Reemplazar la imagen
+        $html = str_replace('{{ IMAGE_NAME }}', 'imagen-1.png', $html);
 
         // Map Excel columns to template
         $replacements = [
@@ -235,7 +241,12 @@ class Pro360Newsletter extends Component
 
     protected function generateNoticiaHtml($data, $template)
     {
+        static $imageCounter = 2;
         $html = $template;
+
+        // Reemplazar la imagen
+        $html = str_replace('{{ IMAGE_NAME }}', "imagen-{$imageCounter}.png", $html);
+        $imageCounter++;
 
         // Map Excel columns to template
         $replacements = [
