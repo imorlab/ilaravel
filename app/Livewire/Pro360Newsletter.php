@@ -21,8 +21,10 @@ class Pro360Newsletter extends Component
     protected $principalTemplate;
     protected $noticiaIzquierdaTemplate;
     protected $noticiaDerechaTemplate;
+    protected $proximamenteTemplate;
     public $selectedSheet = 'ESP';
     protected $lastUploadedFile;
+    public $previewHtml = '';
 
     protected const LANGUAGE_CONFIG = [
         'ESP' => [
@@ -53,7 +55,7 @@ class Pro360Newsletter extends Component
             'url_code' => 'PT',
             'image_code' => 'pt',
             'contact_text' => 'Contacte a equipa PRO360',
-            'privacy_text' => 'A Prosegur Gestión de Activos S.L. (doravante "PROSEGUR") é a entidade responsável pelo tratamento dos seus dados pessoais. Trataremos os seus dados por forma a poder mantê-la/o informada/o, através do envio de uma newsletter, das vantagens oferecidas pela campanha de bem-estar e saúde PRO360 da PROSEGUR, com base na relação contratual existente entre si e a PROSEGUR. Pode exercer os seus direitos de proteção de dados enviando um e-mail para: protecciondedatos@prosegur.com . Pode consultar informações adicionais sobre privacidade acedendo ao seguinte link: https://www.prosegur.com/politica-privacidad/prosegur-empleados',
+            'privacy_text' => 'A Prosegur Gestión de Activos S.L. (doravante "PROSEGUR") é a entidade responsável pelo tratamento dos seus dados pessoais. Trataremos os seus dados por forma a poder mantê-la/o informada/o, através do envio de uma newsletter, das vantagens oferecidas pela campanha de bem-estar e saúde PRO360 da PROSEGUR, com base na relação contratual existente entre si e a PROSEGUR. Pode exercitar os seus direitos de proteção de dados enviando um e-mail para: protecciondedatos@prosegur.com . Pode consultar informações adicionais sobre privacidade acedendo ao seguinte link: https://www.prosegur.com/politica-privacidad/prosegur-empleados',
             'view_problems' => 'Problemas para ver o e-mail? ',
             'click_here' => 'Clique aqui'
         ],
@@ -95,6 +97,7 @@ class Pro360Newsletter extends Component
         $this->principalTemplate = file_get_contents(database_path('pro360/principal.html'));
         $this->noticiaIzquierdaTemplate = file_get_contents(database_path('pro360/noticia-izquierda.html'));
         $this->noticiaDerechaTemplate = file_get_contents(database_path('pro360/noticia-derecha.html'));
+        $this->proximamenteTemplate = file_get_contents(database_path('pro360/proximamente.html'));
     }
 
     public function updatePreview()
@@ -136,66 +139,46 @@ class Pro360Newsletter extends Component
 
             // Generate HTML
             $html = $this->masterTemplate;
-
-            // Replace language-specific content
+            
+            // Get language config
             $langConfig = self::LANGUAGE_CONFIG[$this->selectedSheet];
             $currentMonth = $this->getCurrentMonthCode();
             
-            // Reemplazar la URL y la imagen primero
-            $html = str_replace('pro360_ES.html', "pro360_{$langConfig['url_code']}.html", $html);
+            // Replace language specific content
             $html = str_replace('cab1a-es.png', "cab1a-{$langConfig['image_code']}.png", $html);
             $html = str_replace('/ene/', "/{$currentMonth}/", $html);
             
-            // Reemplazar el texto de contacto
-            $html = str_replace(
-                'Contacta con el equipo PRO360',
-                $langConfig['contact_text'],
-                $html
-            );
+            // Replace contact text and other texts
+            $html = str_replace('Contacta con el equipo PRO360', $langConfig['contact_text'], $html);
+            $html = str_replace('{{ VIEW_PROBLEMS_TEXT }}', $langConfig['view_problems'], $html);
+            $html = str_replace('{{ CLICK_HERE_TEXT }}', $langConfig['click_here'], $html);
             
-            // Reemplazar el texto de problemas de visualización
-            $html = str_replace(
-                '{{ VIEW_PROBLEMS_TEXT }}',
-                $langConfig['view_problems'],
-                $html
-            );
-            
-            // Reemplazar el texto del enlace
-            $html = str_replace(
-                '{{ CLICK_HERE_TEXT }}',
-                $langConfig['click_here'],
-                $html
-            );
-            
-            // Reemplazar el texto legal usando el placeholder
+            // Replace legal text
             $legalText = $langConfig['privacy_text'];
-            
-            // Añadir los enlaces con el estilo correcto
             $email = 'protecciondedatos@prosegur.com';
             $privacy_url = 'https://www.prosegur.com/politica-privacidad/prosegur-empleados';
             
             $legalText = str_replace(
-                $email,
-                '<a href="mailto:' . $email . '" style="text-decoration: none; color: #B7B7B7;">' . $email . '</a>',
-                $legalText
-            );
-            
-            $legalText = str_replace(
-                $privacy_url,
-                '<a href="' . $privacy_url . '" style="text-decoration: none; color: #B7B7B7;">' . $privacy_url . '</a>',
+                ['[email]', '[privacy_url]'],
+                [
+                    '<a href="mailto:' . $email . '" style="color: #000000; text-decoration: underline;">' . $email . '</a>',
+                    '<a href="' . $privacy_url . '" style="color: #000000; text-decoration: underline;">' . $privacy_url . '</a>'
+                ],
                 $legalText
             );
             
             $legalText .= '<br><br><b style="color: #000000;">&copy; Copyright 2024 Prosegur</b>';
-            
             $html = str_replace('{{ LEGAL_TEXT }}', $legalText, $html);
 
             // Replace principal news
             $principalHtml = $this->generatePrincipalHtml($principalNews);
             $html = str_replace('<!-- PRINCIPAL -->', $principalHtml, $html);
 
-            // Generate secondary news
+            // Generate secondary news and proximamente
             $secondaryHtml = '';
+            $proximamenteHtml = '';
+            $noticiaIndex = 0;
+            
             foreach ($rows as $index => $row) {
                 if (empty(array_filter($row, function($cell) {
                     return !empty(trim((string)$cell));
@@ -203,18 +186,33 @@ class Pro360Newsletter extends Component
                     continue;
                 }
 
-                $template = ($index % 2 === 0) ? $this->noticiaIzquierdaTemplate : $this->noticiaDerechaTemplate;
-                $secondaryHtml .= $this->generateNoticiaHtml($row, $template);
+                $firstColumn = trim(strtoupper((string)($row[0] ?? '')));
+
+                // Check if it's a proximamente section
+                if (in_array($firstColumn, ['PRÓXIMAMENTE', 'PROXIMAMENTE'])) {
+                    $proximamenteHtml = $this->generateProximamenteHtml($row, $langConfig['image_code']);
+                    \Log::info('Generado HTML de Próximamente', [
+                        'length' => strlen($proximamenteHtml)
+                    ]);
+                } else {
+                    $template = ($noticiaIndex % 2 === 0) ? $this->noticiaIzquierdaTemplate : $this->noticiaDerechaTemplate;
+                    $secondaryHtml .= $this->generateNoticiaHtml($row, $template);
+                    $noticiaIndex++;
+                }
             }
 
+            // Replace sections in the master template
             $html = str_replace('<!-- NOTICIA -->', $secondaryHtml, $html);
+            $html = str_replace("\t\t\t\t<!-- PROXIMAMENTE -->", $proximamenteHtml, $html);
 
-            // Reemplazar el botón después de procesar todas las plantillas
+            // Replace button after processing all templates
             $html = str_replace('btn-es.png', "btn-{$langConfig['image_code']}.png", $html);
-
+            
             $this->generatedHtml = $html;
 
         } catch (\Exception $e) {
+            \Log::error('Error al procesar Excel: ' . $e->getMessage());
+            \Log::error($e->getTraceAsString());
             session()->flash('error', $e->getMessage());
             $this->generatedHtml = null;
         }
@@ -269,6 +267,62 @@ class Pro360Newsletter extends Component
         return $html;
     }
 
+    protected function generateProximamenteHtml($data, $langCode)
+    {
+        $html = $this->proximamenteTemplate;
+        $currentMonth = $this->getCurrentMonthCode();
+
+        // Replace language specific image in title
+        $html = str_replace(
+            'https://media.beonworldwide.com/newsletters/prosegur/2024/resources/prox-ES.png',
+            "https://media.beonworldwide.com/newsletters/prosegur/2024/resources/prox-{$langCode}.png",
+            $html
+        );
+
+        // Replace month in image paths for other images
+        $html = str_replace('/2025/ene/', "/2025/{$currentMonth}/", $html);
+
+        // Map Excel columns to template
+        $replacements = [
+            'Título' => $data[3] ?? '', // Título
+            'Descripción' => $data[4] ?? '', // Descripción
+            '{{ IMAGE_NAME }}' => 'imagen-7.png', // Imagen fija para próximamente
+        ];
+
+        // Replace text content
+        foreach ($replacements as $search => $replace) {
+            $html = str_replace($search, $replace, $html);
+        }
+
+        // Handle optional button
+        $buttonHtml = '<tr>
+            <td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
+                <a class="keep-black" href="' . ($data[8] ?? '#') . '">
+                    <img src="https://media.beonworldwide.com/newsletters/prosegur/2025/' . $currentMonth . '/img/btn-prox-' . $langCode . '.png"
+                    alt="pro360" width="96" height="" border="0" align="left"
+                    style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #FFD102; text-align: left;margin: 0px 0px 20px 20px;">
+                </a>
+            </td>
+        </tr>';
+
+        // Replace button placeholder with actual button or empty string
+        $html = str_replace(
+            '<tr>
+										<td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
+											<a class="keep-black" href="enlace-noticia">
+												<img src="https://media.beonworldwide.com/newsletters/prosegur/2025/ene/img/btn-prox-es.png"
+												alt="pro360" width="96" height="" border="0" align="left"
+												style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #FFD102; text-align: left;margin: 0px 0px 20px 20px;">
+											</a>
+										</td>
+									</tr>',
+            !empty($data[6]) ? $buttonHtml : '',
+            $html
+        );
+
+        return $html;
+    }
+
     public function downloadNewsletter()
     {
         if (!$this->generatedHtml) {
@@ -279,6 +333,173 @@ class Pro360Newsletter extends Component
         return response()->streamDownload(function () {
             echo $this->generatedHtml;
         }, $filename);
+    }
+
+    public function generatePdf()
+    {
+        if (empty($this->generatedHtml)) {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'Primero debes generar el contenido de la newsletter',
+                'timer' => 1500
+            ]);
+            return;
+        }
+
+        try {
+            \Log::info('Iniciando generación de PDF');
+
+            // Renderizar la vista del PDF con el contenido
+            $html = view('pdf.newsletter', ['content' => $this->generatedHtml])->render();
+
+            // Generar PDF
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($html);
+            $pdf->setPaper('A4', 'portrait');
+            
+            $pdf->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'dpi' => 96,
+                'defaultPaperSize' => 'A4',
+                'enable_php' => false,
+                'enable_javascript' => false,
+                'enable_remote' => true,
+                'enable_html5_parser' => true,
+                'zoom' => 0.5
+            ]);
+
+            // Generar nombre del archivo
+            $filename = 'newsletter_' . now()->format('Y-m-d_His') . '.pdf';
+            $tempPdfPath = storage_path('app/' . $filename);
+
+            // Guardar PDF
+            $pdf->save($tempPdfPath);
+
+            \Log::info('PDF generado en: ' . $tempPdfPath);
+
+            // Devolver el archivo y luego eliminarlo
+            return response()->download($tempPdfPath, $filename)->deleteFileAfterSend(true);
+
+        } catch (\Exception $e) {
+            \Log::error('Error al generar PDF: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'No se pudo generar el PDF: ' . $e->getMessage(),
+                'timer' => 3000
+            ]);
+        }
+    }
+
+    public function previewNewsletter()
+    {
+        if (empty($this->generatedHtml)) {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'Primero debes generar el contenido de la newsletter',
+                'timer' => 1500
+            ]);
+            return;
+        }
+
+        $this->previewHtml = '<!DOCTYPE html>
+            <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif;
+                        background: #f0f0f0;
+                        color: black;
+                        margin: 0;
+                        padding: 20px;
+                    }
+                    * {
+                        box-sizing: border-box;
+                    }
+                    img { 
+                        max-width: 100%;
+                        height: auto;
+                        display: block;
+                    }
+                    .preview-container {
+                        width: ' . $this->cropWidth . 'px;
+                        min-height: ' . $this->cropHeight . 'px;
+                        margin: 0 auto;
+                        background: white;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                        position: relative;
+                    }
+                    .content {
+                        width: 100%;
+                        min-height: 100%;
+                        padding: ' . $this->cropPadding . 'px;
+                        background: white;
+                    }
+                    .controls {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: white;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    }
+                    .controls label {
+                        display: block;
+                        margin-bottom: 10px;
+                    }
+                    .controls input {
+                        width: 100px;
+                        margin-bottom: 15px;
+                    }
+                    table {
+                        width: 100% !important;
+                        margin: 0 !important;
+                        border-collapse: collapse !important;
+                    }
+                    td {
+                        padding: 5px !important;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="preview-container">
+                    <div class="content">' . $this->generatedHtml . '</div>
+                </div>
+                <div class="controls">
+                    <label>Ancho (px):
+                        <input type="number" value="' . $this->cropWidth . '" 
+                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: this.value, height: null, padding: null})">
+                    </label>
+                    <label>Alto (px):
+                        <input type="number" value="' . $this->cropHeight . '" 
+                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: null, height: this.value, padding: null})">
+                    </label>
+                    <label>Padding (px):
+                        <input type="number" value="' . $this->cropPadding . '" 
+                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: null, height: null, padding: this.value})">
+                    </label>
+                    <button onclick="window.livewire.dispatch(\'generatePdf\')" 
+                        style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Generar PDF
+                    </button>
+                </div>
+            </body>
+            </html>';
+
+        $this->showPreview = true;
+    }
+
+    public function updateCropDimensions($width = null, $height = null, $padding = null)
+    {
+        if ($width !== null) $this->cropWidth = (int)$width;
+        if ($height !== null) $this->cropHeight = (int)$height;
+        if ($padding !== null) $this->cropPadding = (int)$padding;
+        
+        $this->previewNewsletter();
     }
 
     public function hydrate()
@@ -343,8 +564,6 @@ class Pro360Newsletter extends Component
     #[On('sendNewsletterToEmails')]
     public function sendNewsletterToEmails()
     {
-        \Log::info('Enviando a emails: ' . $this->emailsToSend);
-        
         if (empty($this->emailsToSend)) {
             $this->dispatch('swal:error', [
                 'title' => 'Error',

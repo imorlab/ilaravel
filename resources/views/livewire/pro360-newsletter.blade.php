@@ -117,6 +117,22 @@
                                         {{ __('Enviando...') }}
                                     </span>
                                 </button>
+
+                                <!-- Button generate pdf -->
+                                <!-- <button wire:click="generatePdf" 
+                                        type="button"
+                                        class="ibtn btn-glass"
+                                        wire:loading.attr="disabled"
+                                        wire:target="generatePdf">
+                                    <span wire:loading.remove wire:target="generatePdf">
+                                        <i class="fas fa-file-pdf me-2"></i>
+                                        {{ __('Generar PDF') }}
+                                    </span>
+                                    <span wire:loading wire:target="generatePdf">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>
+                                        {{ __('Generando PDF...') }}
+                                    </span>
+                                </button> -->
                             
                                 <div class="form-group mb-4" style="width: 150px;">
                                     <div class="input-group">
