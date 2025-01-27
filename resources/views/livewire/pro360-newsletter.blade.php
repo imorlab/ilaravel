@@ -78,19 +78,21 @@
                         @endif
 
                         <div class="d-flex justify-content-center gap-3 pb-3">
-                            <button type="submit"
-                                    class="ibtn"
-                                    wire:loading.attr="disabled"
-                                    wire:target="generateNewsletter">
-                                <span wire:loading.remove wire:target="generateNewsletter">
-                                    <i class="fas fa-wand-magic-sparkles me-2"></i>
-                                    {{ __('Generar Newsletter') }}
-                                </span>
-                                <span wire:loading wire:target="generateNewsletter">
-                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                    {{ __('Procesando...') }}
-                                </span>
-                            </button>
+                            @if(!$generatedHtml)
+                                <button type="submit"
+                                        class="ibtn"
+                                        wire:loading.attr="disabled"
+                                        wire:target="generateNewsletter">
+                                    <span wire:loading.remove wire:target="generateNewsletter">
+                                        <i class="fas fa-wand-magic-sparkles me-2"></i>
+                                        {{ __('Generar Newsletter') }}
+                                    </span>
+                                    <span wire:loading wire:target="generateNewsletter">
+                                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        {{ __('Procesando...') }}
+                                    </span>
+                                </button>
+                            @endif
 
                             @if($generatedHtml)
                                 <button wire:click="downloadNewsletter" 
@@ -98,6 +100,22 @@
                                         class="ibtn btn-glass">
                                     <i class="fas fa-download me-2"></i>
                                     {{ __('Descargar HTML') }}
+                                </button>
+
+                                <!-- Button send newsletter -->
+                                <button wire:click="send" 
+                                        type="button"
+                                        class="ibtn btn-glass"
+                                        wire:loading.attr="disabled"
+                                        wire:target="send">
+                                    <span wire:loading.remove wire:target="send">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        {{ __('Enviar Newsletter') }}
+                                    </span>
+                                    <span wire:loading wire:target="send">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>
+                                        {{ __('Enviando...') }}
+                                    </span>
                                 </button>
                             
                                 <div class="form-group mb-4" style="width: 150px;">

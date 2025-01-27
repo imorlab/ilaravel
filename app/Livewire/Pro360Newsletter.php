@@ -5,6 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
+use App\Models\Newsletter;
+use Livewire\Attributes\On;
 
 class Pro360Newsletter extends Component
 {
@@ -12,6 +16,7 @@ class Pro360Newsletter extends Component
 
     public $excelFile;
     public $generatedHtml;
+    public $emailsToSend = '';
     protected $masterTemplate;
     protected $principalTemplate;
     protected $noticiaIzquierdaTemplate;
@@ -293,5 +298,101 @@ class Pro360Newsletter extends Component
     public function render()
     {
         return view('livewire.pro360-newsletter');
+    }
+
+    public function send()
+    {
+        if (!auth()->check()) {
+            $this->dispatch('swal:confirm', [
+                'title' => 'Autenticación requerida',
+                'text' => 'Para enviar newsletters, necesitas iniciar sesión o registrarte.',
+                'icon' => 'warning',
+                'confirmButtonText' => 'Iniciar sesión',
+                'cancelButtonText' => 'Cancelar',
+                'next' => [
+                    'event' => 'redirect',
+                    'params' => [
+                        'url' => '/login'
+                    ]
+                ]
+            ]);
+            return;
+        }
+
+        if (empty($this->generatedHtml)) {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'Primero debes generar el contenido de la newsletter',
+                'timer' => 1500
+            ]);
+            return;
+        }
+
+        $this->dispatch('swal:confirm', [
+            'title' => 'Enviar Newsletter',
+            'text' => 'Introduce los emails de los destinatarios (separados por comas)',
+            'icon' => 'info',
+            'confirmButtonText' => 'Enviar',
+            'cancelButtonText' => 'Cancelar',
+            'next' => [
+                'event' => 'sendNewsletterToEmails'
+            ]
+        ]);
+    }
+
+    #[On('sendNewsletterToEmails')]
+    public function sendNewsletterToEmails()
+    {
+        \Log::info('Enviando a emails: ' . $this->emailsToSend);
+        
+        if (empty($this->emailsToSend)) {
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => 'El formato de los emails no es válido',
+                'timer' => 1500
+            ]);
+            return;
+        }
+
+        $emailList = explode(',', $this->emailsToSend);
+        $emailList = array_map('trim', $emailList);
+        
+        try {
+            foreach ($emailList as $email) {
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    throw new \Exception("El email $email no es válido");
+                }
+
+                Mail::to($email)->send(new OrderShipped($this->generatedHtml));
+
+                Newsletter::create([
+                    'email' => $email,
+                    'content' => $this->generatedHtml,
+                    'sent_at' => now(),
+                    'status' => 'sent'
+                ]);
+            }
+
+            $message = count($emailList) > 1 
+                ? sprintf('Newsletter enviada a %s y %d destinatario(s) más', $emailList[0], count($emailList) - 1)
+                : sprintf('Newsletter enviada a %s', $emailList[0]);
+
+            $this->dispatch('swal:success', [
+                'title' => 'Newsletter enviada',
+                'text' => $message,
+                'timer' => 1500
+            ]);
+
+            $this->emailsToSend = '';
+
+        } catch (\Exception $e) {
+            \Log::error('Error al enviar newsletter: ' . $e->getMessage());
+            
+            $this->dispatch('swal:error', [
+                'title' => 'Error',
+                'text' => $e->getMessage(),
+                'timer' => 1500
+            ]);
+        }
     }
 }
