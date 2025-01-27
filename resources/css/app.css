@@ -1,0 +1,7 @@
+.body{
+    background: linear-gradient(180deg, rgba(31,27,27,1) 55%, rgba(98,38,16,1) 87%);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}

@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>PRO360 Enero 2025</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+	<!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 23 - 41 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+	<!--[if gte mso 16]>
+	<style>
+		.keep-black {
+			mso-style-textfill-type:gradient;
+			mso-style-textfill-fill-gradientfill-stoplist:"0 \#000000 1 100000\,99000 \#000000 1 100000";
+			color:#000000 !important;
+		}
+		.keep-white {
+			mso-style-textfill-type:gradient;
+			mso-style-textfill-fill-gradientfill-stoplist:"0 \#FFFFFF 0 100000\,100000 \#FFFFFF 0 100000";
+		}
+	</style>
+	<![endif]-->
+
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: https://web.archive.org/web/20190717120616/http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset : BEGIN -->
+
+	<style>
+
+        /* What it does: Tells the email client that both light and dark styles are provided. A duplicate of meta color-scheme meta tag above. */
+
+		:root {
+          color-scheme: light dark;
+          supported-color-schemes: light dark;
+        }
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+		/* What it does: Stops email clients resizing small text. */
+		* {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* What it does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        /* What it does: forces Samsung Android mail clients to use the entire viewport */
+        #MessageViewBody, #MessageWebViewDiv{
+            width: 100% !important;
+        }
+
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        /* What it does: Fixes webkit padding issue. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+        /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+		a {
+            text-decoration: none;
+        }
+
+        /* What it does: A work-around for email clients meddling in triggered links. */
+        a[x-apple-data-detectors],  /* iOS */
+        .unstyle-auto-detected-links a,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+        .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+
+        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+        .im {
+            color: inherit !important;
+        }
+
+        /* If the above doesn't work, add a .g-img class to any image in question. */
+        img.g-img + div {
+            display: none !important;
+        }
+
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        /* iPhone 6, 6S, 7, 8, and X */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        /* iPhone 6+, 7+, and 8+ */
+        @media only screen and (min-device-width: 414px) {
+            u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+
+    </style>
+    <!-- CSS Reset : END -->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+        /* What it does: Hover styles for buttons */
+		.button-td,
+	    .button-a {
+	        transition: all 100ms ease-in;
+	    }
+	    .button-td-primary:hover,
+	    .button-a-primary:hover {
+	        background: #202020 !important;
+	        border-color: #202020 !important;
+	    }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+
+            /* What it does: Adjust typography on small screens to improve readability */
+            /* .email-container p {
+                font-size: 5px !important;
+            } */
+        }
+
+        /* Dark Mode Styles : BEGIN */
+        @media (prefers-color-scheme: dark) {
+			.email-bg {
+				background: #222222 !important;
+			}
+            .darkmode-bg {
+                background: #333333 !important;
+            }
+			h1,
+			h2,
+			h3,
+			p,
+			strong,
+			li,
+			.darkmode-text,
+			.email-container a:not([class]) {
+				color: #F7F7F9 !important;
+			}
+			td.button-td-primary,
+			td.button-td-primary a {
+				background: #ffffff !important;
+				border-color: #ffffff !important;
+				color: #202020 !important;
+			}
+			td.button-td-primary:hover,
+			td.button-td-primary a:hover {
+				background: #cccccc !important;
+				border-color: #cccccc !important;
+			}
+			.footer td {
+				color: #aaaaaa !important;
+			}
+            .darkmode-fullbleed-bg {
+                background-color: #0F3016 !important;
+            }
+        }
+        /* Dark Mode Styles : END */
+    </style>
+    <!-- Progressive Enhancements : END -->
+
+</head>
+<!--
+	The email background color (#222222) is defined in three places:
+	1. body tag: for most email clients
+	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+	3. mso conditional: For Windows 10 Mail
+-->
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #ffffff;" class="email-bg">
+	<center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #ffffff;" class="email-bg">
+    <!--[if mso | IE]>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff;" class="email-bg">
+    <tr>
+    <td>
+    <![endif]-->
+
+        <!-- Visually Hidden Preheader Text : BEGIN -->
+        <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
+	        ¡Descubre el nuevo número de PRO360!
+        </div>
+        <!-- Visually Hidden Preheader Text : END -->
+
+        <!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
+        <!-- Preview Text Spacing Hack : BEGIN -->
+        <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: Arial, Helvetica,sans-serif;">
+	        &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+        </div>
+        <!-- Preview Text Spacing Hack : END -->
+        <!--
+            Set the email width. Defined in two places:
+            1. max-width for all clients except Desktop Windows Outlook, allowing the email to squish on narrow but never go wider than 600px.
+            2. MSO tags for Desktop Windows Outlook enforce a 600px width.
+        -->
+        <div style="max-width: 600px; margin: 0 auto;" class="email-container">
+            <!--[if mso]>
+            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
+            <tr>
+            <td>
+            <![endif]-->
+
+			<!-- Email Body : BEGIN -->
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="max-width: 600px;">
+
+				<!-- 1 Column Text : BEGIN -->
+				<tr>
+					<td style="background-color: #ffffff;" class="darkmode-bg">
+						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
+							<tr>
+								<td style="padding: 20px; font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 20px; color: #000000; text-align:right;">
+									<p style="font-family: Arial, Helvetica, sans-serif; padding: 0; font-size: 10px; line-height: 20px; color: #000000; margin: 0;">
+										{{ VIEW_PROBLEMS_TEXT }}
+										<a href="https://media.beonworldwide.com/newsletters/prosegur/2025/ene/pro360_ES.html" style="color:#000000; font-weight: bold; text-decoration: underline;">
+											{{ CLICK_HERE_TEXT }}
+										</a>
+									</p>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- 1 Column Text : END -->
+
+				<!-- Hero Image, Flush : BEGIN -->
+				<tr>
+					<td style="background-color: #ffffff;">
+						<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/header.png" width="600" height="" alt="pro360" border="0" style="width: 100%; height: auto; background: #ffffff; margin: 0 auto; display: block;" class="darkmode-bg">
+					</td>
+				</tr>
+				<!-- Hero Image, Flush : END -->
+
+				<!-- Hero Image, Flush : BEGIN -->
+				<tr>
+					<td aria-hidden="true" height="70"
+						style="font-size: 0px; line-height: 0px; background-color: #ffffff;" class="darkmode-bg">
+						&nbsp;
+					</td>
+				</tr>
+				<!-- Hero Image, Flush : BEGIN -->
+				<tr>
+					<td style="text-align: center; padding: 0px; background-color: #ffffff;" class="darkmode-bg">
+						<img src="https://media.beonworldwide.com/newsletters/prosegur/2024/resources/cab1a-es.png" width="550" height="" alt="pro360" border="0" align="center" style="width: 550px; height: auto; mso-height-rule: exactly;  background: #ffffff; margin: auto; display: block; text-align: center;" class="darkmode-bg">
+					</td>
+				</tr>
+				<!-- Hero Image, Flush : END -->
+
+                <!-- PRINCIPAL -->
+
+                <!-- NOTICIA -->
+
+				<!-- PROXIMAMENTE -->
+
+				<!-- CONTACTO PROSEGUR BEGIN -->
+				<tr style="margin: 0; padding: 0;">
+					<td style="background-color: #ffffff; padding: 0;" width="600" align="center" class="darkmode-bg">
+						<table role="presentation" cellspacing="0" cellpadding="0" align="center" border="0" width="550" style="background-color: #ffffff;" class="darkmode-bg">
+							<tr>
+								<!--[if mso]>
+									<td style="margin:0;padding:20px;width:550px; height:150px;">
+									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+									style="height:auto; width:550px; v-text-anchor:middle; display:inline-block;" arcsize="10%" fillcolor="#FEF5CC" stroke="f">
+									<v:textbox inset="20px,20px,20px,0" style="mso-fit-shape-to-text:true;">
+								<![endif]-->
+								<!--[if !mso]><!-->
+								<td style="font-size: 0; padding: 20px; width: 510px; background-color: #FEF5CC; border-radius: 16px; mso-line-height-rule: exactly;">
+									<!--<![endif]-->
+									<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center" valign="middle">
+										<tr>
+											<td valign="middle" width="25%">
+												<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+													<tr>
+														<td style="text-align: center; padding: 20px;">
+															<img src="https://media.beonworldwide.com/newsletters/prosegur/imgs/email.png">
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td valign="middle" width="1%">
+												<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+													<tr>
+														<td style="text-align: center;">
+															<img src="https://media.beonworldwide.com/newsletters/prosegur/2024/octubre/img/line.png">
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td valign="middle" width="70%">
+												<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+													<tr>
+														<td style="text-align: left; font-family: Century Gothic, sans-serif; font-size: 15px; line-height: 20px; color: #000000; padding: 0px 0px 5px 20px;">
+															<span class="keep-black" style="font-family: Arial, Helvetica, sans-serif; padding: 0; font-size: 20px; font-weight: 700; line-height: 20px; color: #000000; text-align: left; margin: 0;">
+															Contacta con el equipo PRO360
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 14px; color: #0058FF; padding: 0px 20px 0;">
+															<a href="mailto:pro360@prosegur.com"
+																class="keep-black"
+																style="font-family: Arial, Helvetica, sans-serif; padding: 0; font-size: 14px; font-weight: 300; line-height: 10px; text-align: left; margin: 0; color: #0058FF;">
+															pro360@prosegur.com
+															</a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									<!--[if !mso]><!-->
+								</td>
+								<!--<![endif]-->
+								<!--[if mso]>
+								</v:textbox>
+								</v:roundrect>
+								</td>
+								<![endif]-->
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- CONTACTO PROSEGUR END -->
+
+				<!-- ESPACIO BEGIN -->
+				<tr>
+					<td aria-hidden="true" height="20"
+						style="font-size: 0px; line-height: 0px; background-color: #ffffff;" class="darkmode-bg">
+						&nbsp;
+					</td>
+				</tr>
+				<!-- ESPACIO END -->
+				<!-- FOOTER PROSEGUR BEGIN -->
+				<tr style="margin: 0;padding: 0;">
+                    <td style="background-color: #ffffff; padding: 0;" width="600" align="center" class="darkmode-bg">
+						<table role="presentation" cellspacing="0" cellpadding="0" align="center" border="0" width="550" style="background-color: #ffffff;" class="darkmode-bg">
+							<tr>
+								<!--[if mso]>
+									<td style="margin:0;width:550px; height:80px;">
+									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+										style="height:auto; width:550px; v-text-anchor:middle; display:inline-block;" arcsize="16%" fillcolor="#FFD102" stroke="f">
+										<v:textbox inset="20px,20px,20px,0" style="mso-fit-shape-to-text:true;">
+								<![endif]-->
+								<!--[if !mso]><!-->
+								<td style="font-size: 0; padding: 20px; width: 510px; background-color: rgb(255, 209, 2); border-radius: 16px; mso-line-height-rule: exactly;">
+									<!--<![endif]-->
+									<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center" valign="middle">
+										<tr>
+											<td width="200" valign="middle" align="left" style="text-align: left;">
+												<table width="200" role="presentation" cellspacing="0" cellpadding="0" border="0" align="left">
+													<tr>
+														<td width="200" valign="middle" align="left">
+															<img src="https://media.beonworldwide.com/newsletters/prosegur/imgs/logo_prosegur.png"
+																alt="pro360" width="136" height="" border="0" align="center"
+																style="width: 136px; max-width: 136px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td width="145" valign="middle" align="right" style="text-align: right;">
+												<table width="100%" role="presentation" cellspacing="0" cellpadding="0" border="0" align="right">
+													<tr>
+														<td valign="middle" width="100%" align="right">
+															<table cellspacing="0" cellpadding="0" border="0" width="100%" align="right">
+																<tr>
+																	<td width="25">
+																		<a href="https://twitter.com/ProsegurES">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/x.png"
+																				alt="pro360" width="25" height="" border="0"
+																				align="left"
+																				style="width: 25px; max-width: 25px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="25">
+																		<a href="https://www.instagram.com/prosegur/">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/ins.png"
+																				alt="pro360" width="25" height="" border="0"
+																				align="left"
+																				style="width: 25px; max-width: 25px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="25">
+																		<a href="https://www.youtube.com/user/prosegur">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/you.png"
+																				alt="pro360" width="25" height="" border="0"
+																				align="left"
+																				style="width: 25px; max-width: 25px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="25">
+																		<a href="https://www.tiktok.com/@proseguroficial">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/tik.png"
+																				alt="pro360" width="25" height="" border="0"
+																				align="left"
+																				style="width: 25px; max-width: 25px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="25">
+																		<a href="https://www.linkedin.com/company/prosegur">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/lin.png"
+																				alt="pro360" width="25" height="" border="0"
+																				align="left"
+																				style="width: 25px; max-width: 25px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td width="105" valign="middle" align="right" style="text-align: right;">
+												<table width="100%" role="presentation" cellspacing="0" cellpadding="0" border="0" align="right">
+													<tr>
+														<td valign="middle" width="100%" align="right">
+															<table cellspacing="0" cellpadding="0" border="0" width="100%" align="right">
+																<tr>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td aria-hidden="true" width="2" height="12" style="font-size: 0px; line-height: 0px; background-color: #000000 !important; height: 12px;">
+																		&nbsp;
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="70">
+																		<a href="https://www.fundacionprosegur.com/">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/fundaPro.png"
+																				alt="pro360" width="70" height=""
+																				align="left"
+																				style="width: 70px; max-width: 70px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																	<td aria-hidden="true" width="5" style="font-size: 0px; line-height: 0px;">
+																		&nbsp;
+																	</td>
+																	<td width="23">
+																		<a href="https://www.instagram.com/FundacionProsegur/">
+																			<img src="https://media.beonworldwide.com/newsletters/prosegur/resources/ins.png"
+																				alt="pro360" width="23" height=""
+																				align="left"
+																				style="width: 23px; max-width: 23px; height: auto; background: #FFD102; mso-height-rule: exactly;">
+																		</a>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								<!--[if !mso]><!-->
+								</td>
+								<!--<![endif]-->
+							<!--[if mso]>
+									</v:textbox>
+								</v:roundrect>
+								</td>
+							<![endif]-->
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<!-- FOOTER PROSEGUR END -->
+				<!-- ESPACIO BEGIN -->
+				<tr>
+					<td aria-hidden="true" height="20"
+						style="font-size: 0px; line-height: 0px; background-color: #ffffff;" class="darkmode-bg">
+						&nbsp;
+					</td>
+				</tr>
+				<!-- ESPACIO END -->
+				<tr>
+					<td width="600" align="center" style="padding: 0; background-color: #ffffff;" class="darkmode-bg">
+						<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="540"
+							align="center">
+							<tr>
+								<td width="540" align="center" style="text-align: left; color: #B7B7B7;" class="darkmode-bg">
+									<p style="font-family: Arial, Helvetica, sans-serif; font-weight: 400;  padding: 0; font-size: 8px; line-height: 12px; color: #B7B7B7;">
+										{{ LEGAL_TEXT }}
+									</p>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td aria-hidden="true" height="40"
+						style="font-size: 0px; line-height: 0px; background-color: #ffffff;" class="darkmode-bg">
+						&nbsp;
+					</td>
+				</tr>
+				<!-- FOOTER END -->
+			</table>
+			<!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </div>
+
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+    </center>
+</body>
+</html>
