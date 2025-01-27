@@ -29,7 +29,10 @@
     </div>
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-8">
-            <div class="col-auto text-center mb-5">
+            <div class="col-auto text-center mb-5 position-relative">
+                @if(env('SHOW_CHRISTMAS_ELEMENTS', false))
+                <img src="{{ asset('img/christmas-hat.png') }}" class="position-absolute" style="width: 45px; top: -5px; left: calc(50% - 60px); z-index: 100;">
+                @endif
                 <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1 animate__animated animate__fadeIn">
             </div>
             <div class="row g-4">
@@ -43,8 +46,8 @@
                                     const w = elem.clientWidth;
                                     const h = elem.clientHeight;
                                     const rect = elem.getBoundingClientRect();
-                                    const pageX = e.pageX;
-                                    const pageY = e.pageY;
+                                    const pageX = e.clientX;
+                                    const pageY = e.clientY;
                                     
                                     const offsetX = 0.52 - (pageX - rect.left) / w;
                                     const offsetY = 0.52 - (pageY - rect.top) / h;
@@ -60,16 +63,18 @@
                                     
                                     const cssTransform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)${this.shine ? ' scale3d(1.07,1.07,1.07)' : ''}`;
                                     
-                                    this.$refs.container.style.transform = cssTransform;
+                                    elem.querySelector('.atvImg-container').style.transform = cssTransform;
                                     
-                                    const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
-                                    this.$refs.shine.style.background = shineBg;
+                                    if (this.shine) {
+                                        const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
+                                        elem.querySelector('.shine').style.background = shineBg;
+                                    }
                                 }
                              }"
                              @mouseenter="shine = true"
-                             @mouseleave="shine = false; $refs.container.style.transform = ''; $refs.shine.style.background = ''"
+                             @mouseleave="shine = false; $el.querySelector('.atvImg-container').style.transform = ''; $el.querySelector('.shine').style.background = ''"
                              @mousemove="handleMove">
-                            <div class="atvImg-container" x-ref="container">
+                            <div class="atvImg-container">
                                 <div class="atvImg-shadow"></div>
                                 <div class="atvImg-layers">
                                     <div class="card custom-card bg-glass h-100 animate__animated animate__fadeInLeft">
@@ -98,8 +103,8 @@
                                     const w = elem.clientWidth;
                                     const h = elem.clientHeight;
                                     const rect = elem.getBoundingClientRect();
-                                    const pageX = e.pageX;
-                                    const pageY = e.pageY;
+                                    const pageX = e.clientX;
+                                    const pageY = e.clientY;
                                     
                                     const offsetX = 0.52 - (pageX - rect.left) / w;
                                     const offsetY = 0.52 - (pageY - rect.top) / h;
@@ -115,16 +120,18 @@
                                     
                                     const cssTransform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)${this.shine ? ' scale3d(1.07,1.07,1.07)' : ''}`;
                                     
-                                    this.$refs.container.style.transform = cssTransform;
+                                    elem.querySelector('.atvImg-container').style.transform = cssTransform;
                                     
-                                    const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
-                                    this.$refs.shine.style.background = shineBg;
+                                    if (this.shine) {
+                                        const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
+                                        elem.querySelector('.shine').style.background = shineBg;
+                                    }
                                 }
                              }"
                              @mouseenter="shine = true"
-                             @mouseleave="shine = false; $refs.container.style.transform = ''; $refs.shine.style.background = ''"
+                             @mouseleave="shine = false; $el.querySelector('.atvImg-container').style.transform = ''; $el.querySelector('.shine').style.background = ''"
                              @mousemove="handleMove">
-                            <div class="atvImg-container" x-ref="container">
+                            <div class="atvImg-container">
                                 <div class="atvImg-shadow"></div>
                                 <div class="atvImg-layers">
                                     <div class="card custom-card bg-glass h-100 animate__animated animate__fadeInRight">
@@ -155,8 +162,8 @@
                                     const w = elem.clientWidth;
                                     const h = elem.clientHeight;
                                     const rect = elem.getBoundingClientRect();
-                                    const pageX = e.pageX;
-                                    const pageY = e.pageY;
+                                    const pageX = e.clientX;
+                                    const pageY = e.clientY;
                                     
                                     const offsetX = 0.52 - (pageX - rect.left) / w;
                                     const offsetY = 0.52 - (pageY - rect.top) / h;
@@ -172,16 +179,18 @@
                                     
                                     const cssTransform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)${this.shine ? ' scale3d(1.07,1.07,1.07)' : ''}`;
                                     
-                                    this.$refs.container.style.transform = cssTransform;
+                                    elem.querySelector('.atvImg-container').style.transform = cssTransform;
                                     
-                                    const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
-                                    this.$refs.shine.style.background = shineBg;
+                                    if (this.shine) {
+                                        const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
+                                        elem.querySelector('.shine').style.background = shineBg;
+                                    }
                                 }
                              }"
                              @mouseenter="shine = true"
-                             @mouseleave="shine = false; $refs.container.style.transform = ''; $refs.shine.style.background = ''"
+                             @mouseleave="shine = false; $el.querySelector('.atvImg-container').style.transform = ''; $el.querySelector('.shine').style.background = ''"
                              @mousemove="handleMove">
-                            <div class="atvImg-container" x-ref="container">
+                            <div class="atvImg-container">
                                 <div class="atvImg-shadow"></div>
                                 <div class="atvImg-layers">
                                     <div class="card custom-card bg-glass h-100 animate__animated animate__fadeInLeft">
@@ -210,8 +219,8 @@
                                     const w = elem.clientWidth;
                                     const h = elem.clientHeight;
                                     const rect = elem.getBoundingClientRect();
-                                    const pageX = e.pageX;
-                                    const pageY = e.pageY;
+                                    const pageX = e.clientX;
+                                    const pageY = e.clientY;
                                     
                                     const offsetX = 0.52 - (pageX - rect.left) / w;
                                     const offsetY = 0.52 - (pageY - rect.top) / h;
@@ -227,16 +236,18 @@
                                     
                                     const cssTransform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)${this.shine ? ' scale3d(1.07,1.07,1.07)' : ''}`;
                                     
-                                    this.$refs.container.style.transform = cssTransform;
+                                    elem.querySelector('.atvImg-container').style.transform = cssTransform;
                                     
-                                    const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
-                                    this.$refs.shine.style.background = shineBg;
+                                    if (this.shine) {
+                                        const shineBg = `linear-gradient(${angle}deg, rgba(255,255,255,${(pageY - rect.top)/h * 0.4}) 0%,rgba(255,255,255,0) 80%)`;
+                                        elem.querySelector('.shine').style.background = shineBg;
+                                    }
                                 }
                              }"
                              @mouseenter="shine = true"
-                             @mouseleave="shine = false; $refs.container.style.transform = ''; $refs.shine.style.background = ''"
+                             @mouseleave="shine = false; $el.querySelector('.atvImg-container').style.transform = ''; $el.querySelector('.shine').style.background = ''"
                              @mousemove="handleMove">
-                            <div class="atvImg-container" x-ref="container">
+                            <div class="atvImg-container">
                                 <div class="atvImg-shadow"></div>
                                 <div class="atvImg-layers">
                                     <div class="card custom-card bg-glass h-100 animate__animated animate__fadeInRight">

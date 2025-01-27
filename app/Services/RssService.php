@@ -5,6 +5,7 @@ namespace App\Services;
 use SimplePie;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Log;
 
 class RssService
 {
@@ -26,13 +27,12 @@ class RssService
     public function __construct()
     {
         $this->feed = new SimplePie();
-        $this->feed->set_cache_location(storage_path('app/rss-cache'));
-        $this->feed->set_cache_duration(1800); // 30 minutos
-        $this->feed->enable_order_by_date(true);
+        $this->feed->enable_cache(false);  // Disable cache completely
         $this->feed->set_output_encoding('UTF-8');
         $this->feed->strip_htmltags(['img', 'iframe', 'script', 'style']);
         $this->feed->strip_attributes(['style', 'class', 'id']);
         $this->feed->force_feed(true);
+        $this->feed->set_timeout(60);  // Increase timeout
         setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain.1252');
     }
 
@@ -52,27 +52,53 @@ class RssService
 
     public function getNews($limit = 5)
     {
-        Cache::forget('tech_news');
-        return Cache::remember('tech_news', 1800, function () use ($limit) {
-            $this->feed->set_feed_url($this->techFeeds);
-            $this->feed->init();
+        try {
+            \Log::info('Starting RSS feed fetch');
             
+            // Process each feed individually
+            $allItems = [];
+            foreach ($this->techFeeds as $feedUrl) {
+                try {
+                    $feed = new SimplePie();
+                    $feed->enable_cache(false);
+                    $feed->set_feed_url($feedUrl);
+                    $feed->set_output_encoding('UTF-8');
+                    $feed->force_feed(true);
+                    $feed->init();
+                    
+                    $items = $feed->get_items(0, $limit);
+                    if ($items) {
+                        $allItems = array_merge($allItems, $items);
+                    }
+                } catch (\Exception $e) {
+                    \Log::warning("Error fetching feed {$feedUrl}: " . $e->getMessage());
+                    continue;
+                }
+            }
+
+            if (empty($allItems)) {
+                \Log::warning('No RSS items found in any feed');
+                return [];
+            }
+
+            \Log::info('Found ' . count($allItems) . ' total items');
             $news = [];
-            $items = $this->feed->get_items(0, $limit * 3);
             $seenTitles = [];
             
-            foreach ($items as $item) {
+            foreach ($allItems as $item) {
                 try {
                     $title = html_entity_decode($item->get_title(), ENT_QUOTES, 'UTF-8');
                     $title = trim($title);
 
-                    // Saltar si ya hemos visto este título
                     if (in_array($title, $seenTitles)) {
                         continue;
                     }
                     $seenTitles[] = $title;
 
                     $description = $item->get_description();
+                    if (!$description) {
+                        $description = $item->get_content();
+                    }
                     $description = strip_tags($description);
                     $description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
                     $description = preg_replace('/\s+/', ' ', $description);
@@ -90,17 +116,28 @@ class RssService
                         'date' => $this->formatDate($item->get_date('c')),
                         'source' => $source
                     ];
+                    
+                    \Log::info("Added news item: {$title}");
+
+                    if (count($news) >= $limit) {
+                        break;
+                    }
                 } catch (\Exception $e) {
+                    \Log::error('Error processing RSS item: ' . $e->getMessage());
                     continue;
                 }
             }
 
-            // Ordenar por fecha más reciente
             usort($news, function($a, $b) {
                 return strtotime($b['date']) - strtotime($a['date']);
             });
             
-            return array_slice($news, 0, $limit);
-        });
+            \Log::info('Returning ' . count($news) . ' news items');
+            return $news;
+        } catch (\Exception $e) {
+            \Log::error('Error in RssService::getNews: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            return [];
+        }
     }
 }

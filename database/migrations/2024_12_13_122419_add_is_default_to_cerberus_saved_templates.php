@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->integer('time_spent')->default(0)->comment('Time spent on the task in seconds')->after('order');
+        Schema::table('cerberus_saved_templates', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->dropColumn('time_spent');
+        Schema::table('cerberus_saved_templates', function (Blueprint $table) {
+            //
         });
     }
 };

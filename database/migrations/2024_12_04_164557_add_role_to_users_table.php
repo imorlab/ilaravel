@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->enum('status', ['open', 'doing', 'done', 'trash'])->default('open')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['user', 'admin'])->default('user')->after('email');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->enum('status', ['open', 'done'])->default('open')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
         });
     }
 };

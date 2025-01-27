@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center align-items-center min-vh-100 mt-5 pt-5">
         <div class="col-lg-8">
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
@@ -25,6 +25,30 @@
 
 <script>
     document.addEventListener('livewire:initialized', () => {
+        Livewire.on('swal:auth', (event) => {
+            Swal.fire({
+                icon: 'warning',
+                title: event[0].title,
+                text: event[0].text,
+                background: '#1a1a1a',
+                color: '#fff',
+                showCancelButton: true,
+                confirmButtonText: 'Iniciar sesión',
+                cancelButtonText: 'Registrarse',
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: 'btn btn-primary me-2',
+                    cancelButton: 'btn btn-outline-light'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route("login") }}';
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '{{ route("register") }}';
+                }
+            });
+        });
+
         Livewire.on('swal:success', (event) => {
             Swal.fire({
                 icon: 'success',

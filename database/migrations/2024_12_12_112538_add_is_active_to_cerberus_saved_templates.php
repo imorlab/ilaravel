@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            // $table->dropColumn('order');
-            $table->integer('order')->nullable()->after('status');
-            $table->integer('group')->nullable()->after('order');
+        Schema::table('cerberus_saved_templates', function (Blueprint $table) {
+            $table->boolean('is_active')->default(false);
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->dropColumn('order');
+        Schema::table('cerberus_saved_templates', function (Blueprint $table) {
+            $table->dropColumn('is_active');
         });
     }
 };

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
     <meta property="og:image" content="{{ asset('img/laravel_hero.png') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config('app.name', 'iLaravel') }}">
@@ -34,23 +34,28 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     @vite([
-        'resources/sass/app.scss', 
-        'resources/js/app.js', 
-        'resources/js/card-effects.js'
+        'resources/sass/app.scss',
+        'resources/js/app.js',
+        'resources/js/card-effects.js',
+        'resources/js/sweetalert.js'
     ])
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @livewireStyles
 </head>
 <body class="bg-gray-100">
-    <div class="preload" id="preloader">
-        <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
+    <div id="app" class="min-vh-100">
+        <x-notch-nav />
+        <div class="preload" id="preloader">
+            <div class="preloader-inner">
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="app" class="relative min-h-screen">
         <div class="background-shapes">
             <div class="cube-shape cube-1">
                 <svg x-data="{ animate: false }" x-init="setTimeout(() => animate = true, 0)" :class="{ 'animate-cube': animate }" class="text-primary" width="46" height="53" viewBox="0 0 46 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,26 +85,34 @@
                 </svg>
             </div>
         </div>
-        <main>
-
-            @yield('content')
-
-        </main>
-        @if(Route::currentRouteName() !== '/')
-            <x-footer-nav />
+        
+        @if(env('SHOW_CHRISTMAS_ELEMENTS', false))
+        <x-snowflakes />
         @endif
-        <!-- Sidebar Component -->
+        
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            {{-- @include('layouts.navigation') --}}
+            <x-auth-button />
+
+            <main>
+                @yield('content')
+            </main>
+
+            <!-- @if(Route::currentRouteName() !== '/')
+                <x-footer-nav />
+            @endif -->
+
+            <!-- Sidebar Component -->
             <livewire:sidebar />
+
+        </div>
+
     </div>
 
-    <!-- Scripts -->
     @livewireScripts
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-livewire-alert::scripts />
     @stack('scripts')
     <script>
         window.addEventListener('load', function() {
-            document.getElementById('preloader').classList.add('loaded');
             setTimeout(function() {
                 document.getElementById('preloader').style.display = 'none';
             }, 500);
