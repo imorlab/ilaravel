@@ -20,9 +20,9 @@
 
             <!-- Right Menu Items -->
             <div class="nav-group right-menu">
-                <a href="/notes" class="nav-item" data-side="right">
-                    <i class="bi bi-journal-text"></i>
-                    <span class="nav-text">Notas</span>
+                <a href="/pro360-newsletter" class="nav-item" data-side="right">
+                    <i class="bi bi-newspaper"></i>
+                    <span class="nav-text">PRO360</span>
                 </a>
                 <a href="/todo" class="nav-item" data-side="left">
                     <i class="bi bi-check2-square"></i>
