@@ -47,12 +47,12 @@ class Sending extends Component
     public function send()
     {
         if (!auth()->check()) {
-            // $this->dispatch('swal:auth', [
-            //     'title' => 'Autenticación requerida',
-            //     'text' => 'Para enviar newsletters, necesitas iniciar sesión o registrarte.',
-            //     'showLoginButton' => true,
-            //     'showRegisterButton' => true
-            // ]);
+            $this->dispatch('swal:auth', [
+                'title' => 'Autenticación requerida',
+                'text' => 'Para enviar newsletters, necesitas iniciar sesión o registrarte.',
+                'showLoginButton' => true,
+                'showRegisterButton' => true
+            ]);
             return;
         }
 
@@ -68,25 +68,25 @@ class Sending extends Component
                 'status' => 'sent'
             ]);
 
-            // $this->dispatch('swal:success', [
-            //     'position' => 'top-end',
-            //     'icon' => 'success',
-            //     'title' => 'Newsletter enviada correctamente',
-            //     'timer' => 1500
-            // ]);
+            $this->dispatch('swal:success', [
+                'position' => 'top-end',
+                'icon' => 'success',
+                'title' => 'Newsletter enviada correctamente',
+                'timer' => 1500
+            ]);
 
             $this->reset(['email', 'html']);
         } catch (\Exception $e) {
             \Log::error('Error al enviar newsletter: ' . $e->getMessage());
             
-            // $this->dispatch('swal:error', [
-            //     'position' => 'top-end',
-            //     'icon' => 'error',
-            //     'title' => 'Error al enviar la newsletter',
-            //     'text' => 'Hubo un problema al enviar el correo. Por favor, inténtalo de nuevo.',
-            //     'showConfirmButton' => false,
-            //     'timer' => 1500
-            // ]);
+            $this->dispatch('swal:error', [
+                'position' => 'top-end',
+                'icon' => 'error',
+                'title' => 'Error al enviar la newsletter',
+                'text' => 'Hubo un problema al enviar el correo. Por favor, inténtalo de nuevo.',
+                'showConfirmButton' => false,
+                'timer' => 1500
+            ]);
         }
     }
 
