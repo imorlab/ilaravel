@@ -168,7 +168,7 @@ class Pro360Newsletter extends Component
                 $legalText
             );
             
-            $legalText .= '<br><br><b style="color: #000000;">&copy; Copyright 2024 Prosegur</b>';
+            $legalText .= '<br><br><b style="color: #000000;">&copy; Copyright 2025 Prosegur</b>';
             $html = str_replace('{{ LEGAL_TEXT }}', $legalText, $html);
 
             // Replace principal news
