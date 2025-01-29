@@ -77,7 +77,8 @@ class Pro360Newsletter extends Component
             9 => 'sep', 10 => 'oct', 11 => 'nov', 12 => 'dic'
         ];
         
-        return $monthCodes[(int)date('m')];
+        $futureDate = strtotime('+10 days');
+        return $monthCodes[(int)date('m', $futureDate)];
     }
 
     public function mount()
@@ -178,6 +179,7 @@ class Pro360Newsletter extends Component
             $secondaryHtml = '';
             $proximamenteHtml = '';
             $noticiaIndex = 0;
+            $imageCounter = 2;
             
             foreach ($rows as $index => $row) {
                 if (empty(array_filter($row, function($cell) {
@@ -190,14 +192,16 @@ class Pro360Newsletter extends Component
 
                 // Check if it's a proximamente section
                 if (in_array($firstColumn, ['PRÓXIMAMENTE', 'PROXIMAMENTE'])) {
-                    $proximamenteHtml = $this->generateProximamenteHtml($row, $langConfig['image_code']);
+                    $proximamenteHtml = $this->generateProximamenteHtml($row, $langConfig['image_code'], $imageCounter);
                     \Log::info('Generado HTML de Próximamente', [
                         'length' => strlen($proximamenteHtml)
                     ]);
+                    $imageCounter++;
                 } else {
                     $template = ($noticiaIndex % 2 === 0) ? $this->noticiaIzquierdaTemplate : $this->noticiaDerechaTemplate;
                     $secondaryHtml .= $this->generateNoticiaHtml($row, $template);
                     $noticiaIndex++;
+                    $imageCounter++;
                 }
             }
 
@@ -221,8 +225,10 @@ class Pro360Newsletter extends Component
     protected function generatePrincipalHtml($data)
     {
         $html = $this->principalTemplate;
-
-        // Reemplazar la imagen
+        $currentMonth = $this->getCurrentMonthCode();
+        
+        // Replace month in image paths for other images
+        $html = str_replace('/2025/ene/', "/2025/{$currentMonth}/", $html);
         $html = str_replace('{{ IMAGE_NAME }}', 'imagen-1.png', $html);
 
         // Map Excel columns to template
@@ -246,8 +252,10 @@ class Pro360Newsletter extends Component
     {
         static $imageCounter = 2;
         $html = $template;
+        $currentMonth = $this->getCurrentMonthCode();
 
-        // Reemplazar la imagen
+        // Replace month in image paths for other images
+        $html = str_replace('/2025/ene/', "/2025/{$currentMonth}/", $html);
         $html = str_replace('{{ IMAGE_NAME }}', "imagen-{$imageCounter}.png", $html);
         $imageCounter++;
 
@@ -267,7 +275,7 @@ class Pro360Newsletter extends Component
         return $html;
     }
 
-    protected function generateProximamenteHtml($data, $langCode)
+    protected function generateProximamenteHtml($data, $langCode, $imageCounter)
     {
         $html = $this->proximamenteTemplate;
         $currentMonth = $this->getCurrentMonthCode();
@@ -284,9 +292,10 @@ class Pro360Newsletter extends Component
 
         // Map Excel columns to template
         $replacements = [
-            'Título' => $data[3] ?? '', // Título
-            'Descripción' => $data[4] ?? '', // Descripción
-            '{{ IMAGE_NAME }}' => 'imagen-7.png', // Imagen fija para próximamente
+            '{{ TITULO }}' => $data[3] ?? '', // Título
+            '{{ TEXTO }}' => $data[4] ?? '', // Descripción
+            '{{ IMAGE_NAME }}' => "imagen-{$imageCounter}.png", // Usar el contador dinámico
+            '{{ LINK }}' => $data[8] ?? ''
         ];
 
         // Replace text content
@@ -309,14 +318,14 @@ class Pro360Newsletter extends Component
         $html = str_replace(
             '<tr>
 										<td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
-											<a class="keep-black" href="enlace-noticia">
+											<a class="keep-black" href="{{ LINK }}">
 												<img src="https://media.beonworldwide.com/newsletters/prosegur/2025/ene/img/btn-prox-es.png"
 												alt="pro360" width="96" height="" border="0" align="left"
 												style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #FFD102; text-align: left;margin: 0px 0px 20px 20px;">
 											</a>
 										</td>
 									</tr>',
-            !empty($data[6]) ? $buttonHtml : '',
+            !empty($data[6]) ? '' : $buttonHtml,
             $html
         );
 
