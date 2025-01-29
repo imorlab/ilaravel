@@ -233,12 +233,9 @@ class Pro360Newsletter extends Component
 
         // Map Excel columns to template
         $replacements = [
-            // Título (columna 4)
-            'Título noticia principal' => $data[3] ?? '',
-            // Texto principal (columna 5)
-            'Descripción noticia principal' => $data[4] ?? '',
-            // Enlace (columna 8)
-            'enlace-noticia-principal' => $data[7] ?? ''
+            '{{ TITULO }}' => $data[3] ?? '',
+            '{{ TEXTO }}' => $data[4] ?? '',
+            '{{ LINK }}' => $data[8] ?? ''
         ];
 
         foreach ($replacements as $search => $replace) {
@@ -261,11 +258,11 @@ class Pro360Newsletter extends Component
 
         // Map Excel columns to template
         $replacements = [
-            'Span' => $data[0] ?? '', // Sección
-            'Título noticia' => $data[3] ?? '', // Título
-            'Descripción noticia' => $data[4] ?? '', // Texto principal
-            'href="enlace-noticia"' => 'href="' . ($data[7] ?? '') . '"', // Reemplazar en ambas versiones
-            'Texto botón' => $data[6] ?? '' // Reemplazar en ambas versiones
+            '{{ SPAN }}' => $data[0] ?? '', // Sección
+            '{{ TITULO }}' => $data[3] ?? '', // Título
+            '{{ TEXTO }}' => $data[4] ?? '', // Texto principal
+            'href="{{ LINK }}"' => 'href="' . ($data[8] ?? '') . '"', // Enlace en ambas versiones
+            '{{ TEXTO_BOTON }}' => $data[6] ?? '' // Texto del botón en ambas versiones
         ];
 
         foreach ($replacements as $search => $replace) {
@@ -306,26 +303,18 @@ class Pro360Newsletter extends Component
         // Handle optional button
         $buttonHtml = '<tr>
             <td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
-                <a class="keep-black" href="' . ($data[8] ?? '#') . '">
+                <a class="keep-black" href="' . ($data[7] ?? '#') . '">
                     <img src="https://media.beonworldwide.com/newsletters/prosegur/2025/' . $currentMonth . '/img/btn-prox-' . $langCode . '.png"
                     alt="pro360" width="96" height="" border="0" align="left"
-                    style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #FFD102; text-align: left;margin: 0px 0px 20px 20px;">
+                    style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #637A7C; text-align: left;margin: 0px 0px 20px 20px;">
                 </a>
             </td>
         </tr>';
 
         // Replace button placeholder with actual button or empty string
         $html = str_replace(
-            '<tr>
-										<td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
-											<a class="keep-black" href="{{ LINK }}">
-												<img src="https://media.beonworldwide.com/newsletters/prosegur/2025/ene/img/btn-prox-es.png"
-												alt="pro360" width="96" height="" border="0" align="left"
-												style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #FFD102; text-align: left;margin: 0px 0px 20px 20px;">
-											</a>
-										</td>
-									</tr>',
-            !empty($data[6]) ? '' : $buttonHtml,
+            '{{ IMAGE_BTN }}',
+            !empty($data[6]) ? $buttonHtml : '',
             $html
         );
 
