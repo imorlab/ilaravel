@@ -138,6 +138,54 @@ class Pro360Newsletter extends Component
             // Get principal news (first row)
             $principalNews = array_shift($rows);
 
+            // Process only description column (index 4) for bold formatting
+            $principalNews[4] = $this->getFormattedText($worksheet, 2, 5); // Row 2, Column E (Descripción)
+            
+            // Initialize variables
+            $secondaryHtml = '';
+            $proximamenteHtml = '';
+            $noticiaIndex = 0;
+            $imageCounter = 2;
+            
+            // Process bold formatting for remaining rows
+            $highestRow = $worksheet->getHighestRow();
+            for ($row = 3; $row <= $highestRow; $row++) {
+                $firstColumn = $worksheet->getCell('A' . $row)->getValue();
+                if (empty($firstColumn)) {
+                    continue;
+                }
+
+                // Create an array to store the row data
+                $rowData = [];
+                $rowData[0] = $firstColumn; // Section
+                $rowData[3] = $worksheet->getCell('D' . $row)->getValue(); // Title (Column D)
+                $rowData[4] = $this->getFormattedText($worksheet, $row, 5); // Description (Column E)
+                $rowData[6] = $worksheet->getCell('G' . $row)->getValue(); // Button text
+                $rowData[8] = $worksheet->getCell('I' . $row)->getValue(); // URL
+
+                if (in_array($firstColumn, ['PRÓXIMAMENTE', 'PROXIMAMENTE'])) {
+                    $proximamenteHtml = $this->generateProximamenteHtml($rowData, self::LANGUAGE_CONFIG[$this->selectedSheet]['image_code'], $imageCounter);
+                    $imageCounter++;
+                } else {
+                    $template = ($noticiaIndex % 2 === 0) ? $this->noticiaIzquierdaTemplate : $this->noticiaDerechaTemplate;
+                    $secondaryHtml .= $this->generateNoticiaHtml($rowData, $template);
+                    
+                    // Add space after each news item except the last one
+                    if ($row < $highestRow) {
+                        $secondaryHtml .= '<!-- ESPACIO BEGIN -->
+                                            <tr>
+                                                <td aria-hidden="true" height="50" style="font-size: 0px; line-height: 0px; background-color: #ffffff;" class="darkmode-bg">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <!-- ESPACIO END -->';
+                    }
+                    
+                    $noticiaIndex++;
+                    $imageCounter++;
+                }
+            }
+
             // Generate HTML
             $html = $this->masterTemplate;
             
@@ -175,36 +223,6 @@ class Pro360Newsletter extends Component
             $principalHtml = $this->generatePrincipalHtml($principalNews);
             $html = str_replace('<!-- PRINCIPAL -->', $principalHtml, $html);
 
-            // Generate secondary news and proximamente
-            $secondaryHtml = '';
-            $proximamenteHtml = '';
-            $noticiaIndex = 0;
-            $imageCounter = 2;
-            
-            foreach ($rows as $index => $row) {
-                if (empty(array_filter($row, function($cell) {
-                    return !empty(trim((string)$cell));
-                }))) {
-                    continue;
-                }
-
-                $firstColumn = trim(strtoupper((string)($row[0] ?? '')));
-
-                // Check if it's a proximamente section
-                if (in_array($firstColumn, ['PRÓXIMAMENTE', 'PROXIMAMENTE'])) {
-                    $proximamenteHtml = $this->generateProximamenteHtml($row, $langConfig['image_code'], $imageCounter);
-                    \Log::info('Generado HTML de Próximamente', [
-                        'length' => strlen($proximamenteHtml)
-                    ]);
-                    $imageCounter++;
-                } else {
-                    $template = ($noticiaIndex % 2 === 0) ? $this->noticiaIzquierdaTemplate : $this->noticiaDerechaTemplate;
-                    $secondaryHtml .= $this->generateNoticiaHtml($row, $template);
-                    $noticiaIndex++;
-                    $imageCounter++;
-                }
-            }
-
             // Replace sections in the master template
             $html = str_replace('<!-- NOTICIA -->', $secondaryHtml, $html);
             $html = str_replace("\t\t\t\t<!-- PROXIMAMENTE -->", $proximamenteHtml, $html);
@@ -236,7 +254,7 @@ class Pro360Newsletter extends Component
                 if ($element instanceof \PhpOffice\PhpSpreadsheet\RichText\Run) {
                     $isBold = $element->getFont()->getBold();
                     if ($isBold) {
-                        $text = '<strong style="color: #000000 !important;">' . $text . '</strong>';
+                        $text = '<strong>' . $text . '</strong>';
                     }
                 }
                 $processedText .= $text;
@@ -245,7 +263,7 @@ class Pro360Newsletter extends Component
         } 
         // Si es string normal, verificar si toda la celda está en negrita
         else if (is_string($value) && $cell->getStyle()->getFont()->getBold()) {
-            $value = '<strong style="color: #000000 !important;">' . $value . '</strong>';
+            $value = '<strong>' . $value . '</strong>';
         }
         
         return $value;
