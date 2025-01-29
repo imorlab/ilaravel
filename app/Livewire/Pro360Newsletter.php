@@ -55,7 +55,7 @@ class Pro360Newsletter extends Component
             'url_code' => 'PT',
             'image_code' => 'pt',
             'contact_text' => 'Contacte a equipa PRO360',
-            'privacy_text' => 'A Prosegur Gestión de Activos S.L. (doravante "PROSEGUR") é a entidade responsável pelo tratamento dos seus dados pessoais. Trataremos os seus dados por forma a poder mantê-la/o informada/o, através do envio de uma newsletter, das vantagens oferecidas pela campanha de bem-estar e saúde PRO360 da PROSEGUR, com base na relação contratual existente entre si e a PROSEGUR. Pode exercitar os seus direitos de proteção de dados enviando um e-mail para: protecciondedatos@prosegur.com . Pode consultar informações adicionais sobre privacidade acedendo ao seguinte link: https://www.prosegur.com/politica-privacidad/prosegur-empleados',
+            'privacy_text' => 'A Prosegur Gestión de Activos S.L. (doravante "PROSEGUR") é a entidade responsável pelo tratamento dos seus dados pessoais. Trataremos os seus dados por forma a poder mantê-la/o informada/o, através do envio de uma newsletter, das vantagens oferecidas pela campanha de bem-estar e saúde PRO360 da PROSEGUR, sobre a base da relação contratual existente entre si e a PROSEGUR. Pode exercitar os seus direitos de proteção de dados enviando um e-mail para: protecciondedatos@prosegur.com . Pode consultar informações adicionais sobre privacidade acedendo ao seguinte link: https://www.prosegur.com/politica-privacidad/prosegur-empleados',
             'view_problems' => 'Problemas para ver o e-mail? ',
             'click_here' => 'Clique aqui'
         ],
@@ -220,6 +220,35 @@ class Pro360Newsletter extends Component
             session()->flash('error', $e->getMessage());
             $this->generatedHtml = null;
         }
+    }
+
+    protected function getFormattedText($worksheet, $rowNum, $colNum) 
+    {
+        $coordinate = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($colNum) . $rowNum;
+        $cell = $worksheet->getCell($coordinate);
+        $value = $cell->getValue();
+
+        // Si es RichText, procesarlo
+        if ($value instanceof \PhpOffice\PhpSpreadsheet\RichText\RichText) {
+            $processedText = '';
+            foreach ($value->getRichTextElements() as $element) {
+                $text = $element->getText();
+                if ($element instanceof \PhpOffice\PhpSpreadsheet\RichText\Run) {
+                    $isBold = $element->getFont()->getBold();
+                    if ($isBold) {
+                        $text = '<strong style="color: #000000 !important;">' . $text . '</strong>';
+                    }
+                }
+                $processedText .= $text;
+            }
+            $value = $processedText;
+        } 
+        // Si es string normal, verificar si toda la celda está en negrita
+        else if (is_string($value) && $cell->getStyle()->getFont()->getBold()) {
+            $value = '<strong style="color: #000000 !important;">' . $value . '</strong>';
+        }
+        
+        return $value;
     }
 
     protected function generatePrincipalHtml($data)
