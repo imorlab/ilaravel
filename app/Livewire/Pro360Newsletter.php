@@ -370,11 +370,13 @@ class Pro360Newsletter extends Component
 
     public function downloadNewsletter()
     {
-        if (!$this->generatedHtml) {
+        if (empty($this->generatedHtml)) {
+            $this->addError('excel', 'No hay contenido HTML generado para descargar.');
             return;
         }
 
-        $filename = 'pro360_newsletter_' . date('Y_m_d_His') . '.html';
+        $langCode = self::LANGUAGE_CONFIG[$this->selectedSheet]['url_code'];
+        $filename = 'pro360_' . $langCode . '.html';
         return response()->streamDownload(function () {
             echo $this->generatedHtml;
         }, $filename);
