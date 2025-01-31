@@ -163,7 +163,7 @@ class Pro360Newsletter extends Component
                 $rowData[6] = $worksheet->getCell('G' . $row)->getValue(); // Button text
                 $rowData[8] = $worksheet->getCell('I' . $row)->getValue(); // URL
 
-                if (in_array($firstColumn, ['PRÓXIMAMENTE', 'PROXIMAMENTE'])) {
+                if (in_array($firstColumn, ['PRÓXIMAMENTE', 'DEMNÄCHST', 'COMING SOON', 'EM BREVE'])) {
                     $proximamenteHtml = $this->generateProximamenteHtml($rowData, self::LANGUAGE_CONFIG[$this->selectedSheet]['image_code'], $imageCounter);
                     $imageCounter++;
                 } else {
@@ -196,6 +196,8 @@ class Pro360Newsletter extends Component
             // Replace language specific content
             $html = str_replace('cab1a-es.png', "cab1a-{$langConfig['image_code']}.png", $html);
             $html = str_replace('/ene/', "/{$currentMonth}/", $html);
+            $langCode = strtoupper($langConfig['image_code']);
+            $html = str_replace('pro360_ES.html', "pro360_{$langCode}.html", $html);
             
             // Replace contact text and other texts
             $html = str_replace('Contacta con el equipo PRO360', $langConfig['contact_text'], $html);
@@ -323,6 +325,7 @@ class Pro360Newsletter extends Component
     {
         $html = $this->proximamenteTemplate;
         $currentMonth = $this->getCurrentMonthCode();
+        $langCode = strtoupper($langCode);
 
         // Replace language specific image in title
         $html = str_replace(
@@ -350,7 +353,7 @@ class Pro360Newsletter extends Component
         // Handle optional button
         $buttonHtml = '<tr>
             <td align="left" style="font-family: Arial, Helvetica, sans-serif;text-align: left;margin: 10px 0px 0px 20px;">
-                <a class="keep-black" href="' . ($data[7] ?? '#') . '">
+                <a class="keep-black" href="' . ($data[8] ?? '#') . '">
                     <img src="https://media.beonworldwide.com/newsletters/prosegur/2025/' . $currentMonth . '/img/btn-prox-' . $langCode . '.png"
                     alt="pro360" width="96" height="" border="0" align="left"
                     style="width: 96px; height: auto; mso-height-rule: exactly; background-color: #637A7C; text-align: left;margin: 0px 0px 20px 20px;">
@@ -361,7 +364,7 @@ class Pro360Newsletter extends Component
         // Replace button placeholder with actual button or empty string
         $html = str_replace(
             '{{ IMAGE_BTN }}',
-            !empty($data[6]) ? $buttonHtml : '',
+            (!empty($data[6]) && !empty($data[8])) ? $buttonHtml : '',
             $html
         );
 
