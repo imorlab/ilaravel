@@ -385,192 +385,6 @@ class Pro360Newsletter extends Component
         }, $filename);
     }
 
-    public function generatePdf()
-    {
-        if (empty($this->generatedHtml)) {
-            $this->dispatch('swal:error', [
-                'title' => 'Error',
-                'text' => 'Primero debes generar el contenido de la newsletter',
-                'timer' => 1500
-            ]);
-            return;
-        }
-
-        try {
-            \Log::info('Iniciando generación de PDF');
-
-            // Renderizar la vista del PDF con el contenido
-            $html = view('pdf.newsletter', ['content' => $this->generatedHtml])->render();
-
-            // Generar PDF
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($html);
-            $pdf->setPaper('A4', 'portrait');
-            
-            $pdf->setOptions([
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'dpi' => 96,
-                'defaultPaperSize' => 'A4',
-                'enable_php' => false,
-                'enable_javascript' => false,
-                'enable_remote' => true,
-                'enable_html5_parser' => true,
-                'zoom' => 0.5
-            ]);
-
-            // Generar nombre del archivo
-            $filename = 'newsletter_' . now()->format('Y-m-d_His') . '.pdf';
-            $tempPdfPath = storage_path('app/' . $filename);
-
-            // Guardar PDF
-            $pdf->save($tempPdfPath);
-
-            \Log::info('PDF generado en: ' . $tempPdfPath);
-
-            // Devolver el archivo y luego eliminarlo
-            return response()->download($tempPdfPath, $filename)->deleteFileAfterSend(true);
-
-        } catch (\Exception $e) {
-            \Log::error('Error al generar PDF: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
-            
-            $this->dispatch('swal:error', [
-                'title' => 'Error',
-                'text' => 'No se pudo generar el PDF: ' . $e->getMessage(),
-                'timer' => 3000
-            ]);
-        }
-    }
-
-    public function previewNewsletter()
-    {
-        if (empty($this->generatedHtml)) {
-            $this->dispatch('swal:error', [
-                'title' => 'Error',
-                'text' => 'Primero debes generar el contenido de la newsletter',
-                'timer' => 1500
-            ]);
-            return;
-        }
-
-        $this->previewHtml = '<!DOCTYPE html>
-            <html>
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>
-                    body { 
-                        font-family: Arial, sans-serif;
-                        background: #f0f0f0;
-                        color: black;
-                        margin: 0;
-                        padding: 20px;
-                    }
-                    * {
-                        box-sizing: border-box;
-                    }
-                    img { 
-                        max-width: 100%;
-                        height: auto;
-                        display: block;
-                    }
-                    .preview-container {
-                        width: ' . $this->cropWidth . 'px;
-                        min-height: ' . $this->cropHeight . 'px;
-                        margin: 0 auto;
-                        background: white;
-                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                        position: relative;
-                    }
-                    .content {
-                        width: 100%;
-                        min-height: 100%;
-                        padding: ' . $this->cropPadding . 'px;
-                        background: white;
-                    }
-                    .controls {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                    }
-                    .controls label {
-                        display: block;
-                        margin-bottom: 10px;
-                    }
-                    .controls input {
-                        width: 100px;
-                        margin-bottom: 15px;
-                    }
-                    table {
-                        width: 100% !important;
-                        margin: 0 !important;
-                        border-collapse: collapse !important;
-                    }
-                    td {
-                        padding: 5px !important;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="preview-container">
-                    <div class="content">' . $this->generatedHtml . '</div>
-                </div>
-                <div class="controls">
-                    <label>Ancho (px):
-                        <input type="number" value="' . $this->cropWidth . '" 
-                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: this.value, height: null, padding: null})">
-                    </label>
-                    <label>Alto (px):
-                        <input type="number" value="' . $this->cropHeight . '" 
-                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: null, height: this.value, padding: null})">
-                    </label>
-                    <label>Padding (px):
-                        <input type="number" value="' . $this->cropPadding . '" 
-                            onchange="window.livewire.dispatch(\'updateCropDimensions\', {width: null, height: null, padding: this.value})">
-                    </label>
-                    <button onclick="window.livewire.dispatch(\'generatePdf\')" 
-                        style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Generar PDF
-                    </button>
-                </div>
-            </body>
-            </html>';
-
-        $this->showPreview = true;
-    }
-
-    public function updateCropDimensions($width = null, $height = null, $padding = null)
-    {
-        if ($width !== null) $this->cropWidth = (int)$width;
-        if ($height !== null) $this->cropHeight = (int)$height;
-        if ($padding !== null) $this->cropPadding = (int)$padding;
-        
-        $this->previewNewsletter();
-    }
-
-    public function hydrate()
-    {
-        // Recargar las plantillas después de cada actualización de Livewire
-        $this->loadTemplates();
-    }
-
-    public function dehydrate()
-    {
-        // Limpiar recursos cuando el componente se deshidrata
-        if ($this->lastUploadedFile && file_exists($this->lastUploadedFile)) {
-            @unlink($this->lastUploadedFile);
-        }
-    }
-
-    public function render()
-    {
-        return view('livewire.pro360-newsletter');
-    }
-
     public function send()
     {
         if (!auth()->check()) {
@@ -663,5 +477,24 @@ class Pro360Newsletter extends Component
                 'timer' => 1500
             ]);
         }
+    }
+
+    public function hydrate()
+    {
+        // Recargar las plantillas después de cada actualización de Livewire
+        $this->loadTemplates();
+    }
+
+    public function dehydrate()
+    {
+        // Limpiar recursos cuando el componente se deshidrata
+        if ($this->lastUploadedFile && file_exists($this->lastUploadedFile)) {
+            @unlink($this->lastUploadedFile);
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.pro360-newsletter');
     }
 }
