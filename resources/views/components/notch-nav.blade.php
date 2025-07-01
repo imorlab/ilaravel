@@ -15,7 +15,7 @@
 
             <!-- Home Icon -->
             <a href="/" class="home-link">
-                <img src="{{ asset('/img/laravel_96.png') }}" class="home-icon" alt="">
+                <img src="{{ asset('/icons/xbox-96.png') }}" class="home-icon opacity-75" alt="iLaravel">
             </a>
 
             <!-- Right Menu Items -->
@@ -36,11 +36,11 @@
 <style>
 /* Variables */
 :root {
-    --nav-height: 20px;
+    --nav-height: 10px;
     --notch-height: 35px;
     --notch-expanded-width: 270px;
     --notch-collapsed-width: 50px;
-    --primary-color: rgba(25, 25, 25, 1);
+    --primary-color: rgba(58 9 100 / 1);
     --secondary-color: rgba(40, 40, 40, 0.95);
     --text-color: #fff;
     --animation-speed: 1s;
@@ -48,7 +48,7 @@
 
 /* Base styles */
 .notch-nav {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -56,6 +56,7 @@
     z-index: 1000;
     /* backdrop-filter: blur(10px); */
     background-color: var(--primary-color);
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 .nav-content {
@@ -65,8 +66,24 @@
     margin: 0 auto;
     transition: width var(--animation-speed) cubic-bezier(0.34, 1.56, 0.64, 1);
     background-color: var(--primary-color);
-    border-radius: 0 0 15px 15px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
     overflow: visible;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Pseudo-elemento para el gradiente */
+.nav-content::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    /* background: linear-gradient(to bottom, var(--primary-color), rgba(255, 255, 255, 0.8)); */
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 12px 16px rgba(255, 255, 255, 0.36);
+    z-index: -1;
 }
 
 .notch-container {
@@ -170,8 +187,8 @@
 }
 
 .home-icon {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;

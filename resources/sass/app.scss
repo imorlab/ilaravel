@@ -445,7 +445,7 @@ body {
     font-family: 'Source Code Pro', sans-serif;
     background: linear-gradient(180deg,
         rgba(15, 15, 20, 1) 0%,
-        rgba(35, 17, 44, 1) 50%,
+        rgba(35, 17, 44, 1) 75%,
         rgba(59, 7, 100, 1) 100%
     ) fixed;
     background-repeat: no-repeat;
@@ -1271,8 +1271,8 @@ body {
     border: none;
 
     &.bg-glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+        background: rgba(255 255 255 / 0.1);
+        backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
