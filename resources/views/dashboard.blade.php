@@ -6,9 +6,9 @@
         <!-- Contenido Principal -->
         <div class="col-10">
             <div class="">
-                {{-- <div class="text-center mb-4">
+                <div class="text-center mb-4">
                     <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
-                </div> --}}
+                </div>
                 <div class="card glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0 text-light">iDashboard</h2>

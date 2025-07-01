@@ -2,8 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100 mt-5 pt-5">
+    <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <img src="{{ asset('/img/laravel_96.png') }}" class="img-fluid ms-auto me-auto d-block mb-1">
+            </div>
             <div class="card shadow glass-card">
                 <div class="card-header glass-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0 text-light">{{ __('iMail') }}</h2>
