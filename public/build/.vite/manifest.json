@@ -1,0 +1,45 @@
+{
+  "_vendor-LfbfoprD.js": {
+    "file": "assets/vendor-LfbfoprD.js",
+    "name": "vendor"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
+    "file": "assets/bootstrap-icons-BeopsB42.woff",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
+    "file": "assets/bootstrap-icons-mSm7cUeB.woff2",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DBsyJU-e.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DG4RV_v-.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-LfbfoprD.js"
+    ]
+  },
+  "resources/js/card-effects.js": {
+    "file": "assets/card-effects-D8Fyex-i.js",
+    "name": "card-effects",
+    "src": "resources/js/card-effects.js",
+    "isEntry": true
+  },
+  "resources/js/sweetalert.js": {
+    "file": "assets/sweetalert-Dim5I8l-.js",
+    "name": "sweetalert",
+    "src": "resources/js/sweetalert.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-CUPRwgI_.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}

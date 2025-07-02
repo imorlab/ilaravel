@@ -15,7 +15,7 @@
 
             <!-- Home Icon -->
             <a href="/" class="home-link">
-                <img src="{{ asset('/icons/xbox-96.png') }}" class="home-icon opacity-75" alt="iLaravel">
+                <img src="{{ asset('/img/icons/xbox-96.png') }}" class="home-icon opacity-75" alt="iLaravel">
             </a>
 
             <!-- Right Menu Items -->

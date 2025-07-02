@@ -81,7 +81,7 @@
                                         <div class="card-body p-4">
                                             <div class="d-flex align-items-center mb-3">
                                                 <div class="feature-icon me-3">
-                                                    <img src="{{ asset('/icons/mail_96.png') }}" alt="Mail" class="icon-image">
+                                                    <img src="{{ asset('/img/icons/mail_96.png') }}" alt="Mail" class="icon-image">
                                                 </div>
                                                 <h4 class="card-title mb-0">{{ __('Envío de Newsletter') }}</h4>
                                             </div>
@@ -138,7 +138,7 @@
                                         <div class="card-body p-4">
                                             <div class="d-flex align-items-center mb-3">
                                                 <div class="feature-icon me-3">
-                                                    <img src="{{ asset('/icons/rubik_96.png') }}" alt="Notes" class="icon-image">
+                                                    <img src="{{ asset('/img/icons/rubik_96.png') }}" alt="Notes" class="icon-image">
                                                 </div>
                                                 <h4 class="card-title mb-0">{{ __('Notas Personales') }}</h4>
                                             </div>
@@ -197,7 +197,7 @@
                                         <div class="card-body p-4">
                                             <div class="d-flex align-items-center mb-3">
                                                 <div class="feature-icon me-3">
-                                                    <img src="{{ asset('/icons/new_96.png') }}" alt="Todo" class="icon-image">
+                                                    <img src="{{ asset('/img/icons/new_96.png') }}" alt="Todo" class="icon-image">
                                                 </div>
                                                 <h4 class="card-title mb-0">{{ __('Lista de Tareas') }}</h4>
                                             </div>
@@ -254,7 +254,7 @@
                                         <div class="card-body p-4">
                                             <div class="d-flex align-items-center mb-3">
                                                 <div class="feature-icon me-3">
-                                                    <img src="{{ asset('/icons/toolbox_96.png') }}" alt="Dashboard" class="icon-image">
+                                                    <img src="{{ asset('/img/icons/toolbox_96.png') }}" alt="Dashboard" class="icon-image">
                                                 </div>
                                                 <h4 class="card-title mb-0">{{ __('Panel de Control') }}</h4>
                                             </div>
