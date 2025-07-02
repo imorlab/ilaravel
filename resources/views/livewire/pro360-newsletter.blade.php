@@ -35,7 +35,7 @@
                         <div class="form-group mb-4">
                             <div class="input-group">
                                 <span class="input-group-text glass-input-icon">
-                                    <img src="{{ asset('icons/excel-icon.webp') }}" alt="Excel Icon" style="width: 18px; height: 18px;">
+                                    <img src="{{ asset('/img/icons/excel-icon.webp') }}" alt="Excel Icon" style="width: 18px; height: 18px;">
                                 </span>
                                 <input type="file" 
                                     wire:model.live="excelFile" 
